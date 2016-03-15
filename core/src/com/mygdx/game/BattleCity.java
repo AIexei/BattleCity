@@ -9,8 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import java.util.ArrayList;
-import java.util.Timer;
+import java.util.*;
 
 /**
  * Created by Алексей on 01.03.2016.
@@ -19,6 +18,7 @@ import java.util.Timer;
 public class BattleCity extends Game {
     SpriteBatch batch;
     Texture img;
+    Texture img2;
     ShapeRenderer renderer;
     ArrayList<Tank> arrayList;
 
@@ -29,15 +29,16 @@ public class BattleCity extends Game {
     boolean flag = false;
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    //long start = 0;
+    //long frames = 0;
 
     @Override
     public void create() {
-        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
 
         batch = new SpriteBatch();
-        img = new Texture("image.png");
+        img = new Texture("tank4.png");
+        img2 = new Texture("bullet.png");
         renderer = new ShapeRenderer();
 
         arr = new byte[26][26];
@@ -95,15 +96,18 @@ public class BattleCity extends Game {
         }
 
         batch.begin();
-        batch.draw(img, 300, 300);
         tank.draw(batch);
+        batch.draw(img2, 100, 100);
+        batch.draw(img, 300, 300);
         batch.end();
 
-
+        /*
         frames++;
         long time = System.currentTimeMillis() - start;
         System.out.println(1000 * ((double)frames / (double) time));
+        */
     }
+
 
 
     public void inputControl() {
@@ -116,6 +120,7 @@ public class BattleCity extends Game {
             if (flag == false) {
                 if (tank.getRotation() != 0) {
                     tank.setRotation(0);
+
                 } else {
                     tank.addY(speed);
                 }
