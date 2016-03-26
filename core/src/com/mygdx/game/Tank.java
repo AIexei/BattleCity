@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sun.plugin.services.WIExplorerBrowserService;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Алексей on 01.03.2016.
  */
@@ -17,12 +21,21 @@ public class Tank {
     private Texture img;
     private Sprite sprite;
 
+    private ArrayList<Shell> shells;
+    private boolean canShoot;
+
+    private Timer timer;
+
+
     public Tank(int x, int y, Texture img, int border) {
         this.x = x;
         this.y = y;
         this.img = img;
         this.sprite = new Sprite(img);
         this.border = border;
+        this.shells = new ArrayList<Shell>();
+        this.canShoot = true;
+        this.timer = new Timer();
 
         sprite.setX(x);
         sprite.setY(y);
@@ -34,6 +47,9 @@ public class Tank {
         this.y = 0;
         this.border = border;
         this.sprite = new Sprite(img);
+        this.shells = new ArrayList<Shell>();
+        this.canShoot = true;
+        this.timer = new Timer();
 
         sprite.setX(x);
         sprite.setY(y);
@@ -73,6 +89,28 @@ public class Tank {
         }
 
         sprite.setY(y);
+    }
+
+    public void fire() {
+        if (canShoot) {
+
+
+            // something
+            //------------------------
+            //-----------------------
+            System.out.println("FIRE!!!    ");
+
+
+            canShoot = false;
+            timer.schedule(new Reloading(), 2000);
+        }
+    }
+
+    private class Reloading extends TimerTask {
+        @Override
+        public void run() {
+            canShoot = true;
+        }
     }
 
     public float getX() {

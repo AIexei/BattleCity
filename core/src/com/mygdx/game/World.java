@@ -10,9 +10,8 @@ import java.util.ArrayList;
 public class World {
     private ArrayList<Tank> list;
     private static byte[][] field;
-    private int size;
 
-    public World(byte[][] field, ArrayList<Tank> list, int size) {
+    public World(byte[][] field, ArrayList<Tank> list) {
         this.field = field;
         this.list = list;
     }
@@ -54,7 +53,7 @@ public class World {
     }
 
     public int getSize() {
-        return size;
+        return field[0].length;
     }
 }
 

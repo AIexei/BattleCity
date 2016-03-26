@@ -3,12 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -18,14 +18,17 @@ import java.util.*;
 public class BattleCity extends Game {
     SpriteBatch batch;
     Texture img;
-    Texture img2;
+    Texture k;
+    Texture b;
+    Texture f;
+    Texture t;
     ShapeRenderer renderer;
     ArrayList<Tank> arrayList;
 
     World world;
     Tank tank;
 
-    final float speed = 2.5f;
+    final float tankSpeed = 2.5f;
     boolean flag = false;
     byte[][] arr;
 
@@ -37,22 +40,32 @@ public class BattleCity extends Game {
         //start = System.currentTimeMillis();
 
         batch = new SpriteBatch();
-        img = new Texture("tank4.png");
-        img2 = new Texture("bullet.png");
+        img = new Texture("tank1.png");
+        k = new Texture("kir.png");
+        b = new Texture("block.png");
+        f = new Texture("flag.png");
+        t = new Texture("trawa.png");
         renderer = new ShapeRenderer();
 
         arr = new byte[26][26];
-        for (int i = 0; i < 26; i += 3) {
-            for (int j = 0; j < 26; j += 3) {
-                arr[i][j] = 1;
-            }
+
+        try (FileInputStream fileReader = new FileInputStream("map1.m")) {
+            Scanner scanner = new Scanner(fileReader);
+
+            for (int i = 0; i < 26; i++)
+                for (int j = 0; j < 26; j++)
+                    arr[j][25 - i] = scanner.nextByte();
+
+        } catch(IOException ioe) {
+            System.out.println("File not found");
         }
+
 
         tank = new Tank(img, 650);
         arrayList = new ArrayList<Tank>();
         arrayList.add(tank);
 
-        world = new World(arr, arrayList, 26);
+        world = new World(arr, arrayList);
     }
 
 
@@ -74,16 +87,17 @@ public class BattleCity extends Game {
             renderer.line(0, i, 650, i);
             renderer.line(i, 0, i, 650);
         }
-*/
+
 
 
         renderer.setColor(Color.GREEN);
-        for (int i = 0; i < 26; i += 3) {
-            for (int j = 0; j < 26; j += 3) {
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < 26; j++) {
+                if (arr[i][j] == 1)
                 renderer.rect(i*25, j*25, 25, 25);
             }
         }
-
+        */
 
 
 
@@ -97,8 +111,20 @@ public class BattleCity extends Game {
 
         batch.begin();
         tank.draw(batch);
-        batch.draw(img2, 100, 100);
-        batch.draw(img, 300, 300);
+
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < 26; j++) {
+                if (arr[i][j] == 1) {
+                    batch.draw(k, i * 25, j * 25);
+                } else if (arr[i][j] == 2) {
+                    batch.draw(b, i * 25, j * 25);
+                }
+            }
+        }
+
+        batch.draw(f, 12 * 25, 0);
+
+
         batch.end();
 
         /*
@@ -122,7 +148,7 @@ public class BattleCity extends Game {
                     tank.setRotation(0);
 
                 } else {
-                    tank.addY(speed);
+                    tank.addY(tankSpeed);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
@@ -135,7 +161,7 @@ public class BattleCity extends Game {
                 if (tank.getRotation() != 180) {
                     tank.setRotation(180);
                 } else {
-                    tank.addY(-speed);
+                    tank.addY(-tankSpeed);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -148,7 +174,7 @@ public class BattleCity extends Game {
                 if (tank.getRotation() != 90) {
                     tank.setRotation(90);
                 } else {
-                    tank.addX(-speed);
+                    tank.addX(-tankSpeed);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -161,11 +187,15 @@ public class BattleCity extends Game {
                 if (tank.getRotation() != 270) {
                     tank.setRotation(270);
                 } else {
-                    tank.addX(speed);
+                    tank.addX(tankSpeed);
                 }
             }
         } else {
             flag = true;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            tank.fire();
         }
     }
 
@@ -178,7 +208,7 @@ public class BattleCity extends Game {
         switch(direction) {
             case 0:
                 if ((tank.getY() % 25 != 0) && (tank.getY() < (yy * 25) + 25)) {
-                    tank.addY(speed);
+                    tank.addY(tankSpeed);
                 } else {
                     flag = false;
                 }
@@ -186,7 +216,7 @@ public class BattleCity extends Game {
                 break;
             case 90:
                 if ((tank.getX() % 25 != 0) && (tank.getX() > (xx * 25) - 25)) {
-                    tank.addX(-speed);
+                    tank.addX(-tankSpeed);
                 } else {
                     flag = false;
                 }
@@ -194,14 +224,14 @@ public class BattleCity extends Game {
                 break;
             case 180:
                 if ((tank.getY() % 25 != 0) && (tank.getY() > (yy * 25) - 25)) {
-                    tank.addY(-speed);
+                    tank.addY(-tankSpeed);
                 } else {
                     flag = false;
                 }
                 break;
             case 270:
                 if ((tank.getX() % 25 != 0) && (tank.getX() < (xx * 25) + 25)) {
-                    tank.addX(speed);
+                    tank.addX(tankSpeed);
                 } else {
                     flag = false;
                 }
