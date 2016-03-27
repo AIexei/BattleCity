@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class World {
     private ArrayList<Tank> list;
     private static byte[][] field;
+    private static float border;
 
-    public World(byte[][] field, ArrayList<Tank> list) {
+    public World(byte[][] field, ArrayList<Tank> list, float border) {
         this.field = field;
         this.list = list;
+        this.border = border;
     }
 
     public void update() {
@@ -54,11 +56,8 @@ public class World {
         return false;
     }
 
-    public int getValue(int x, int y) {
-        ///////////////
-        //////////////
-        /////////////
-        return 0;
+    public static float getBorder() {
+        return border;
     }
 
     public int getSize() {

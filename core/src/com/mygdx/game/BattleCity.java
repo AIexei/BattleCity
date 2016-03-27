@@ -17,11 +17,11 @@ import java.util.*;
 
 public class BattleCity extends Game {
     SpriteBatch batch;
-    Texture img;
-    Texture k;
-    Texture b;
-    Texture f;
-    Texture t;
+    Texture tank1;
+    Texture brick;
+    Texture block;
+    Texture emblem;
+    Texture grass;
     ShapeRenderer renderer;
     ArrayList<Tank> arrayList;
 
@@ -40,11 +40,11 @@ public class BattleCity extends Game {
         //start = System.currentTimeMillis();
 
         batch = new SpriteBatch();
-        img = new Texture("tank1.png");
-        k = new Texture("kir.png");
-        b = new Texture("block.png");
-        f = new Texture("flag.png");
-        t = new Texture("trawa.png");
+        tank1 = new Texture("tank1.png");
+        brick = new Texture("kir.png");
+        block = new Texture("block.png");
+        emblem = new Texture("flag.png");
+        grass = new Texture("trawa.png");
         renderer = new ShapeRenderer();
 
         arr = new byte[26][26];
@@ -52,25 +52,20 @@ public class BattleCity extends Game {
         try (FileInputStream fileReader = new FileInputStream("map1.m")) {
             Scanner scanner = new Scanner(fileReader);
 
-            for (int i = 0; i < 26; i++) {
-                for (int j = 0; j < 26; j++) {
+            for (int i = 0; i < 26; i++)
+                for (int j = 0; j < 26; j++)
                     arr[25 -i][j] = scanner.nextByte();
-                    System.out.print(arr[25-i][j]);
-                    System.out.print(' ');
-                }
 
-                System.out.println();
-            }
         } catch(IOException ioe) {
+
             System.out.println("File not found");
         }
 
-
-        tank = new Tank(img, 650);
+        tank = new Tank(tank1);
         arrayList = new ArrayList<Tank>();
         arrayList.add(tank);
 
-        world = new World(arr, arrayList);
+        world = new World(arr, arrayList, 650);
     }
 
 
@@ -120,14 +115,14 @@ public class BattleCity extends Game {
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
                 if (arr[i][j] == 1) {
-                    batch.draw(k, j * 25, i * 25);
+                    batch.draw(brick, j * 25, i * 25);
                 } else if (arr[i][j] == 2) {
-                    batch.draw(b, j * 25, i * 25);
+                    batch.draw(block, j * 25, i * 25);
                 }
             }
         }
 
-        batch.draw(f, 12 * 25, 0);
+        batch.draw(emblem, 12 * 25, 0);
 
 
         batch.end();
@@ -137,6 +132,12 @@ public class BattleCity extends Game {
         long time = System.currentTimeMillis() - start;
         System.out.println(1000 * ((double)frames / (double) time));
         */
+    }
+
+
+    @Override
+    public void dispose() {
+        System.exit(0);
     }
 
 
@@ -229,7 +230,7 @@ public class BattleCity extends Game {
                 break;
             case 180:
                 if ((tank.getY() % 25 != 0) && (tank.getY() > (yy * 25) - 25)) {
-                    tank.addY(-tankSpeed);
+                     tank.addY(-tankSpeed);
                 } else {
                     flag = false;
                 }
