@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * Created by Алексей on 01.03.2016.
  */
 
-public class Tank {
+public class Tank implements Mobility {
     private float x;
     private float y;
     private int border;
@@ -55,17 +55,18 @@ public class Tank {
         sprite.setY(y);
     }
 
+    @Override
     public void addX(float value) {
         if (value >= 0) {
             if (x + value >= border - 50) {
                 x = border - 50;
-            } else if (World.canDrive(x + 50, y, 1)) {
+            } else if (World.canMove(x + 50, y, 1)) {
                 x += value;
             }
         } else {
             if (x + value <= 0) {
                 x = 0;
-            } else if (World.canDrive(x + value, y, 3)) {
+            } else if (World.canMove(x + value, y, 3)) {
                 x += value;
             }
         }
@@ -73,17 +74,18 @@ public class Tank {
         sprite.setX(x);
     }
 
+    @Override
     public void addY(float value) {
         if (value >= 0) {
             if (y + value >= border - 50) {
                 y = border - 50;
-            } else if (World.canDrive(x, y + 50, 0)) {
+            } else if (World.canMove(x, y + 50, 0)) {
                 y += value;
             }
         } else {
             if (y + value <= 0) {
                 y = 0;
-            } else if (World.canDrive(x, y + value, 2)) {
+            } else if (World.canMove(x, y + value, 2)) {
                 y += value;
             }
         }
@@ -113,10 +115,12 @@ public class Tank {
         }
     }
 
+    @Override
     public float getX() {
         return x;
     }
 
+    @Override
     public float getY() {
         return y;
     }

@@ -23,21 +23,27 @@ public class World {
         }
     }
 
-    public static boolean canDrive(float x, float y, int dir) {
+    /**
+     * @param x : future Õ
+     * @param y : future Ó
+     * @param dir : 0, 2 - Ó, 1,3 - X
+     * @return : can you take this position
+     */
+    public static boolean canMove(float x, float y, int dir) {
         int xx = (int) x / 25;
         int yy = (int) y / 25;
 
-        if (field[xx][yy] == 0) {
+        if (field[yy][xx] == 0) {
             switch (dir) {
                 case 0:
                 case 2:
-                    if (field[xx + 1][yy] > 0)
+                    if (field[yy][xx + 1] > 0)
                         return false;
                     break;
 
                 case 1:
                 case 3:
-                    if (field[xx][yy + 1] > 0)
+                    if (field[yy + 1][xx] > 0)
                         return false;
                     break;
             }
@@ -49,7 +55,10 @@ public class World {
     }
 
     public int getValue(int x, int y) {
-        return field[x][y];
+        ///////////////
+        //////////////
+        /////////////
+        return 0;
     }
 
     public int getSize() {

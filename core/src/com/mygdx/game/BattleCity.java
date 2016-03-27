@@ -52,10 +52,15 @@ public class BattleCity extends Game {
         try (FileInputStream fileReader = new FileInputStream("map1.m")) {
             Scanner scanner = new Scanner(fileReader);
 
-            for (int i = 0; i < 26; i++)
-                for (int j = 0; j < 26; j++)
-                    arr[j][25 - i] = scanner.nextByte();
+            for (int i = 0; i < 26; i++) {
+                for (int j = 0; j < 26; j++) {
+                    arr[25 -i][j] = scanner.nextByte();
+                    System.out.print(arr[25-i][j]);
+                    System.out.print(' ');
+                }
 
+                System.out.println();
+            }
         } catch(IOException ioe) {
             System.out.println("File not found");
         }
@@ -115,9 +120,9 @@ public class BattleCity extends Game {
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
                 if (arr[i][j] == 1) {
-                    batch.draw(k, i * 25, j * 25);
+                    batch.draw(k, j * 25, i * 25);
                 } else if (arr[i][j] == 2) {
-                    batch.draw(b, i * 25, j * 25);
+                    batch.draw(b, j * 25, i * 25);
                 }
             }
         }
@@ -228,6 +233,7 @@ public class BattleCity extends Game {
                 } else {
                     flag = false;
                 }
+
                 break;
             case 270:
                 if ((tank.getX() % 25 != 0) && (tank.getX() < (xx * 25) + 25)) {
@@ -235,6 +241,7 @@ public class BattleCity extends Game {
                 } else {
                     flag = false;
                 }
+
                 break;
         }
     }
