@@ -8,20 +8,20 @@ import java.util.ArrayList;
 
 
 public class World {
-    private ArrayList<Tank> list;
+    private ArrayList<Tank> enemies;
     private static byte[][] field;
     private static float border;
 
-    public World(byte[][] field, ArrayList<Tank> list, float border) {
+    public World(byte[][] field, ArrayList<Tank> enemies, float border) {
         this.field = field;
-        this.list = list;
+        this.enemies = enemies;
         this.border = border;
     }
 
     public void update() {
-        for (int i = 0; i < list.size(); i++) {
-            float x = list.get(i).getX();
-            float y = list.get(i).getY();
+        for (int i = 0; i < enemies.size(); i++) {
+            float x = enemies.get(i).getX();
+            float y = enemies.get(i).getY();
         }
     }
 
@@ -31,21 +31,26 @@ public class World {
      * @param dir : 0, 2 - Ó, 1,3 - X
      * @return : can you take this position
      */
-    public static boolean canMove(float x, float y, int dir) {
+    public static boolean canMove(float x, float y, int dir, ObjType type) {
         int xx = (int) x / 25;
         int yy = (int) y / 25;
+        int limitation = 1;
 
-        if (field[yy][xx] == 0) {
+        if (type == ObjType.SHELL) {
+            limitation = 2;
+        }
+
+        if (field[yy][xx] <= limitation) {
             switch (dir) {
                 case 0:
                 case 2:
-                    if (field[yy][xx + 1] > 0)
+                    if (field[yy][xx + 1] > limitation)
                         return false;
                     break;
 
                 case 1:
                 case 3:
-                    if (field[yy + 1][xx] > 0)
+                    if (field[yy + 1][xx] > limitation)
                         return false;
                     break;
             }
@@ -56,12 +61,28 @@ public class World {
         return false;
     }
 
-    public static float getBorder() {
-        return border;
+
+    public static void destruction (float x, float y, int dir) {
+        int xx = (int) x / 25;
+        int yy = (int) y / 25;
+
+        field[yy][xx] = 0;
+
+        switch (dir) {
+            case 0:
+            case 2:
+                field[yy][xx + 1] = 0;
+                break;
+
+            case 1:
+            case 3:
+                field[yy + 1][xx] = 0;
+                break;
+        }
     }
 
-    public int getSize() {
-        return field[0].length;
+    public static float getBorder() {
+        return border;
     }
 }
 

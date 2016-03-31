@@ -22,6 +22,7 @@ public class BattleCity extends Game {
     Texture block;
     Texture emblem;
     Texture grass;
+    Texture water;
     ShapeRenderer renderer;
     ArrayList<Tank> arrayList;
 
@@ -45,7 +46,11 @@ public class BattleCity extends Game {
         block = new Texture("block.png");
         emblem = new Texture("flag.png");
         grass = new Texture("trawa.png");
+        water = new Texture("voda.png");
         renderer = new ShapeRenderer();
+
+        Shell.setSpeed(10f);
+        Shell.loadTexture(new Texture("shell.png"));
 
         arr = new byte[26][26];
 
@@ -61,7 +66,7 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        tank = new Tank(tank1);
+        tank = new Tank(tank1, 8);
         arrayList = new ArrayList<Tank>();
         arrayList.add(tank);
 
@@ -115,15 +120,19 @@ public class BattleCity extends Game {
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
                 if (arr[i][j] == 1) {
-                    batch.draw(brick, j * 25, i * 25);
+                    batch.draw(grass, j * 25, i * 25);
                 } else if (arr[i][j] == 2) {
+                    batch.draw(water, j * 25, i * 25);
+                } else if (arr[i][j] == 3) {
+                    batch.draw(brick, j * 25, i * 25);
+                } else if (arr[i][j] == 4) {
                     batch.draw(block, j * 25, i * 25);
                 }
             }
         }
 
         batch.draw(emblem, 12 * 25, 0);
-
+        tank.drawShells(batch);
 
         batch.end();
 
@@ -152,7 +161,6 @@ public class BattleCity extends Game {
             if (flag == false) {
                 if (tank.getRotation() != 0) {
                     tank.setRotation(0);
-
                 } else {
                     tank.addY(tankSpeed);
                 }

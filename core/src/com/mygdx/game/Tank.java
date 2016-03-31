@@ -15,6 +15,7 @@ import java.util.TimerTask;
 public class Tank implements Mobility{
     private float x;
     private float y;
+    private int accessory;
 
     private Texture img;
     private Sprite sprite;
@@ -25,7 +26,7 @@ public class Tank implements Mobility{
     private Timer timer;
 
 
-    public Tank(int x, int y, Texture img) {
+    public Tank(int x, int y, Texture img, int accessory) {
         this.x = x;
         this.y = y;
         this.img = img;
@@ -33,12 +34,13 @@ public class Tank implements Mobility{
         this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
+        this.accessory = accessory;
 
         sprite.setX(x);
         sprite.setY(y);
     }
 
-    public Tank(Texture img) {
+    public Tank(Texture img, int accessory) {
         this.img = img;
         this.x = 0;
         this.y = 0;
@@ -46,6 +48,7 @@ public class Tank implements Mobility{
         this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
+        this.accessory = accessory;
 
         sprite.setX(x);
         sprite.setY(y);
@@ -55,14 +58,14 @@ public class Tank implements Mobility{
     public void addX(float value) {
         if (value >= 0) {
             if (x + value >= World.getBorder() - 50) {
-                x =  - 50;
-            } else if (World.canMove(x + 50, y, 1)) {
+                x = World.getBorder() - 50;
+            } else if (World.canMove(x + 50, y, 1, ObjType.TANK)) {
                 x += value;
             }
         } else {
             if (x + value <= 0) {
                 x = 0;
-            } else if (World.canMove(x + value, y, 3)) {
+            } else if (World.canMove(x + value, y, 3, ObjType.TANK)) {
                 x += value;
             }
         }
@@ -75,13 +78,13 @@ public class Tank implements Mobility{
         if (value >= 0) {
             if (y + value >= World.getBorder() - 50) {
                 y = World.getBorder() - 50;
-            } else if (World.canMove(x, y + 50, 0)) {
+            } else if (World.canMove(x, y + 50, 0, ObjType.TANK)) {
                 y += value;
             }
         } else {
             if (y + value <= 0) {
                 y = 0;
-            } else if (World.canMove(x, y + value, 2)) {
+            } else if (World.canMove(x, y + value, 2, ObjType.TANK)) {
                 y += value;
             }
         }
@@ -92,7 +95,8 @@ public class Tank implements Mobility{
     public void fire() {
         if (canShoot) {
 
-
+            shells.add(new Shell(x, y, (int)(((360 - getRotation()) % 360)/90), accessory));
+            System.out.println((int) getRotation());
             // something
             //------------------------
             //-----------------------
@@ -100,7 +104,7 @@ public class Tank implements Mobility{
 
 
             canShoot = false;
-            timer.schedule(new Reloading(), 2000);
+            timer.schedule(new Reloading(), 1000);
         }
     }
 
@@ -131,17 +135,13 @@ public class Tank implements Mobility{
 
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
+    }
 
+    public void drawShells(SpriteBatch batch) {
         for (int i = 0; i < shells.size(); i++) {
-            shells.get(i).draw(batch);
+            if (!shells.get(i).draw(batch)) {
+                shells.remove(i);
+            }
         }
-    }
-
-    public float barrelX() {
-        return 0;
-    }
-
-    public float barrelY() {
-        return 0;
     }
 }
