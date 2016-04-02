@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -17,37 +16,40 @@ import java.util.*;
 
 public class BattleCity extends Game {
     SpriteBatch batch;
-    Texture tank1;
+    Texture[] tanks;
     Texture brick;
     Texture block;
     Texture emblem;
     Texture grass;
     Texture water;
-    ShapeRenderer renderer;
     ArrayList<Tank> arrayList;
 
     World world;
     Tank tank;
+    Tank enemy;
 
     final float tankSpeed = 2.5f;
     boolean flag = false;
     byte[][] arr;
 
-    //long start = 0;
-    //long frames = 0;
+    long start = 0;
+    long frames = 0;
 
     @Override
     public void create() {
-        //start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
 
+        tanks = new Texture[3];
+
+        tanks[0] = new Texture("tank1.png");
+        tanks[1] = new Texture("tank2.png");
+        tanks[2] = new Texture("tank3.png");
         batch = new SpriteBatch();
-        tank1 = new Texture("tank1.png");
         brick = new Texture("kir.png");
         block = new Texture("block.png");
         emblem = new Texture("flag.png");
         grass = new Texture("trawa.png");
         water = new Texture("voda.png");
-        renderer = new ShapeRenderer();
 
         Shell.setSpeed(10f);
         Shell.loadTexture(new Texture("shell.png"));
@@ -66,9 +68,11 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        tank = new Tank(tank1, 8);
+        tank = new Tank(tanks, (byte)8);
+        enemy = new Tank(100, 225,tanks, (byte) 8);
         arrayList = new ArrayList<Tank>();
         arrayList.add(tank);
+        arrayList.add(enemy);
 
         world = new World(arr, arrayList, 650);
     }
@@ -79,34 +83,6 @@ public class BattleCity extends Game {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        /*
-        renderer.setColor(com.badlogic.gdx.graphics.Color.GOLD);
-        for (int i = 0; i <= 650; i += 25) {
-            renderer.line(i, 0, i, 650);
-            renderer.line(0, i, 650, i);
-        }
-
-        renderer.setColor(com.badlogic.gdx.graphics.Color.BLUE);
-        for (int i = 0; i <= 650; i += 50) {
-            renderer.line(0, i, 650, i);
-            renderer.line(i, 0, i, 650);
-        }
-
-
-
-        renderer.setColor(Color.GREEN);
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < 26; j++) {
-                if (arr[i][j] == 1)
-                renderer.rect(i*25, j*25, 25, 25);
-            }
-        }
-        */
-
-
-
-        renderer.end();
 
         if (flag) {
             equalizer();
@@ -115,7 +91,8 @@ public class BattleCity extends Game {
         }
 
         batch.begin();
-        tank.draw(batch);
+
+        World.drawTanks(batch);
 
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
@@ -132,15 +109,17 @@ public class BattleCity extends Game {
         }
 
         batch.draw(emblem, 12 * 25, 0);
-        tank.drawShells(batch);
+        World.drawShells(batch);
+
+        World.update();
 
         batch.end();
 
-        /*
+
         frames++;
         long time = System.currentTimeMillis() - start;
         System.out.println(1000 * ((double)frames / (double) time));
-        */
+
     }
 
 

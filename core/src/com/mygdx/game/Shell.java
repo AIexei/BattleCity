@@ -75,7 +75,7 @@ public class Shell {
                     if (y + 2.5f > World.getBorder() - 6) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if (World.canMove(x, y + 2.5f, direction, ObjType.SHELL)) {
+                    } else if ((World.canMove(x, y + 2.5f, direction, this)) && (World.notCollisionWithTank(x, y + 2.5f, direction, this))) {
                         y += 2.5f;
                     } else {
                         World.destruction(x, y + 2.5f, direction);
@@ -92,7 +92,7 @@ public class Shell {
                     if (x + 2.5f > World.getBorder() - 6) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if (World.canMove(x + 2.5f, y, direction, ObjType.SHELL)) {
+                    } else if ((World.canMove(x + 2.5f, y, direction, this)) && (World.notCollisionWithTank(x + 2.5f, y, direction, this))) {
                         x += 2.5f;
                     } else {
                         World.destruction(x + 2.5f, y, direction);
@@ -108,7 +108,7 @@ public class Shell {
                     if (y - 2.5f <= 0) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if (World.canMove(x, y - 2.5f, direction, ObjType.SHELL)) {
+                    } else if ((World.canMove(x, y - 2.5f, direction, this)) && (World.notCollisionWithTank(x, y - 2.5f, direction, this))) {
                         y -= 2.5f;
                     } else {
                         World.destruction(x, y - 2.5f, direction);
@@ -125,7 +125,7 @@ public class Shell {
                     if (x - 2.5f <= 0) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if (World.canMove(x - 2.5f, y, direction, ObjType.SHELL)) {
+                    } else if ((World.canMove(x - 2.5f, y, direction, this)) && (World.notCollisionWithTank(x - 2.5f, y, direction, this))) {
                         x -= 2.5f;
                     } else {
                         World.destruction(x - 2.5f, y, direction);

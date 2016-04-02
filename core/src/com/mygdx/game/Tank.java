@@ -15,9 +15,10 @@ import java.util.TimerTask;
 public class Tank implements Mobility{
     private float x;
     private float y;
-    private int accessory;
+    private byte accessory;
+    private byte level;
 
-    private Texture img;
+    private Texture[] images;
     private Sprite sprite;
 
     private ArrayList<Shell> shells;
@@ -26,11 +27,12 @@ public class Tank implements Mobility{
     private Timer timer;
 
 
-    public Tank(int x, int y, Texture img, int accessory) {
+    public Tank(int x, int y, Texture[] images, byte accessory) {
         this.x = x;
         this.y = y;
-        this.img = img;
-        this.sprite = new Sprite(img);
+        this.level = 0;
+        this.images= images;
+        this.sprite = new Sprite(images[level]);
         this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
@@ -40,11 +42,12 @@ public class Tank implements Mobility{
         sprite.setY(y);
     }
 
-    public Tank(Texture img, int accessory) {
-        this.img = img;
+    public Tank(Texture[] images, byte accessory) {
+        this.images = images;
         this.x = 0;
         this.y = 0;
-        this.sprite = new Sprite(img);
+        this.level = 0;
+        this.sprite = new Sprite(images[level]);
         this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
@@ -59,13 +62,13 @@ public class Tank implements Mobility{
         if (value >= 0) {
             if (x + value >= World.getBorder() - 50) {
                 x = World.getBorder() - 50;
-            } else if (World.canMove(x + 50, y, 1, ObjType.TANK)) {
+            } else if ((World.canMove(x + 50, y, 1, this)) && (World.notCollisionWithTank(x + 50, y, 1, this))) {
                 x += value;
             }
         } else {
             if (x + value <= 0) {
                 x = 0;
-            } else if (World.canMove(x + value, y, 3, ObjType.TANK)) {
+            } else if ((World.canMove(x + value, y, 3, this)) && (World.notCollisionWithTank(x + value, y, 3, this))) {
                 x += value;
             }
         }
@@ -78,13 +81,13 @@ public class Tank implements Mobility{
         if (value >= 0) {
             if (y + value >= World.getBorder() - 50) {
                 y = World.getBorder() - 50;
-            } else if (World.canMove(x, y + 50, 0, ObjType.TANK)) {
+            } else if ((World.canMove(x, y + 50, 0, this)) && (World.notCollisionWithTank(x, y + 50, 0, this))) {
                 y += value;
             }
         } else {
             if (y + value <= 0) {
                 y = 0;
-            } else if (World.canMove(x, y + value, 2, ObjType.TANK)) {
+            } else if ((World.canMove(x, y + value, 2, this)) && (World.notCollisionWithTank(x, y + value, 2, this))) {
                 y += value;
             }
         }
@@ -125,6 +128,10 @@ public class Tank implements Mobility{
         return y;
     }
 
+    public byte getAccessory() {
+        return accessory;
+    }
+
     public float getRotation() {
         return sprite.getRotation();
     }
@@ -142,6 +149,16 @@ public class Tank implements Mobility{
             if (!shells.get(i).draw(batch)) {
                 shells.remove(i);
             }
+        }
+    }
+
+    public void setLevel(int newLevel) {
+        if (newLevel == 0) {
+
+        } else if (newLevel == 1) {
+
+        } else if (newLevel == 2) {
+
         }
     }
 }
