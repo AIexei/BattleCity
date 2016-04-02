@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,7 +99,7 @@ public class Tank implements Mobility{
     public void fire() {
         if (canShoot) {
 
-            shells.add(new Shell(x, y, (int)(((360 - getRotation()) % 360)/90), accessory));
+            shells.add(new Shell(x, y, (int)(((360 - getRotation()) % 360)/90),this));
             System.out.println((int) getRotation());
             // something
             //------------------------

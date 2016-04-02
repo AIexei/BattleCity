@@ -22,7 +22,7 @@ public class BattleCity extends Game {
     Texture emblem;
     Texture grass;
     Texture water;
-    ArrayList<Tank> arrayList;
+    LinkedList<Tank> linkedList;
 
     World world;
     Tank tank;
@@ -32,12 +32,12 @@ public class BattleCity extends Game {
     boolean flag = false;
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    //long start = 0;
+    //long frames = 0;
 
     @Override
     public void create() {
-        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
 
         tanks = new Texture[3];
 
@@ -56,7 +56,7 @@ public class BattleCity extends Game {
 
         arr = new byte[26][26];
 
-        try (FileInputStream fileReader = new FileInputStream("map1.m")) {
+        try (FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(1))) {
             Scanner scanner = new Scanner(fileReader);
 
             for (int i = 0; i < 26; i++)
@@ -70,11 +70,11 @@ public class BattleCity extends Game {
 
         tank = new Tank(tanks, (byte)8);
         enemy = new Tank(100, 225,tanks, (byte) 8);
-        arrayList = new ArrayList<Tank>();
-        arrayList.add(tank);
-        arrayList.add(enemy);
+        linkedList = new LinkedList<Tank>();
+        linkedList.add(tank);
+        linkedList.add(enemy);
 
-        world = new World(arr, arrayList, 650);
+        world = new World(arr, linkedList, 650);
     }
 
 
@@ -116,9 +116,11 @@ public class BattleCity extends Game {
         batch.end();
 
 
-        frames++;
-        long time = System.currentTimeMillis() - start;
-        System.out.println(1000 * ((double)frames / (double) time));
+
+
+        //frames++;
+        //long time = System.currentTimeMillis() - start;
+        //System.out.println(1000 * ((double)frames / (double) time));
 
     }
 

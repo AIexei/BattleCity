@@ -14,8 +14,8 @@ public class Shell {
     private float x;
     private float y;
     private int direction;
-    private int accessory;
 
+    private Tank owner;
     private Sprite sprite;
     private boolean isFlying;
 
@@ -33,11 +33,11 @@ public class Shell {
     }
 
 
-    public Shell(float tankX, float tankY, int tankDirection, int accessory) {
+    public Shell(float tankX, float tankY, int tankDirection, Tank owner) {
         this.direction = tankDirection;
         this.sprite = new Sprite(img);
         this.isFlying = true;
-        this.accessory = accessory;
+        this.owner = owner;
 
         switch(direction) {
             case 0:
@@ -75,8 +75,16 @@ public class Shell {
                     if (y + 2.5f > World.getBorder() - 6) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if ((World.canMove(x, y + 2.5f, direction, this)) && (World.notCollisionWithTank(x, y + 2.5f, direction, this))) {
-                        y += 2.5f;
+                    } else if (World.canMove(x, y + 2.5f, direction, this)) {
+                        if (World.notCollisionWithTank(x, y + 2.5f, direction, owner)) {
+                            y += 2.5f;
+                        } else {
+                            //////////
+                            /////////
+                            ///////////
+                            World.killTank(x, y + 2.5f, direction, owner);
+                            isFlying = false;
+                        }
                     } else {
                         World.destruction(x, y + 2.5f, direction);
                         isFlying = false;
@@ -92,8 +100,16 @@ public class Shell {
                     if (x + 2.5f > World.getBorder() - 6) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if ((World.canMove(x + 2.5f, y, direction, this)) && (World.notCollisionWithTank(x + 2.5f, y, direction, this))) {
-                        x += 2.5f;
+                    } else if (World.canMove(x + 2.5f, y, direction, this)) {
+                        if (World.notCollisionWithTank(x + 2.5f, y, direction, owner)) {
+                            x += 2.5f;
+                        } else {
+                            ////////////
+                            //////////
+                            //////////
+                            World.killTank(x + 2.5f, y, direction, owner);
+                            isFlying = false;
+                        }
                     } else {
                         World.destruction(x + 2.5f, y, direction);
                         isFlying = false;
@@ -108,8 +124,16 @@ public class Shell {
                     if (y - 2.5f <= 0) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if ((World.canMove(x, y - 2.5f, direction, this)) && (World.notCollisionWithTank(x, y - 2.5f, direction, this))) {
-                        y -= 2.5f;
+                    } else if (World.canMove(x, y - 2.5f, direction, this)) {
+                        if (World.notCollisionWithTank(x, y - 2.5f, direction, owner)) {
+                            y -= 2.5f;
+                        } else {
+                            ////////////
+                            ////////////
+                            //////////////
+                            World.killTank(x, y - 2.5f, direction, owner);
+                            isFlying = false;
+                        }
                     } else {
                         World.destruction(x, y - 2.5f, direction);
                         isFlying = false;
@@ -125,8 +149,16 @@ public class Shell {
                     if (x - 2.5f <= 0) {
                         System.out.println("out");
                         isFlying = false;
-                    } else if ((World.canMove(x - 2.5f, y, direction, this)) && (World.notCollisionWithTank(x - 2.5f, y, direction, this))) {
-                        x -= 2.5f;
+                    } else if (World.canMove(x - 2.5f, y, direction, this)) {
+                        if (World.notCollisionWithTank(x - 2.5f, y, direction, owner)) {
+                            x -= 2.5f;
+                        } else {
+                            /////////
+                            /////////
+                            /////////
+                            World.killTank(x - 2.5f, y, direction, owner);
+                            isFlying = false;
+                        }
                     } else {
                         World.destruction(x - 2.5f, y, direction);
                         isFlying = false;
@@ -140,5 +172,9 @@ public class Shell {
 
         sprite.setX(x);
         sprite.setY(y);
+
+        System.out.print((int) y/25);
+        System.out.print(' ');
+        System.out.println((int) x/25);
     }
 }

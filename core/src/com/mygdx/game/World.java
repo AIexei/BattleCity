@@ -1,8 +1,9 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import javafx.util.Pair;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Алексей on 01.03.2016.
@@ -10,13 +11,13 @@ import java.util.ArrayList;
 
 
 public class World {
-    private static ArrayList<Tank> tanks;
+    private static LinkedList<Tank> tanks;
     private static byte[][] field;
     private static Tank[][] tanksMap;
     private static float border;
 
 
-    public World(byte[][] field, ArrayList<Tank> tanks, float border) {
+    public World(byte[][] field, LinkedList<Tank> tanks, float border) {
         this.field = field;
         this.tanksMap = new Tank[field.length][field.length];
         this.tanks = tanks;
@@ -52,6 +53,23 @@ public class World {
             tanksMap[yy+1][xx] = tanks.get(i);
             tanksMap[yy][xx+1] = tanks.get(i);
         }
+
+        /*
+        for (int i = 0; i < 26; i++) {
+            System.out.println();
+
+            for (int j = 0; j < 26; j++) {
+                if (tanksMap[25 -i][j] != null)
+                    System.out.print("1 ");
+                else {
+                    System.out.print("0 ");
+                }
+            }
+        }
+
+        System.out.println();
+        System.out.println();
+        */
     }
 
     /**
@@ -120,16 +138,11 @@ public class World {
     public static boolean notCollisionWithTank(float x, float y, int dir, Object obj) {
         int xx = (int) x / 25;
         int yy = (int) y / 25;
-        boolean isShell = Shell.class.getClass().equals(obj.getClass());
+
         Tank temp = tanksMap[yy][xx];
 
-        if (temp != null) {
-            if (!temp.equals(obj)) {
-                if (isShell)
-                    killTank();
-
-                return false;
-            }
+        if ((temp != null) && (!obj.equals(temp))) {
+            return false;
         }
 
         switch (dir) {
@@ -137,13 +150,8 @@ public class World {
             case 2:
                 temp = tanksMap[yy][xx + 1];
 
-                if (temp != null) {
-                    if (!temp.equals(obj)) {
-                        if (isShell)
-                            killTank();
-
+                if ((temp != null) && (!obj.equals(temp))) {
                         return false;
-                    }
                 }
 
                 break;
@@ -152,13 +160,8 @@ public class World {
             case 3:
                 temp = tanksMap[yy + 1][xx];
 
-                if (temp != null){
-                    if (!temp.equals(obj)) {
-                        if (isShell)
-                            killTank();
-
+                if ((temp != null) && (!obj.equals(temp))) {
                         return false;
-                    }
                 }
 
                 break;
@@ -171,8 +174,24 @@ public class World {
         return border;
     }
 
-    private static void killTank() {
+    public static void killTank(float x, float y, int dir, Tank tank) {
+        /*
+        int xx = (int) x / 25;
+        int yy = (int) y / 25;
 
+        Tank temp = tanksMap[xx][yy];
+
+        if ((temp == null) || (tank.equals(temp))) {
+            if (dir % 2 == 0) {
+                temp = tanksMap[yy][xx + 1];
+            } else {
+                temp = tanksMap[yy + 1][xx];
+            }
+        }
+
+        System.out.println(temp);
+        tanks.remove(temp);
+        */
     }
 }
 
