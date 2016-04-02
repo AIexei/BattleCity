@@ -33,30 +33,30 @@ public class Shell {
     }
 
 
-    public Shell(float tankX, float tankY, int tankDirection, Tank owner) {
-        this.direction = tankDirection;
+    public Shell(Tank owner) {
+        this.direction = (int)(((360 - owner.getRotation()) % 360)/90);
         this.sprite = new Sprite(img);
         this.isFlying = true;
         this.owner = owner;
 
         switch(direction) {
             case 0:
-                this.y = tankY + 50;
-                this.x = tankX + 23; // shell in [23,27]
+                this.y = owner.getY() + 50;
+                this.x = owner.getX() + 23; // shell in [23,27]
                 break;
             case 1:
-                this.y = tankY + 23;
-                this.x = tankX + 50;
+                this.y = owner.getY() + 23;
+                this.x = owner.getX() + 50;
                 sprite.setRotation(270);
                 break;
             case 2:
-                this.y = tankY;
-                this.x = tankX + 23;
+                this.y = owner.getY();
+                this.x = owner.getX() + 23;
                 sprite.setRotation(180);
                 break;
             case 3:
-                this.y = tankY + 23;
-                this.x = tankX;
+                this.y = owner.getY() + 23;
+                this.x = owner.getX();
                 sprite.setRotation(90);
                 break;
         }
@@ -72,109 +72,87 @@ public class Shell {
         switch (direction) {
             case 0:
                 for (float i = 0; i < speed; i += 2.5f) {
-                    if (y + 2.5f > World.getBorder() - 6) {
-                        System.out.println("out");
-                        isFlying = false;
-                    } else if (World.canMove(x, y + 2.5f, direction, this)) {
-                        if (World.notCollisionWithTank(x, y + 2.5f, direction, owner)) {
-                            y += 2.5f;
+                    if (isFlying) {
+                        if (y + 2.5f > World.getBorder() - 6) {
+                            isFlying = false;
+                        } else if (World.canMove(x, y + 2.5f, direction, this)) {
+                            if (World.notCollisionWithTank(x, y + 2.5f, direction, owner)) {
+                                y += 2.5f;
+                            } else {
+                                World.killTank(x, y + 2.5f, direction, owner);
+                                isFlying = false;
+                            }
                         } else {
-                            //////////
-                            /////////
-                            ///////////
-                            World.killTank(x, y + 2.5f, direction, owner);
+                            World.destruction(x, y + 2.5f, direction);
                             isFlying = false;
                         }
-                    } else {
-                        World.destruction(x, y + 2.5f, direction);
-                        isFlying = false;
                     }
-
-                    ////////////
-                    //////////////
-                    ///////////
                 }
+
                 break;
             case 1:
                 for (float i = 0; i < speed; i += 2.5f) {
-                    if (x + 2.5f > World.getBorder() - 6) {
-                        System.out.println("out");
-                        isFlying = false;
-                    } else if (World.canMove(x + 2.5f, y, direction, this)) {
-                        if (World.notCollisionWithTank(x + 2.5f, y, direction, owner)) {
-                            x += 2.5f;
+                    if (isFlying) {
+                        if (x + 2.5f > World.getBorder() - 6) {
+                            isFlying = false;
+                        } else if (World.canMove(x + 2.5f, y, direction, this)) {
+                            if (World.notCollisionWithTank(x + 2.5f, y, direction, owner)) {
+                                x += 2.5f;
+                            } else {
+                                World.killTank(x + 2.5f, y, direction, owner);
+                                isFlying = false;
+                            }
                         } else {
-                            ////////////
-                            //////////
-                            //////////
-                            World.killTank(x + 2.5f, y, direction, owner);
+                            World.destruction(x + 2.5f, y, direction);
                             isFlying = false;
                         }
-                    } else {
-                        World.destruction(x + 2.5f, y, direction);
-                        isFlying = false;
                     }
-                    ////////////
-                    //////////////
-                    ///////////
                 }
+
                 break;
             case 2:
                 for (float i = 0; i < speed; i += 2.5f) {
-                    if (y - 2.5f <= 0) {
-                        System.out.println("out");
-                        isFlying = false;
-                    } else if (World.canMove(x, y - 2.5f, direction, this)) {
-                        if (World.notCollisionWithTank(x, y - 2.5f, direction, owner)) {
-                            y -= 2.5f;
+                    if (isFlying) {
+                        if (y - 2.5f <= 0) {
+                            isFlying = false;
+                        } else if (World.canMove(x, y - 2.5f, direction, this)) {
+                            if (World.notCollisionWithTank(x, y - 2.5f, direction, owner)) {
+                                y -= 2.5f;
+                            } else {
+                                World.killTank(x, y - 2.5f, direction, owner);
+                                isFlying = false;
+                            }
                         } else {
-                            ////////////
-                            ////////////
-                            //////////////
-                            World.killTank(x, y - 2.5f, direction, owner);
+                            World.destruction(x, y - 2.5f, direction);
                             isFlying = false;
                         }
-                    } else {
-                        World.destruction(x, y - 2.5f, direction);
-                        isFlying = false;
                     }
-
-                    ////////////
-                    //////////////
-                    ///////////
                 }
+
                 break;
             case 3:
                 for (float i = 0; i < speed; i += 2.5f) {
-                    if (x - 2.5f <= 0) {
-                        System.out.println("out");
-                        isFlying = false;
-                    } else if (World.canMove(x - 2.5f, y, direction, this)) {
-                        if (World.notCollisionWithTank(x - 2.5f, y, direction, owner)) {
-                            x -= 2.5f;
+                    if (isFlying) {
+                        if (x - 2.5f <= 0) {
+                            isFlying = false;
+                        } else if (World.canMove(x - 2.5f, y, direction, this)) {
+                            if (World.notCollisionWithTank(x - 2.5f, y, direction, owner)) {
+                                x -= 2.5f;
+                            } else {
+                                World.killTank(x - 2.5f, y, direction, owner);
+                                isFlying = false;
+                            }
                         } else {
-                            /////////
-                            /////////
-                            /////////
-                            World.killTank(x - 2.5f, y, direction, owner);
+                            World.destruction(x - 2.5f, y, direction);
                             isFlying = false;
                         }
-                    } else {
-                        World.destruction(x - 2.5f, y, direction);
-                        isFlying = false;
                     }
-                    ////////////
-                    //////////////
-                    ///////////
                 }
+
                 break;
         }
 
         sprite.setX(x);
         sprite.setY(y);
-
-        System.out.print((int) y/25);
-        System.out.print(' ');
-        System.out.println((int) x/25);
     }
 }

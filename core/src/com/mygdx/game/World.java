@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Алексей on 01.03.2016.
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 
 public class World {
     private static LinkedList<Tank> tanks;
+    private static LinkedList<Shell> shells;
     private static byte[][] field;
     private static Tank[][] tanksMap;
     private static float border;
@@ -22,18 +24,23 @@ public class World {
         this.tanksMap = new Tank[field.length][field.length];
         this.tanks = tanks;
         this.border = border;
+        this.shells = new LinkedList<Shell>();
     }
 
     public static void drawTanks(SpriteBatch batch) {
         for (int i = 0; i < tanks.size(); i++)
             tanks.get(i).draw(batch);
+
+        if (tanks.size() ==2)
+            tanks.get(1).fire();
     }
 
     public static void drawShells(SpriteBatch batch) {
-        for (int i = 0; i < tanks.size(); i++)
-            tanks.get(i).drawShells(batch);
-
-        // жизнь пули не должна зависеть от жизни танка
+        for (int i = 0; i < shells.size(); i++) {
+            if (shells.get(i).draw(batch) == false) {
+                shells.remove(i);
+            }
+        }
     }
 
     public static void update() {
@@ -53,23 +60,10 @@ public class World {
             tanksMap[yy+1][xx] = tanks.get(i);
             tanksMap[yy][xx+1] = tanks.get(i);
         }
+    }
 
-        /*
-        for (int i = 0; i < 26; i++) {
-            System.out.println();
-
-            for (int j = 0; j < 26; j++) {
-                if (tanksMap[25 -i][j] != null)
-                    System.out.print("1 ");
-                else {
-                    System.out.print("0 ");
-                }
-            }
-        }
-
-        System.out.println();
-        System.out.println();
-        */
+    public static void addShell(Shell newShell) {
+        shells.add(newShell);
     }
 
     /**
@@ -175,11 +169,10 @@ public class World {
     }
 
     public static void killTank(float x, float y, int dir, Tank tank) {
-        /*
         int xx = (int) x / 25;
         int yy = (int) y / 25;
 
-        Tank temp = tanksMap[xx][yy];
+        Tank temp = tanksMap[yy][xx];
 
         if ((temp == null) || (tank.equals(temp))) {
             if (dir % 2 == 0) {
@@ -189,9 +182,7 @@ public class World {
             }
         }
 
-        System.out.println(temp);
         tanks.remove(temp);
-        */
     }
 }
 

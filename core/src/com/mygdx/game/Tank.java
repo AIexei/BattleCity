@@ -21,8 +21,6 @@ public class Tank implements Mobility{
 
     private Texture[] images;
     private Sprite sprite;
-
-    private ArrayList<Shell> shells;
     private boolean canShoot;
 
     private Timer timer;
@@ -34,7 +32,6 @@ public class Tank implements Mobility{
         this.level = 0;
         this.images= images;
         this.sprite = new Sprite(images[level]);
-        this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
         this.accessory = accessory;
@@ -49,7 +46,6 @@ public class Tank implements Mobility{
         this.y = 0;
         this.level = 0;
         this.sprite = new Sprite(images[level]);
-        this.shells = new ArrayList<Shell>();
         this.canShoot = true;
         this.timer = new Timer();
         this.accessory = accessory;
@@ -99,7 +95,7 @@ public class Tank implements Mobility{
     public void fire() {
         if (canShoot) {
 
-            shells.add(new Shell(x, y, (int)(((360 - getRotation()) % 360)/90),this));
+            World.addShell(new Shell(this));
             System.out.println((int) getRotation());
             // something
             //------------------------
@@ -143,14 +139,6 @@ public class Tank implements Mobility{
 
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
-    }
-
-    public void drawShells(SpriteBatch batch) {
-        for (int i = 0; i < shells.size(); i++) {
-            if (!shells.get(i).draw(batch)) {
-                shells.remove(i);
-            }
-        }
     }
 
     public void setLevel(int newLevel) {

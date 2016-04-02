@@ -32,12 +32,12 @@ public class BattleCity extends Game {
     boolean flag = false;
     byte[][] arr;
 
-    //long start = 0;
-    //long frames = 0;
+    long start = 0;
+    long frames = 0;
 
     @Override
     public void create() {
-        //start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
 
         tanks = new Texture[3];
 
@@ -69,7 +69,7 @@ public class BattleCity extends Game {
         }
 
         tank = new Tank(tanks, (byte)8);
-        enemy = new Tank(100, 225,tanks, (byte) 8);
+        enemy = new Tank(100, 400,tanks, (byte) 8);
         linkedList = new LinkedList<Tank>();
         linkedList.add(tank);
         linkedList.add(enemy);
@@ -93,6 +93,11 @@ public class BattleCity extends Game {
         batch.begin();
 
         World.drawTanks(batch);
+
+        //////////////////////////////////////////////////
+        //enemy.fire();
+
+        //////////////////////////////////////////////////
 
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
@@ -118,9 +123,9 @@ public class BattleCity extends Game {
 
 
 
-        //frames++;
-        //long time = System.currentTimeMillis() - start;
-        //System.out.println(1000 * ((double)frames / (double) time));
+        frames++;
+        long time = System.currentTimeMillis() - start;
+        System.out.println(1000 * ((double)frames / (double) time));
 
     }
 
