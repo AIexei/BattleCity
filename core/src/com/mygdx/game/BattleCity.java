@@ -2,10 +2,18 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.controller.II.MoveController;
+import com.mygdx.game.controller.ShellsController;
+import com.mygdx.game.controller.TanksController;
+import com.mygdx.game.controller.WorldController;
+import com.mygdx.game.controller.input.InputController;
+import com.mygdx.game.model.Shell;
+import com.mygdx.game.model.Tank;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -15,21 +23,29 @@ import java.util.*;
  */
 
 public class BattleCity extends Game {
+    Timer myTimer = new Timer();
+    int dir;
+    int dir1;
+
+
     SpriteBatch batch;
     Texture[] tanks;
+    Texture[] enemies;
     Texture brick;
     Texture block;
     Texture emblem;
     Texture grass;
     Texture water;
-    LinkedList<Tank> linkedList;
 
-    World world;
+    WorldController worldController;
+    ShellsController shellsController;
+    TanksController tanksController;
+    InputController inputController;
+
     Tank tank;
     Tank enemy;
+    Tank enemy1;
 
-    final float tankSpeed = 2.5f;
-    boolean flag = false;
     byte[][] arr;
 
     long start = 0;
@@ -40,10 +56,15 @@ public class BattleCity extends Game {
         start = System.currentTimeMillis();
 
         tanks = new Texture[3];
+        enemies = new Texture[3];
 
         tanks[0] = new Texture("tank1.png");
         tanks[1] = new Texture("tank2.png");
         tanks[2] = new Texture("tank3.png");
+        enemies[0] = new Texture("enemy1.png");
+        enemies[1] = new Texture("enemy2.png");
+        enemies[2] = new Texture("enemy3.png");
+
         batch = new SpriteBatch();
         brick = new Texture("kir.png");
         block = new Texture("block.png");
@@ -68,13 +89,26 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        tank = new Tank(tanks, (byte)8);
-        enemy = new Tank(100, 400,tanks, (byte) 8);
-        linkedList = new LinkedList<Tank>();
-        linkedList.add(tank);
-        linkedList.add(enemy);
+        tank = new Tank(tanks);
+        enemy = new Tank(100, 400, enemies);
+        enemy1 = new Tank(600, 600, enemies);
 
-        world = new World(arr, linkedList, 650);
+        worldController = new WorldController(arr, 650);
+        shellsController = new ShellsController();
+        tanksController = new TanksController(tank);
+        inputController = new InputController(tank);
+
+        tanksController.addTank(tank);
+        tanksController.addTank(enemy);
+        tanksController.addTank(enemy1);
+
+        myTimer.schedule((new TimerTask() {
+            @Override
+            public void run() {
+                dir = IIPlayer.randomDir();
+                dir1 = IIPlayer.randomDir();
+            }
+        }), 0, 3000);
     }
 
 
@@ -84,20 +118,14 @@ public class BattleCity extends Game {
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
 
-        if (flag) {
-            equalizer();
-        } else {
-            inputControl();
-        }
+        InputController.inputProcessing();
+        MoveController.move(enemy, dir);
+        MoveController.move(enemy1, dir1);
 
         batch.begin();
-
-        World.drawTanks(batch);
-
-        //////////////////////////////////////////////////
+        TanksController.drawTanks(batch);
         //enemy.fire();
 
-        //////////////////////////////////////////////////
 
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
@@ -114,130 +142,23 @@ public class BattleCity extends Game {
         }
 
         batch.draw(emblem, 12 * 25, 0);
-        World.drawShells(batch);
-
-        World.update();
+        ShellsController.drawShells(batch);
+        TanksController.update();
 
         batch.end();
 
-
-
+        if (TanksController.isEnd())
+            dispose();
 
         frames++;
         long time = System.currentTimeMillis() - start;
         System.out.println(1000 * ((double)frames / (double) time));
-
     }
 
 
     @Override
     public void dispose() {
+        System.out.println("End game");
         System.exit(0);
-    }
-
-
-
-    public void inputControl() {
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            if (tank.getRotation() != 0) {
-                flag = true;
-                equalizer();
-            }
-
-            if (flag == false) {
-                if (tank.getRotation() != 0) {
-                    tank.setRotation(0);
-                } else {
-                    tank.addY(tankSpeed);
-                }
-            }
-        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            if (tank.getRotation() != 180) {
-                flag = true;
-                equalizer();
-            }
-
-            if (flag == false) {
-                if (tank.getRotation() != 180) {
-                    tank.setRotation(180);
-                } else {
-                    tank.addY(-tankSpeed);
-                }
-            }
-        } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if (tank.getRotation() != 90) {
-                flag = true;
-                equalizer();
-            }
-
-            if (flag == false) {
-                if (tank.getRotation() != 90) {
-                    tank.setRotation(90);
-                } else {
-                    tank.addX(-tankSpeed);
-                }
-            }
-        } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if (tank.getRotation() != 270) {
-                flag = true;
-                equalizer();
-            }
-
-            if (flag == false) {
-                if (tank.getRotation() != 270) {
-                    tank.setRotation(270);
-                } else {
-                    tank.addX(tankSpeed);
-                }
-            }
-        } else {
-            flag = true;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            tank.fire();
-        }
-    }
-
-
-    public void equalizer() {
-        int direction = (int) tank.getRotation();
-        int xx = (int)(tank.getX() / 25);
-        int yy = (int)(tank.getY() / 25);
-
-        switch(direction) {
-            case 0:
-                if ((tank.getY() % 25 != 0) && (tank.getY() < (yy * 25) + 25)) {
-                    tank.addY(tankSpeed);
-                } else {
-                    flag = false;
-                }
-
-                break;
-            case 90:
-                if ((tank.getX() % 25 != 0) && (tank.getX() > (xx * 25) - 25)) {
-                    tank.addX(-tankSpeed);
-                } else {
-                    flag = false;
-                }
-
-                break;
-            case 180:
-                if ((tank.getY() % 25 != 0) && (tank.getY() > (yy * 25) - 25)) {
-                     tank.addY(-tankSpeed);
-                } else {
-                    flag = false;
-                }
-
-                break;
-            case 270:
-                if ((tank.getX() % 25 != 0) && (tank.getX() < (xx * 25) + 25)) {
-                    tank.addX(tankSpeed);
-                } else {
-                    flag = false;
-                }
-
-                break;
-        }
     }
 }
