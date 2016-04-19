@@ -14,10 +14,11 @@ import java.util.TimerTask;
  * Created by Алексей on 01.03.2016.
  */
 
-public class Tank implements Mobility {
+public class Tank {
     private float x;
     private float y;
-    private byte level;
+    private float speed;
+    private int level;
     private boolean canShoot;
     private boolean moveFlag;
 
@@ -27,9 +28,10 @@ public class Tank implements Mobility {
     private Timer timer;
 
 
-    public Tank(int x, int y, Texture[] images) {
+    public Tank(int x, int y, float r, Texture[] images) {
         this.x = x;
         this.y = y;
+        this.speed = 2.5f;
         this.level = 0;
         this.images= images;
         this.sprite = new Sprite(images[level]);
@@ -37,55 +39,62 @@ public class Tank implements Mobility {
         this.timer = new Timer();
         this.moveFlag = false;
 
+        sprite.setRotation(r);
         sprite.setX(x);
         sprite.setY(y);
     }
+
+
+    public Tank(int x, int y, Texture[] images) {
+        this(x, y, 0, images);
+    }
+
+
+    public Tank(float r, Texture[] images) {
+        this(0, 0, r, images);
+    }
+
 
     public Tank(Texture[] images) {
-        this.images = images;
-        this.x = 0;
-        this.y = 0;
-        this.level = 0;
-        this.sprite = new Sprite(images[level]);
-        this.canShoot = true;
-        this.timer = new Timer();
-
-        sprite.setX(x);
-        sprite.setY(y);
+        this(0, 0, 0, images);
     }
 
-    @Override
+
     public void addX(float value) {
         if (value >= 0) {
-            if (x + value >= WorldController.getBorder() - 50) {
+            if (x + speed >= WorldController.getBorder() - 50) {
                 x = WorldController.getBorder() - 50;
-            } else if ((WorldController.canMove(x + 50, y, 1, this)) && (TanksController.notCollisionWithTank(x + 50, y, 1, this))) {
-                x += value;
+            } else if ((WorldController.canMove(x + 50, y, 1, this)) &&
+                       (TanksController.notCollisionWithTank(x + 50, y, 1, this))) {
+                x += speed;
             }
         } else {
-            if (x + value <= 0) {
+            if (x - speed <= 0) {
                 x = 0;
-            } else if ((WorldController.canMove(x + value, y, 3, this)) && (TanksController.notCollisionWithTank(x + value, y, 3, this))) {
-                x += value;
+            } else if ((WorldController.canMove(x - speed, y, 3, this)) &&
+                       (TanksController.notCollisionWithTank(x - speed, y, 3, this))) {
+                x -= speed;
             }
         }
 
         sprite.setX(x);
     }
 
-    @Override
+
     public void addY(float value) {
         if (value >= 0) {
-            if (y + value >= WorldController.getBorder() - 50) {
+            if (y + speed >= WorldController.getBorder() - 50) {
                 y = WorldController.getBorder() - 50;
-            } else if ((WorldController.canMove(x, y + 50, 0, this)) && (TanksController.notCollisionWithTank(x, y + 50, 0, this))) {
-                y += value;
+            } else if ((WorldController.canMove(x, y + 50, 0, this)) &&
+                       (TanksController.notCollisionWithTank(x, y + 50, 0, this))) {
+                y += speed;
             }
         } else {
-            if (y + value <= 0) {
+            if (y - speed <= 0) {
                 y = 0;
-            } else if ((WorldController.canMove(x, y + value, 2, this)) && (TanksController.notCollisionWithTank(x, y + value, 2, this))) {
-                y += value;
+            } else if ((WorldController.canMove(x, y - speed, 2, this)) &&
+                       (TanksController.notCollisionWithTank(x, y - speed, 2, this))) {
+                y -= speed;
             }
         }
 
@@ -115,12 +124,12 @@ public class Tank implements Mobility {
         }
     }
 
-    @Override
+
     public float getX() {
         return x;
     }
 
-    @Override
+
     public float getY() {
         return y;
     }

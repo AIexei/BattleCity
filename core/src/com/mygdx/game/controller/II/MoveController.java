@@ -9,8 +9,6 @@ import com.mygdx.game.model.Tank;
  */
 
 public class MoveController {
-    private static final float tankSpeed = 2.5f;
-
     public static void move(Tank tank, int dir) {
         if (tank.getMoveFlag()) {
             equalizer(tank);
@@ -32,7 +30,7 @@ public class MoveController {
                 if (tank.getRotation() != 0) {
                     tank.setRotation(0);
                 } else {
-                    tank.addY(tankSpeed);
+                    tank.addY(1);
                 }
             }
         } else if (dir == 2) {
@@ -45,7 +43,7 @@ public class MoveController {
                 if (tank.getRotation() != 180) {
                     tank.setRotation(180);
                 } else {
-                    tank.addY(-tankSpeed);
+                    tank.addY(-1);
                 }
             }
         } else if (dir == 3) {
@@ -58,7 +56,7 @@ public class MoveController {
                 if (tank.getRotation() != 90) {
                     tank.setRotation(90);
                 } else {
-                    tank.addX(-tankSpeed);
+                    tank.addX(-1);
                 }
             }
         } else if (dir == 1) {
@@ -71,7 +69,7 @@ public class MoveController {
                 if (tank.getRotation() != 270) {
                     tank.setRotation(270);
                 } else {
-                    tank.addX(tankSpeed);
+                    tank.addX(1);
                 }
             }
         } else {
@@ -92,7 +90,7 @@ public class MoveController {
         switch(direction) {
             case 0:
                 if ((tank.getY() % 25 != 0) && (tank.getY() < (yy * 25) + 25)) {
-                    tank.addY(tankSpeed);
+                    tank.addY(1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -100,7 +98,7 @@ public class MoveController {
                 break;
             case 90:
                 if ((tank.getX() % 25 != 0) && (tank.getX() > (xx * 25) - 25)) {
-                    tank.addX(-tankSpeed);
+                    tank.addX(-1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -108,7 +106,7 @@ public class MoveController {
                 break;
             case 180:
                 if ((tank.getY() % 25 != 0) && (tank.getY() > (yy * 25) - 25)) {
-                    tank.addY(-tankSpeed);
+                    tank.addY(-1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -116,7 +114,7 @@ public class MoveController {
                 break;
             case 270:
                 if ((tank.getX() % 25 != 0) && (tank.getX() < (xx * 25) + 25)) {
-                    tank.addX(tankSpeed);
+                    tank.addX(1);
                 } else {
                     tank.setMoveFlag(false);
                 }

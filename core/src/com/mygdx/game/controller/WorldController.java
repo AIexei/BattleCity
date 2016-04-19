@@ -12,19 +12,13 @@ import java.util.LinkedList;
 
 
 public class WorldController {
-    private static LinkedList<Shell> shells;
-
     private static byte[][] field;
-    private static Tank[][] tanksMap;
     private static float border;
-    private static boolean endFlag = false;
 
 
     public WorldController(byte[][] field, float border) {
         this.field = field;
-        this.tanksMap = new Tank[field.length][field.length];
         this.border = border;
-        this.shells = new LinkedList<>();
     }
 
 

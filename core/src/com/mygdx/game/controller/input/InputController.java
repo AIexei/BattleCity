@@ -10,7 +10,6 @@ import com.mygdx.game.model.Tank;
 
 public class InputController {
     private static Tank tank;
-    private final static float tankSpeed = 2.5f;
 
     public InputController(Tank player) {
         this.tank= player;
@@ -35,7 +34,7 @@ public class InputController {
                 if (tank.getRotation() != 0) {
                     tank.setRotation(0);
                 } else {
-                    tank.addY(tankSpeed);
+                    tank.addY(1);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
@@ -48,7 +47,7 @@ public class InputController {
                 if (tank.getRotation() != 180) {
                     tank.setRotation(180);
                 } else {
-                    tank.addY(-tankSpeed);
+                    tank.addY(-1);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -61,7 +60,7 @@ public class InputController {
                 if (tank.getRotation() != 90) {
                     tank.setRotation(90);
                 } else {
-                    tank.addX(-tankSpeed);
+                    tank.addX(-1);
                 }
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -74,7 +73,7 @@ public class InputController {
                 if (tank.getRotation() != 270) {
                     tank.setRotation(270);
                 } else {
-                    tank.addX(tankSpeed);
+                    tank.addX(1);
                 }
             }
         } else {
@@ -95,7 +94,7 @@ public class InputController {
         switch(direction) {
             case 0:
                 if ((tank.getY() % 25 != 0) && (tank.getY() < (yy * 25) + 25)) {
-                    tank.addY(tankSpeed);
+                    tank.addY(1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -103,7 +102,7 @@ public class InputController {
                 break;
             case 90:
                 if ((tank.getX() % 25 != 0) && (tank.getX() > (xx * 25) - 25)) {
-                    tank.addX(-tankSpeed);
+                    tank.addX(-1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -111,7 +110,7 @@ public class InputController {
                 break;
             case 180:
                 if ((tank.getY() % 25 != 0) && (tank.getY() > (yy * 25) - 25)) {
-                    tank.addY(-tankSpeed);
+                    tank.addY(-1);
                 } else {
                     tank.setMoveFlag(false);
                 }
@@ -119,7 +118,7 @@ public class InputController {
                 break;
             case 270:
                 if ((tank.getX() % 25 != 0) && (tank.getX() < (xx * 25) + 25)) {
-                    tank.addX(tankSpeed);
+                    tank.addX(1);
                 } else {
                     tank.setMoveFlag(false);
                 }

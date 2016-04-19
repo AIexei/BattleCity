@@ -82,12 +82,16 @@ public class Shell {
         return y;
     }
 
+    public int getDir() {
+        return direction;
+    }
+
     private void move() {
         switch (direction) {
             case 0:
                 for (float i = 0; i < speed; i += 2.5f) {
                     if (isFlying) {
-                        if (y + 2.5f > WorldController.getBorder() - 6) {
+                        if (y + 2.5f > WorldController.getBorder() - 8) {
                             isFlying = false;
                         } else if (WorldController.canMove(x, y + 2.5f, direction, this)) {
                             if (TanksController.notCollisionWithTank(x, y + 2.5f, direction, this)) {

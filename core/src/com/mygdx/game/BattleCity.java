@@ -48,12 +48,12 @@ public class BattleCity extends Game {
 
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    //long start = 0;
+    //long frames = 0;
 
     @Override
     public void create() {
-        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
 
         tanks = new Texture[3];
         enemies = new Texture[3];
@@ -90,8 +90,8 @@ public class BattleCity extends Game {
         }
 
         tank = new Tank(tanks);
-        enemy = new Tank(100, 400, enemies);
-        enemy1 = new Tank(600, 600, enemies);
+        enemy = new Tank(200, 0, enemies);
+        enemy1 = new Tank(200, 600, enemies);
 
         worldController = new WorldController(arr, 650);
         shellsController = new ShellsController();
@@ -102,13 +102,14 @@ public class BattleCity extends Game {
         tanksController.addTank(enemy);
         tanksController.addTank(enemy1);
 
-        myTimer.schedule((new TimerTask() {
+        /*myTimer.schedule((new TimerTask() {
             @Override
             public void run() {
                 dir = IIPlayer.randomDir();
                 dir1 = IIPlayer.randomDir();
             }
         }), 0, 3000);
+        */
     }
 
 
@@ -119,12 +120,14 @@ public class BattleCity extends Game {
 
 
         InputController.inputProcessing();
-        MoveController.move(enemy, dir);
-        MoveController.move(enemy1, dir1);
+        //MoveController.move(enemy, dir);
+        //MoveController.move(enemy1, dir1);
 
         batch.begin();
         TanksController.drawTanks(batch);
-        //enemy.fire();
+
+        enemy.fire();
+        enemy1.fire();
 
 
         for (int i = 0; i < 26; i++) {
@@ -150,9 +153,9 @@ public class BattleCity extends Game {
         if (TanksController.isEnd())
             dispose();
 
-        frames++;
-        long time = System.currentTimeMillis() - start;
-        System.out.println(1000 * ((double)frames / (double) time));
+        //frames++;
+        //long time = System.currentTimeMillis() - start;
+        //System.out.println(1000 * ((double)frames / (double) time));
     }
 
 

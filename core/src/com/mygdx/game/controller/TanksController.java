@@ -1,6 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
 
@@ -154,6 +155,7 @@ public class TanksController {
         }
 
         tanks.remove(temp);
+        IIPlayer.decTanksCount();
 
         if (temp.equals(player))
             endFlag = true;
@@ -162,5 +164,20 @@ public class TanksController {
 
     public static boolean isEnd() {
         return endFlag;
+    }
+
+
+    public static Tank getPlayer() {
+        return player;
+    }
+
+
+    public static Tank getMapCell (int x, int y) {
+        return tanksMap[y][x];
+    }
+
+
+    public static LinkedList<Tank> getTanks() {
+        return tanks;
     }
 }
