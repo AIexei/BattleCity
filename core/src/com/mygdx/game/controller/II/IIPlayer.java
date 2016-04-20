@@ -30,18 +30,20 @@ public class IIPlayer {
     }
 
 
-    private static void newTank() {
+    public static void newTank() {
         if (curTanksCount < 4) {
             for (int i = prevAppearancePoint+1; i != prevAppearancePoint; i++, i %= 3) {
                 if (canAppearOnPoint(i)) {
                     switch (i) {
                         case 0:
-                            //TanksController.addTank();
-                            break;
+                            TanksController.addTank(TanksGenerator.createTank(0, 0, false));
+                            return;
                         case 1:
-                            break;
+                            TanksController.addTank(TanksGenerator.createTank(1, 0, false));
+                            return;
                         case 2:
-                            break;
+                            TanksController.addTank(TanksGenerator.createTank(2, 0, false));
+                            return;
                     }
                 }
             }

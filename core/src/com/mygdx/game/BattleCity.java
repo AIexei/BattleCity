@@ -6,12 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
-import com.mygdx.game.controller.II.MoveController;
 import com.mygdx.game.controller.ShellsController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.controller.input.InputController;
-import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
 
 import java.io.FileInputStream;
@@ -72,8 +70,6 @@ public class BattleCity extends Game {
         grass = new Texture("trawa.png");
         water = new Texture("voda.png");
 
-        Shell.setSpeed(10f);
-        Shell.loadTexture(new Texture("shell.png"));
 
         arr = new byte[26][26];
 
@@ -89,18 +85,15 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        tank = new Tank(tanks);
-        enemy = new Tank(200, 0, enemies);
-        enemy1 = new Tank(200, 600, enemies);
+        tank = new Tank(tanks[0]);
 
         worldController = new WorldController(arr, 650);
         shellsController = new ShellsController();
         tanksController = new TanksController(tank);
         inputController = new InputController(tank);
 
-        tanksController.addTank(tank);
-        tanksController.addTank(enemy);
-        tanksController.addTank(enemy1);
+        IIPlayer.newTank();
+
 
         /*myTimer.schedule((new TimerTask() {
             @Override
@@ -125,9 +118,9 @@ public class BattleCity extends Game {
 
         batch.begin();
         TanksController.drawTanks(batch);
-
-        enemy.fire();
-        enemy1.fire();
+        System.out.println(TanksController.getTanks().size());
+        //enemy.fire();
+        //enemy1.fire();
 
 
         for (int i = 0; i < 26; i++) {

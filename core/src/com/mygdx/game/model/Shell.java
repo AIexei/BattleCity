@@ -21,17 +21,13 @@ public class Shell {
     private Sprite sprite;
     private boolean isFlying;
 
-    private static float speed = 10f;
+    private static float speed;
     private static Texture img;
 
 
-    public static void setSpeed(float s) {
-        speed = s;
-    }
-
-
-    public static void loadTexture(Texture image) {
-        img = image;
+    static {
+        img = new Texture("shell.png");
+        speed = 10f;
     }
 
 

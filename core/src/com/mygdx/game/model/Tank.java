@@ -22,19 +22,19 @@ public class Tank {
     private boolean canShoot;
     private boolean moveFlag;
 
-    private Texture[] images;
+    private Texture image;
     private Sprite sprite;
 
     private Timer timer;
 
 
-    public Tank(int x, int y, float r, Texture[] images) {
+    public Tank(int x, int y, float r, float s,  Texture image) {
         this.x = x;
         this.y = y;
-        this.speed = 2.5f;
+        this.speed = s;
         this.level = 0;
-        this.images= images;
-        this.sprite = new Sprite(images[level]);
+        this.image = image;
+        this.sprite = new Sprite(image);
         this.canShoot = true;
         this.timer = new Timer();
         this.moveFlag = false;
@@ -45,18 +45,18 @@ public class Tank {
     }
 
 
-    public Tank(int x, int y, Texture[] images) {
-        this(x, y, 0, images);
+    public Tank(int x, int y, Texture image) {
+        this(x, y, 0, 2.5f, image);
     }
 
 
-    public Tank(float r, Texture[] images) {
-        this(0, 0, r, images);
+    public Tank(float r, Texture image) {
+        this(0, 0, r, 2.5f, image);
     }
 
 
-    public Tank(Texture[] images) {
-        this(0, 0, 0, images);
+    public Tank(Texture image) {
+        this(0, 0, 0, 2.5f, image);
     }
 
 

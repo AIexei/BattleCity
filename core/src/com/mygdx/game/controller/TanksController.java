@@ -23,6 +23,7 @@ public class TanksController {
         this.tanksMap = new Tank[26][26];
         this.tanks = new LinkedList<>();
         this.player = player;
+        this.tanks.add(player);
     }
 
 
