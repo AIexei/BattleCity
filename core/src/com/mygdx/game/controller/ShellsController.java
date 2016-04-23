@@ -6,7 +6,7 @@ import com.mygdx.game.model.Shell;
 import java.util.LinkedList;
 
 /**
- * Created by Алексей on 14.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 14.04.2016.
  */
 
 public class ShellsController {
@@ -14,7 +14,7 @@ public class ShellsController {
 
 
     public ShellsController() {
-        this.shells = new LinkedList<>();
+        this.shells = new LinkedList<Shell>();
     }
 
 

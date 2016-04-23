@@ -19,6 +19,7 @@ public class Tank {
     private float y;
     private float speed;
     private int level;
+    private int direction;
     private boolean canShoot;
     private boolean moveFlag;
 
@@ -152,6 +153,14 @@ public class Tank {
 
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
+    }
+
+    public void setDir(int dir) {
+        this.direction = dir;
+    }
+
+    public int getDir() {
+        return direction;
     }
 
 

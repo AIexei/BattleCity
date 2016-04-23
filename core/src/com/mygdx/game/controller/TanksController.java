@@ -8,7 +8,7 @@ import com.mygdx.game.model.Tank;
 import java.util.LinkedList;
 
 /**
- * Created by Алексей on 14.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 14.04.2016.
  */
 
 public class TanksController {
@@ -21,7 +21,7 @@ public class TanksController {
 
     public TanksController(Tank player) {
         this.tanksMap = new Tank[26][26];
-        this.tanks = new LinkedList<>();
+        this.tanks = new LinkedList<Tank>();
         this.player = player;
         this.tanks.add(player);
     }
@@ -173,8 +173,8 @@ public class TanksController {
     }
 
 
-    public static Tank getMapCell (int x, int y) {
-        return tanksMap[y][x];
+    public static boolean isEmptyMapCell (int x, int y) {
+        return (tanksMap[y][x] == null);
     }
 
 

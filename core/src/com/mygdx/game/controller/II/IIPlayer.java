@@ -1,39 +1,71 @@
 package com.mygdx.game.controller.II;
 
 import com.mygdx.game.controller.TanksController;
-import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.model.Tank;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Created by ΐλεκρει on 03.04.2016.
+ * Created by ΠΠ»ΠµΠΊΡΠµΠΉ on 03.04.2016.
  */
 
 public class IIPlayer {
-    private static LinkedList<Tank> tanksOnMap = new LinkedList<>();
+    private static LinkedList<Tank> tanksOnMap = new LinkedList<Tank>();
+    private static Timer timer = new Timer();
 
-    private static int prevRandom = -1;
     private static int curTanksCount = 0;
     private static int tanksLeftCount = 16;
     private static int prevAppearancePoint = 0;
 
+    private static boolean createTank = false;
 
-    public static void decTanksCount() {
-        tanksLeftCount--;
+
+    public static void create() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                createTank = true;
+            }
+        }, 0, 5000);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (int i = 0; i < curTanksCount; i++) {
+                    IITankMovement.changeDir(tanksOnMap.get(i));
+                }
+            }
+        }, 0, 3000);
     }
 
 
-    private static void update() {
+    public static void actions() {
         tanksOnMap = TanksController.getTanks();
+
+        for (int i = 0; i < curTanksCount; i++) {
+            IITankMovement.move(tanksOnMap.get(i));
+        }
+
+        if (createTank) {
+            newTank();
+            createTank = false;
+        }
+    }
+
+
+    public static void decTanksCount() {
+        tanksLeftCount--;
+        curTanksCount--;
     }
 
 
     public static void newTank() {
         if (curTanksCount < 4) {
             for (int i = prevAppearancePoint+1; i != prevAppearancePoint; i++, i %= 3) {
-                if (canAppearOnPoint(i)) {
+               // if (canAppearOnPoint(i)) {
                     switch (i) {
                         case 0:
                             TanksController.addTank(TanksGenerator.createTank(0, 0, false));
@@ -45,31 +77,8 @@ public class IIPlayer {
                             TanksController.addTank(TanksGenerator.createTank(2, 0, false));
                             return;
                     }
-                }
+               // }
             }
-        }
-    }
-
-
-    private static int randomDir() {
-        int value = (new Random()).nextInt(100);
-        int curRandom;
-
-        if (value < 15) {
-            curRandom = 0;
-        } else if (value < 40) {
-            curRandom = 1;
-        } else if (value < 65) {
-            curRandom = 3;
-        } else {
-            curRandom = 2;
-        }
-
-        if (prevRandom == curRandom) {
-            return randomDir();
-        } else {
-            prevRandom = curRandom;
-            return curRandom;
         }
     }
 
@@ -77,19 +86,19 @@ public class IIPlayer {
     private static boolean canAppearOnPoint (int pointNum) {
         switch (pointNum) {
             case 0:
-                if (TanksController.getMapCell(1, 24) != null) {
+                if (!TanksController.isEmptyMapCell(1, 24)) {
                     return false;
                 }
 
                 break;
             case 1:
-                if ((TanksController.getMapCell(12, 24) != null) ||
-                    (TanksController.getMapCell(13, 24) != null)) {
+                if ((!TanksController.isEmptyMapCell(12, 24)) ||
+                    (!TanksController.isEmptyMapCell(13, 24))) {
                     return false;
                 }
                 break;
             case 2:
-                if (TanksController.getMapCell(24, 24) != null) {
+                if (!TanksController.isEmptyMapCell(24, 24)) {
                     return false;
                 }
 

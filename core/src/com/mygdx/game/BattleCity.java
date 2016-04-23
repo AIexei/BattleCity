@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.controller.II.TanksGenerator;
 import com.mygdx.game.controller.ShellsController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.controller.WorldController;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by Алексей on 01.03.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 01.03.2016.
  */
 
 public class BattleCity extends Game {
@@ -52,6 +53,8 @@ public class BattleCity extends Game {
     @Override
     public void create() {
         //start = System.currentTimeMillis();
+        IIPlayer.create();
+        TanksGenerator.create();
 
         tanks = new Texture[3];
         enemies = new Texture[3];
@@ -73,7 +76,8 @@ public class BattleCity extends Game {
 
         arr = new byte[26][26];
 
-        try (FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(1))) {
+        try {
+            FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(1));
             Scanner scanner = new Scanner(fileReader);
 
             for (int i = 0; i < 26; i++)
@@ -111,17 +115,11 @@ public class BattleCity extends Game {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
-
         InputController.inputProcessing();
-        //MoveController.move(enemy, dir);
-        //MoveController.move(enemy1, dir1);
+        IIPlayer.actions();
 
         batch.begin();
         TanksController.drawTanks(batch);
-        System.out.println(TanksController.getTanks().size());
-        //enemy.fire();
-        //enemy1.fire();
-
 
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {

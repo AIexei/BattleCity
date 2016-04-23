@@ -10,18 +10,20 @@ import com.mygdx.game.model.Tank;
 public class TanksGenerator {
     private static Texture[] myTextures;
     private static Texture[] enemyTextures;
+    private static Texture t;
 
 
-    static {
-        myTextures = new Texture[3];
-        enemyTextures = new Texture[3];
+    public static void create() {
+        t = new Texture("enemy1.png");
+        //myTextures = new Texture[3];
+        //enemyTextures = new Texture[3];
 
-        myTextures[0] = new Texture("tank1.png");
-        myTextures[1] = new Texture("tank2.png");
-        myTextures[2] = new Texture("tank3.png");
-        enemyTextures[0] = new Texture("enemy1.png");
-        enemyTextures[1] = new Texture("enemy2.png");
-        enemyTextures[2] = new Texture("enemy3.png");
+        //myTextures[0] = new Texture("tank1.png");
+        //myTextures[1] = new Texture("tank2.png");
+        //myTextures[2] = new Texture("tank3.png");
+        //enemyTextures[0] = new Texture("enemy1.png");
+        //enemyTextures[1] = new Texture("enemy2.png");
+        //enemyTextures[2] = new Texture("enemy3.png");
     }
 
 
@@ -53,9 +55,11 @@ public class TanksGenerator {
         }
 
         if (isMy) {
-            image = myTextures[level];
+            //image = myTextures[level];
+            image = t;
         } else {
-            image = enemyTextures[level];
+            image = t;
+            //image = enemyTextures[level];
             if (level == 1)
                 speed = 5f;
         }
