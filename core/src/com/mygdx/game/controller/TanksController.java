@@ -178,7 +178,13 @@ public class TanksController {
     }
 
 
-    public static LinkedList<Tank> getTanks() {
-        return tanks;
+    public static LinkedList<Tank> getEnemies() {
+        LinkedList<Tank> result = new LinkedList<Tank>();
+
+        for (int i = 1; i < tanks.size(); i++) {
+            result.add(tanks.get(i));
+        }
+
+        return result;
     }
 }

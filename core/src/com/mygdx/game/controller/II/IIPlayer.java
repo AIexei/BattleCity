@@ -43,8 +43,10 @@ public class IIPlayer {
 
 
     public static void actions() {
-        tanksOnMap = TanksController.getTanks();
+        tanksOnMap = TanksController.getEnemies();
+        curTanksCount = TanksController.getEnemies().size();
 
+        System.out.println(curTanksCount);
         for (int i = 0; i < curTanksCount; i++) {
             IITankMovement.move(tanksOnMap.get(i));
         }
@@ -58,7 +60,6 @@ public class IIPlayer {
 
     public static void decTanksCount() {
         tanksLeftCount--;
-        curTanksCount--;
     }
 
 
@@ -69,12 +70,15 @@ public class IIPlayer {
                     switch (i) {
                         case 0:
                             TanksController.addTank(TanksGenerator.createTank(0, 0, false));
+                            prevAppearancePoint = 0;
                             return;
                         case 1:
                             TanksController.addTank(TanksGenerator.createTank(1, 0, false));
+                            prevAppearancePoint = 1;
                             return;
                         case 2:
                             TanksController.addTank(TanksGenerator.createTank(2, 0, false));
+                            prevAppearancePoint = 2;
                             return;
                     }
                // }
