@@ -46,7 +46,6 @@ public class IIPlayer {
         tanksOnMap = TanksController.getEnemies();
         curTanksCount = TanksController.getEnemies().size();
 
-        System.out.println(curTanksCount);
         for (int i = 0; i < curTanksCount; i++) {
             IITankMovement.move(tanksOnMap.get(i));
         }
@@ -66,7 +65,7 @@ public class IIPlayer {
     public static void newTank() {
         if (curTanksCount < 4) {
             for (int i = prevAppearancePoint+1; i != prevAppearancePoint; i++, i %= 3) {
-               // if (canAppearOnPoint(i)) {
+                if (canAppearOnPoint(i)) {
                     switch (i) {
                         case 0:
                             TanksController.addTank(TanksGenerator.createTank(0, 0, false));
@@ -81,7 +80,7 @@ public class IIPlayer {
                             prevAppearancePoint = 2;
                             return;
                     }
-               // }
+                }
             }
         }
     }

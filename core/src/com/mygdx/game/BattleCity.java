@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.AnimationsController;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.II.TanksGenerator;
 import com.mygdx.game.controller.ShellsController;
@@ -47,12 +48,12 @@ public class BattleCity extends Game {
 
     byte[][] arr;
 
-    //long start = 0;
-    //long frames = 0;
+    long start = 0;
+    long frames = 0;
 
     @Override
     public void create() {
-        //start = System.currentTimeMillis();
+                        start = System.currentTimeMillis();
         IIPlayer.create();
         TanksGenerator.create();
 
@@ -121,6 +122,10 @@ public class BattleCity extends Game {
         batch.begin();
         TanksController.drawTanks(batch);
 
+
+        AnimationsController.draw(batch);
+        AnimationsController.update();
+
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
                 if (arr[i][j] == 1) {
@@ -144,9 +149,9 @@ public class BattleCity extends Game {
         if (TanksController.isEnd())
             dispose();
 
-        //frames++;
-        //long time = System.currentTimeMillis() - start;
-        //System.out.println(1000 * ((double)frames / (double) time));
+        frames++;
+        long time = System.currentTimeMillis() - start;
+        System.out.println(1000 * ((double)frames / (double) time));
     }
 
 

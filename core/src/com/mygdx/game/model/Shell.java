@@ -3,8 +3,11 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.AnimationsController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.controller.WorldController;
+import com.mygdx.game.model.anima.AnimImages;
+import com.mygdx.game.model.anima.Animation;
 
 /**
  * Created by Алексей on 26.03.2016.
@@ -89,16 +92,21 @@ public class Shell {
                     if (isFlying) {
                         if (y + 2.5f > WorldController.getBorder() - 8) {
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-16));
                         } else if (WorldController.canMove(x, y + 2.5f, direction, this)) {
                             if (TanksController.notCollisionWithTank(x, y + 2.5f, direction, this)) {
                                 y += 2.5f;
                             } else {
                                 TanksController.killTank(x, y + 2.5f, direction, owner);
+
                                 isFlying = false;
+                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-16));
                             }
                         } else {
                             WorldController.destruction(x, y + 2.5f, direction);
+
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-16));
                         }
                     }
                 }
@@ -109,16 +117,21 @@ public class Shell {
                     if (isFlying) {
                         if (x + 2.5f > WorldController.getBorder() - 6) {
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-16, y-21));
                         } else if (WorldController.canMove(x + 2.5f, y, direction, this)) {
                             if (TanksController.notCollisionWithTank(x + 2.5f, y, direction, this)) {
                                 x += 2.5f;
                             } else {
                                 TanksController.killTank(x + 2.5f, y, direction, owner);
+
                                 isFlying = false;
+                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-16, y-46));
                             }
                         } else {
                             WorldController.destruction(x + 2.5f, y, direction);
+
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-16, y-21));
                         }
                     }
                 }
@@ -129,16 +142,21 @@ public class Shell {
                     if (isFlying) {
                         if (y - 2.5f <= 0) {
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-25));
                         } else if (WorldController.canMove(x, y - 2.5f, direction, this)) {
                             if (TanksController.notCollisionWithTank(x, y - 2.5f, direction, this)) {
                                 y -= 2.5f;
                             } else {
                                 TanksController.killTank(x, y - 2.5f, direction, owner);
+
                                 isFlying = false;
+                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-75));
                             }
                         } else {
                             WorldController.destruction(x, y - 2.5f, direction);
+
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-25));
                         }
                     }
                 }
@@ -149,16 +167,21 @@ public class Shell {
                     if (isFlying) {
                         if (x - 2.5f <= 0) {
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-25, y-21));
                         } else if (WorldController.canMove(x - 2.5f, y, direction, this)) {
                             if (TanksController.notCollisionWithTank(x - 2.5f, y, direction, this)) {
                                 x -= 2.5f;
                             } else {
                                 TanksController.killTank(x - 2.5f, y, direction, owner);
+
                                 isFlying = false;
+                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-75, y-46));
                             }
                         } else {
                             WorldController.destruction(x - 2.5f, y, direction);
+
                             isFlying = false;
+                            AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-25, y-21));
                         }
                     }
                 }
