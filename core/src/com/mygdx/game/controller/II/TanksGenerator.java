@@ -26,17 +26,6 @@ public class TanksGenerator {
         //enemyTextures[2] = new Texture("enemy3.png");
     }
 
-
-    public static Texture getMyTankTexture(int level) {
-        return myTextures[level];
-    }
-
-
-    public static Texture getEnemyTexture(int level) {
-        return enemyTextures[level];
-    }
-
-
     public static Tank createTank(int point, int level, boolean isMy) {
         int x = 0;
         float speed = 2.5f;

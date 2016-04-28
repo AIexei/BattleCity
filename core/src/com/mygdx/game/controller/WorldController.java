@@ -86,6 +86,11 @@ public class WorldController {
     }
 
 
+    public static void homeDefence() {
+        //...
+    }
+
+
     public static float getBorder() {
         return border;
     }

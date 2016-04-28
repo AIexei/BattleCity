@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
+import com.mygdx.game.model.anima.AnimImages;
+import com.mygdx.game.model.anima.Animation;
 
 import java.util.LinkedList;
 
@@ -155,11 +157,12 @@ public class TanksController {
             }
         }
 
-        tanks.remove(temp);
-        IIPlayer.decTanksCount();
-
-        if (temp.equals(player))
+        if (temp.equals(player)) {
             endFlag = true;
+        } else {
+            tanks.remove(temp);
+            IIPlayer.decTanksCount();
+        }
     }
 
 
@@ -186,5 +189,20 @@ public class TanksController {
         }
 
         return result;
+    }
+
+
+    public static void killAllTanks() {
+        for (int i = 1; i < tanks.size(); i++) {
+            float x = tanks.get(i).getX();
+            float y = tanks.get(i).getY();
+
+            AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-25, y-25));
+            IIPlayer.decTanksCount();
+        }
+
+        while (tanks.size() != 1) {
+            tanks.remove(tanks.size()-1);
+        }
     }
 }
