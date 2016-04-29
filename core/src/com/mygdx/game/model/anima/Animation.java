@@ -5,18 +5,22 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by Алексей on 24.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 24.04.2016.
  */
 
 public class Animation {
     private Array<TextureRegion> frames;
+
     private float maxFrameTime;
     private float currentFrameTime;
-    private int frameCount;
-    private int frame;
     private float x;
     private float y;
+
+    private int frameCount;
+    private int frame;
+
     private boolean completed;
+    private boolean repeatAnimation;
 
     public Animation(TextureRegion region, int frameCount, float cycleTime, float x, float y) {
         frames = new Array<TextureRegion>();
@@ -32,6 +36,7 @@ public class Animation {
         this.maxFrameTime = cycleTime / frameCount;
         this.frame = 0;
         this.completed = false;
+        this.repeatAnimation = false;
     }
 
     public void update(float dt) {
@@ -42,8 +47,13 @@ public class Animation {
             currentFrameTime = 0;
         }
 
-        if (frame >= frameCount)
-            completed = true;
+        if (frame >= frameCount) {
+            if (repeatAnimation) {
+                frame = 0;
+            } else {
+                completed = true;
+            }
+        }
     }
 
     public void draw(SpriteBatch batch) {
@@ -57,5 +67,21 @@ public class Animation {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    public void setCompleted(boolean value) {
+        this.completed = value;
+    }
+
+    public void setRepeat(boolean value) {
+        this.repeatAnimation = value;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 }

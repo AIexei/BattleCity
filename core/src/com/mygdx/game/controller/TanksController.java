@@ -17,6 +17,7 @@ public class TanksController {
     private static LinkedList<Tank> tanks;
     private static Tank player;
     private static Tank[][] tanksMap;
+    private static boolean playerImmortality;
 
     private static boolean endFlag = false;
 
@@ -26,6 +27,7 @@ public class TanksController {
         this.tanks = new LinkedList<Tank>();
         this.player = player;
         this.tanks.add(player);
+        this.playerImmortality = false;
     }
 
 
@@ -158,11 +160,20 @@ public class TanksController {
         }
 
         if (temp.equals(player)) {
-            endFlag = true;
+            if (!playerImmortality) {
+                endFlag = true;
+            }
         } else {
             tanks.remove(temp);
             IIPlayer.decTanksCount();
         }
+    }
+
+
+    public static void setPlayerImmortality(boolean value) {
+        playerImmortality = value;
+
+
     }
 
 

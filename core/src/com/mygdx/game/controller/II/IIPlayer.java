@@ -4,7 +4,6 @@ import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.model.Tank;
 
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,15 +59,8 @@ public class IIPlayer {
     }
 
 
-    public static void stopMoving() {
-        stopPowerup = true;
-
-        (new Timer()).schedule(new TimerTask() {
-            @Override
-            public void run() {
-               stopPowerup = false;
-            }
-        }, 5000);
+    public static void setStopPowerup(boolean value) {
+        stopPowerup = value;
     }
 
 

@@ -10,7 +10,7 @@ import com.mygdx.game.model.anima.AnimImages;
 import com.mygdx.game.model.anima.Animation;
 
 /**
- * Created by Алексей on 26.03.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 26.03.2016.
  */
 
 

@@ -77,44 +77,69 @@ public class PowerupsController {
         }
     }
 
-
+    // OK
+    // TanksController
     private static void grenade() {
-        // убить все танки
         TanksController.killAllTanks();
         timerRunning = false;
         curPowerupId = -1;
     }
 
-
+    // animation
+    // TanksController
     private static void immortality() {
-        // как нибудь
+        TanksController.setPlayerImmortality(true);
 
+        (new Timer()).schedule(new TimerTask() {
+            @Override
+            public void run() {
+                TanksController.setPlayerImmortality(false);
+                timerRunning = false;
+                curPowerupId = -1;
+            }
+        }, 10000);
     }
 
-
+    // OK
+    // IIPlayer
     private static void stopTime() {
-        // остановить танк мувмент
-        IIPlayer.stopMoving();
+        IIPlayer.setStopPowerup(true);
+
+        (new Timer()).schedule(new TimerTask() {
+            @Override
+            public void run() {
+                IIPlayer.setStopPowerup(false);
+                timerRunning = false;
+                curPowerupId = -1;
+            }
+        }, 5000);
+
+
     }
 
-
+    // OK
+    // WorldController
     private static void homeDefence() {
-        // достроить дом блоками, и через пару сек обратно вернуть
+        WorldController.homeDefence(true);
 
-        WorldController.homeDefence();
+        (new Timer()).schedule(new TimerTask() {
+            @Override
+            public void run() {
+                WorldController.homeDefence(false);
+                timerRunning = false;
+                curPowerupId = -1;
+            }
+        }, 10000);
     }
 
-
+    // Tank
     private static void levelUp() {
-        // изи катка
         timerRunning = false;
         curPowerupId = -1;
     }
 
-
+    // OK
     private static void points() {
-        // изи изи катка
-
         ScoreController.incScore(500);
         timerRunning = false;
         curPowerupId = -1;

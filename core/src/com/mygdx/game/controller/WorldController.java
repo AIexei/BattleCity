@@ -1,33 +1,32 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Shell;
-import com.mygdx.game.model.Tank;
 
-import java.util.LinkedList;
 
 /**
- * Created by Алексей on 01.03.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 01.03.2016.
  */
 
 
 public class WorldController {
     private static byte[][] field;
     private static float border;
+    private static boolean homeDef;
 
 
     public WorldController(byte[][] field, float border) {
         this.field = field;
         this.border = border;
+        this.homeDef = false;
     }
 
 
     /**
      * Check the possibility to movement to the next cell
      *
-     * @param x : future Х
-     * @param y : future У
-     * @param dir : 0, 2 - У, 1,3 - X
+     * @param x : future пїЅ
+     * @param y : future пїЅ
+     * @param dir : 0, 2 - пїЅ, 1,3 - X
      * @return : can you take this position
      */
     public static boolean canMove(float x, float y, int dir, Object obj) {
@@ -86,8 +85,24 @@ public class WorldController {
     }
 
 
-    public static void homeDefence() {
-        //...
+    public static void homeDefence(boolean value) {
+        if (value != homeDef) {
+            homeDef = value;
+
+            byte filler = 3;
+            if (homeDef == true) {
+                filler = 4;
+            }
+
+            field[0][11] = filler;
+            field[1][11] = filler;
+            field[2][11] = filler;
+            field[0][14] = filler;
+            field[1][14] = filler;
+            field[2][14] = filler;
+            field[2][12] = filler;
+            field[2][13] = filler;
+        }
     }
 
 

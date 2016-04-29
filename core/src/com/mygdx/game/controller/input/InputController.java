@@ -3,11 +3,11 @@ package com.mygdx.game.controller.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.controller.PowerupsController;
-import com.mygdx.game.controller.TanksController;
+import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.model.Tank;
 
 /**
- * Created by Алексей on 14.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 14.04.2016.
  */
 
 public class InputController {
