@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Алексей on 01.03.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 01.03.2016.
  */
 
 public class Tank {
@@ -104,14 +104,7 @@ public class Tank {
 
     public void fire() {
         if (canShoot) {
-
             ShellsController.addShell(new Shell(this));
-            System.out.println((int) getRotation());
-            // something
-            //------------------------
-            //-----------------------
-            System.out.println("FIRE!!!    ");
-
 
             canShoot = false;
             timer.schedule(new Reloading(), 1000);

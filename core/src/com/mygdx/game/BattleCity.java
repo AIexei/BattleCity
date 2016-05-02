@@ -5,12 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.controller.AnimationsController;
+import com.mygdx.game.controller.*;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.II.TanksGenerator;
-import com.mygdx.game.controller.ShellsController;
-import com.mygdx.game.controller.TanksController;
-import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.controller.input.InputController;
 import com.mygdx.game.model.Tank;
 
@@ -48,12 +45,13 @@ public class BattleCity extends Game {
 
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    //long start = 0;
+    //long frames = 0;
 
     @Override
     public void create() {
-                        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
+
         IIPlayer.create();
         TanksGenerator.create();
 
@@ -116,6 +114,7 @@ public class BattleCity extends Game {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
+        PowerupsController.actions();
         InputController.inputProcessing();
         IIPlayer.actions();
 
@@ -143,15 +142,16 @@ public class BattleCity extends Game {
         batch.draw(emblem, 12 * 25, 0);
         ShellsController.drawShells(batch);
         TanksController.update();
+        PowerupsController.draw(batch);
 
         batch.end();
 
         if (TanksController.isEnd())
             dispose();
 
-        frames++;
-        long time = System.currentTimeMillis() - start;
-        System.out.println(1000 * ((double)frames / (double) time));
+        //frames++;
+        //long time = System.currentTimeMillis() - start;
+        //System.out.println(1000 * ((double)frames / (double) time));
     }
 
 

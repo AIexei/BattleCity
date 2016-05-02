@@ -3,6 +3,7 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.model.Tank;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,10 +15,14 @@ import java.util.TimerTask;
  */
 
 public class PowerupsController {
+    private static Timer timer;
     private static ArrayList<Texture> images;
 
     private static boolean timerRunning;
+
     private static int curPowerupId;
+    private static int counter;
+
     private static float curX;
     private static float curY;
 
@@ -25,36 +30,89 @@ public class PowerupsController {
     static {
         timerRunning = false;
         curPowerupId = -1;
+        counter = 0;
 
+        timer = new Timer();
         images = new ArrayList<Texture>();
-        //...
+        images.add(new Texture("pups/grenadePup.png"));
+        images.add(new Texture("pups/immortalityPup.png"));
+        images.add(new Texture("pups/stopPup.png"));
+        images.add(new Texture("pups/homePup.png"));
+        images.add(new Texture("pups/levelPup.png"));
+        images.add(new Texture("pups/pointsPup.png"));
     }
 
 
     public static void actions() {
         if (!timerRunning) {
+            System.out.println("timer");
             timerRunning = true;
 
-            (new Timer()).schedule(new TimerTask() {
+            timer.purge();
+            timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     createPowerup();
                 }
-            }, (new Random()).nextInt(30) + 5);
+            }, (new Random()).nextInt(5000) + 3000);
+        } else {
+            if (curPowerupId != -1) {
+                System.out.println("checking");
+
+                if (checkTaking()) {
+                    executePowerup();
+                }
+            }
         }
     }
 
 
     public static void draw(SpriteBatch batch) {
         if (curPowerupId != -1) {
+            counter = (counter + 1)%50;
 
+            if (counter > 25) {
+                batch.draw(images.get(curPowerupId), curX, curY);
+            }
+        } else {
+            counter = 0;
+        }
+    }
+
+
+    private static boolean checkTaking() {
+        Tank player = TanksController.getPlayer();
+
+        if ((curX - player.getX() <= 25) && (curY - player.getY() <= 25)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
 
     private static void createPowerup() {
+        curY = (new Random()).nextInt(22) + 4;
+        curX = (new Random()).nextInt(26);
+        curY *= 25;
+        curX *= 25;
+
         curPowerupId = (new Random()).nextInt(6);
 
+        timer.purge();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(curPowerupId != -1) {
+                    curPowerupId = -1;
+                    timerRunning = false;
+                }
+            }
+        }, 10000);
+    }
+
+
+    private static void executePowerup() {
         switch (curPowerupId) {
             case 0:
                 grenade();
@@ -88,6 +146,7 @@ public class PowerupsController {
     // animation
     // TanksController
     private static void immortality() {
+        curPowerupId = -1;
         TanksController.setPlayerImmortality(true);
 
         (new Timer()).schedule(new TimerTask() {
@@ -95,7 +154,6 @@ public class PowerupsController {
             public void run() {
                 TanksController.setPlayerImmortality(false);
                 timerRunning = false;
-                curPowerupId = -1;
             }
         }, 10000);
     }
@@ -103,6 +161,7 @@ public class PowerupsController {
     // OK
     // IIPlayer
     private static void stopTime() {
+        curPowerupId = -1;
         IIPlayer.setStopPowerup(true);
 
         (new Timer()).schedule(new TimerTask() {
@@ -110,7 +169,6 @@ public class PowerupsController {
             public void run() {
                 IIPlayer.setStopPowerup(false);
                 timerRunning = false;
-                curPowerupId = -1;
             }
         }, 5000);
 
@@ -120,6 +178,7 @@ public class PowerupsController {
     // OK
     // WorldController
     private static void homeDefence() {
+        curPowerupId = -1;
         WorldController.homeDefence(true);
 
         (new Timer()).schedule(new TimerTask() {
@@ -127,7 +186,6 @@ public class PowerupsController {
             public void run() {
                 WorldController.homeDefence(false);
                 timerRunning = false;
-                curPowerupId = -1;
             }
         }, 10000);
     }
@@ -145,3 +203,5 @@ public class PowerupsController {
         curPowerupId = -1;
     }
 }
+
+
