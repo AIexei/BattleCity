@@ -81,9 +81,9 @@ public class PowerupsController {
 
 
     private static boolean checkTaking() {
-        Tank player = TanksController.getPlayer();
+        Tank p = TanksController.getPlayer();
 
-        if ((curX - player.getX() <= 25) && (curY - player.getY() <= 25)) {
+        if ((Math.abs(curX - p.getX()) <= 25) && (Math.abs(curY - p.getY()) <= 25)) {
             return true;
         } else {
             return false;
@@ -92,10 +92,15 @@ public class PowerupsController {
 
 
     private static void createPowerup() {
-        curY = (new Random()).nextInt(22) + 4;
-        curX = (new Random()).nextInt(26);
-        curY *= 25;
-        curX *= 25;
+        Tank player = TanksController.getPlayer();
+
+        do {
+            curY = (new Random()).nextInt(21) + 4;
+            curX = (new Random()).nextInt(25);
+            curY *= 25;
+            curX *= 25;
+        } while ((curX - player.getX() <= 50) &&
+                 (curY - player.getY() <= 50));
 
         curPowerupId = (new Random()).nextInt(6);
 
@@ -133,6 +138,8 @@ public class PowerupsController {
                 points();
                 break;
         }
+
+        System.out.println("EXE");
     }
 
     // OK
