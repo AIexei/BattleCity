@@ -13,8 +13,8 @@ import com.mygdx.game.model.Tank;
 public class InputController {
     private static Tank tank;
 
-    public InputController(Tank player) {
-        this.tank= player;
+    public static void create(Tank player) {
+        tank = player;
     }
 
     public static void inputProcessing() {

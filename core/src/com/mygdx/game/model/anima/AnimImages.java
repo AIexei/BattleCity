@@ -4,16 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Created by Алексей on 24.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 24.04.2016.
  */
 
 public class AnimImages {
     private static Texture bang;
     private static Texture bigBang;
+    private static Texture tankDef;
 
     static {
-        bang = new Texture("bang.png");
-        bigBang = new Texture("bigbang.png");
+        bang = new Texture("other/bang.png");
+        bigBang = new Texture("other/bigbang.png");
+        tankDef = new Texture("other/defence.png");
     }
 
     public static TextureRegion getBang() {
@@ -22,5 +24,9 @@ public class AnimImages {
 
     public static TextureRegion getBigBang() {
         return new TextureRegion(bigBang);
+    }
+
+    public static TextureRegion getTankDef() {
+        return new TextureRegion(tankDef);
     }
 }

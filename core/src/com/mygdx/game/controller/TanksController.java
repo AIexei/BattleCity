@@ -1,6 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
@@ -17,23 +18,34 @@ public class TanksController {
     private static LinkedList<Tank> tanks;
     private static Tank player;
     private static Tank[][] tanksMap;
-    private static boolean playerImmortality;
+    private static Animation immortalityAnima;
 
+    private static boolean playerImmortality;
     private static boolean endFlag = false;
 
 
-    public TanksController(Tank player) {
-        this.tanksMap = new Tank[26][26];
-        this.tanks = new LinkedList<Tank>();
-        this.player = player;
-        this.tanks.add(player);
-        this.playerImmortality = false;
-    }
+    public static void create(Tank p) {
+        tanksMap = new Tank[26][26];
+        tanks = new LinkedList<Tank>();
+        player = p;
+        tanks.add(player);
 
+        playerImmortality = false;
+        immortalityAnima = new Animation(AnimImages.getTankDef(), 2, 1f, p.getX(), p.getY());
+        immortalityAnima.setRepeat(true);
+    }
 
     public static void drawTanks(SpriteBatch batch) {
         for (int i = 0; i < tanks.size(); i++)
             tanks.get(i).draw(batch);
+
+        if (playerImmortality) {
+            immortalityAnima.setX(player.getX());
+            immortalityAnima.setY(player.getY());
+
+            immortalityAnima.draw(batch);
+            immortalityAnima.update(0.2f);
+        }
     }
 
 
@@ -172,8 +184,6 @@ public class TanksController {
 
     public static void setPlayerImmortality(boolean value) {
         playerImmortality = value;
-
-
     }
 
 

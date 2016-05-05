@@ -29,7 +29,7 @@ public class Shell {
 
 
     static {
-        img = new Texture("shell.png");
+        img = new Texture("other/shell.png");
         speed = 10f;
     }
 

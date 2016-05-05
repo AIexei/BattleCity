@@ -39,6 +39,7 @@ public class Tank {
         this.canShoot = true;
         this.timer = new Timer();
         this.moveFlag = false;
+        this.direction = (int) (r/90);
 
         sprite.setRotation(r);
         sprite.setX(x);

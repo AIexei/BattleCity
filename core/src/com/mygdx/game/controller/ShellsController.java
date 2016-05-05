@@ -13,12 +13,12 @@ import java.util.LinkedList;
 
 public class ShellsController {
     private static LinkedList<Shell> shells;
-    private static Music music;
+    private static Music shoot;
 
 
-    public ShellsController() {
-        this.shells = new LinkedList<Shell>();
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/shoot.mp3"));
+    public static void create() {
+        shells = new LinkedList<Shell>();
+        shoot = Gdx.audio.newMusic(Gdx.files.internal("music/fire.mp3"));
     }
 
 
@@ -35,7 +35,7 @@ public class ShellsController {
 
     public static void addShell(Shell newShell) {
         shells.add(newShell);
-        //music.play();
+        shoot.play();
     }
 
 

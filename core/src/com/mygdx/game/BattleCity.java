@@ -2,9 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.controller.*;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.II.TanksGenerator;
@@ -20,12 +24,10 @@ import java.util.*;
  */
 
 public class BattleCity extends Game {
-    Timer myTimer = new Timer();
-    int dir;
-    int dir1;
-
-
+    OrthographicCamera camera;
     SpriteBatch batch;
+    ShapeRenderer renderer;
+
     Texture[] tanks;
     Texture[] enemies;
     Texture brick;
@@ -34,23 +36,16 @@ public class BattleCity extends Game {
     Texture grass;
     Texture water;
 
-    WorldController worldController;
-    ShellsController shellsController;
-    TanksController tanksController;
-    InputController inputController;
-
-    Tank tank;
-    Tank enemy;
-    Tank enemy1;
+    Tank player;
 
     byte[][] arr;
 
-    //long start = 0;
-    //long frames = 0;
+    long start = 0;
+    long frames = 0;
 
     @Override
     public void create() {
-        //start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
 
         IIPlayer.create();
         TanksGenerator.create();
@@ -58,19 +53,24 @@ public class BattleCity extends Game {
         tanks = new Texture[3];
         enemies = new Texture[3];
 
-        tanks[0] = new Texture("tank1.png");
-        tanks[1] = new Texture("tank2.png");
-        tanks[2] = new Texture("tank3.png");
-        enemies[0] = new Texture("enemy1.png");
-        enemies[1] = new Texture("enemy2.png");
-        enemies[2] = new Texture("enemy3.png");
+        tanks[0] = new Texture("tanks/tank1.png");
+        tanks[1] = new Texture("tanks/tank2.png");
+        tanks[2] = new Texture("tanks/tank3.png");
+        enemies[0] = new Texture("tanks/enemy1.png");
+        enemies[1] = new Texture("tanks/enemy2.png");
+        enemies[2] = new Texture("tanks/enemy3.png");
+
+        camera = new OrthographicCamera(800, 680);
+        camera.position.set(new Vector3(385, 325, 0));
 
         batch = new SpriteBatch();
-        brick = new Texture("kir.png");
-        block = new Texture("block.png");
-        emblem = new Texture("flag.png");
-        grass = new Texture("trawa.png");
-        water = new Texture("voda.png");
+        renderer = new ShapeRenderer();
+
+        brick = new Texture("covering/kir.png");
+        block = new Texture("covering/block.png");
+        emblem = new Texture("covering/flag.png");
+        grass = new Texture("covering/trawa.png");
+        water = new Texture("covering/voda.png");
 
 
         arr = new byte[26][26];
@@ -88,24 +88,12 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        tank = new Tank(tanks[0]);
+        player = new Tank(tanks[0]);
 
-        worldController = new WorldController(arr, 650);
-        shellsController = new ShellsController();
-        tanksController = new TanksController(tank);
-        inputController = new InputController(tank);
-
-        IIPlayer.newTank();
-
-
-        /*myTimer.schedule((new TimerTask() {
-            @Override
-            public void run() {
-                dir = IIPlayer.randomDir();
-                dir1 = IIPlayer.randomDir();
-            }
-        }), 0, 3000);
-        */
+        WorldController.create(arr, 650);
+        TanksController.create(player);
+        InputController.create(player);
+        ShellsController.create();
     }
 
 
@@ -114,13 +102,24 @@ public class BattleCity extends Game {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+        renderer.setProjectionMatrix(camera.combined);
+
         PowerupsController.actions();
         InputController.inputProcessing();
         IIPlayer.actions();
 
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.GRAY);
+        renderer.rect(-15, 0, 15, 800);
+        renderer.rect(650, 0, 135, 800);
+        renderer.rect(-15, -15, 800, 15);
+        renderer.rect(-15, 650, 800, 15);
+        renderer.end();
+
         batch.begin();
         TanksController.drawTanks(batch);
-
 
         AnimationsController.draw(batch);
         AnimationsController.update();
@@ -149,9 +148,9 @@ public class BattleCity extends Game {
         if (TanksController.isEnd())
             dispose();
 
-        //frames++;
-        //long time = System.currentTimeMillis() - start;
-        //System.out.println(1000 * ((double)frames / (double) time));
+        frames++;
+        long time = System.currentTimeMillis() - start;
+        System.out.println(1000 * ((double)frames / (double) time));
     }
 
 

@@ -8,8 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Battle city";
-		config.width = 650;
-		config.height = 650;
+		config.width = 800;
+		config.height = 680;
 		config.resizable = false;
 		//config.fullscreen = true;
 		new LwjglApplication(new BattleCity(), config);

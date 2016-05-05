@@ -45,7 +45,7 @@ public class PowerupsController {
 
     public static void actions() {
         if (!timerRunning) {
-            System.out.println("timer");
+            //System.out.println("timer");
             timerRunning = true;
 
             timer.purge();
@@ -54,10 +54,10 @@ public class PowerupsController {
                 public void run() {
                     createPowerup();
                 }
-            }, (new Random()).nextInt(5000) + 3000);
+            }, (new Random()).nextInt(10000) + 10000);
         } else {
             if (curPowerupId != -1) {
-                System.out.println("checking");
+                //System.out.println("checking");
 
                 if (checkTaking()) {
                     executePowerup();
@@ -92,15 +92,14 @@ public class PowerupsController {
 
 
     private static void createPowerup() {
-        Tank player = TanksController.getPlayer();
+        Tank p = TanksController.getPlayer();
 
         do {
             curY = (new Random()).nextInt(21) + 4;
             curX = (new Random()).nextInt(25);
             curY *= 25;
             curX *= 25;
-        } while ((curX - player.getX() <= 50) &&
-                 (curY - player.getY() <= 50));
+        } while ((curX - p.getX() <= 50) && (curY - p.getY() <= 50));
 
         curPowerupId = (new Random()).nextInt(6);
 
@@ -139,7 +138,7 @@ public class PowerupsController {
                 break;
         }
 
-        System.out.println("EXE");
+        //System.out.println("EXE");
     }
 
     // OK
@@ -150,7 +149,7 @@ public class PowerupsController {
         curPowerupId = -1;
     }
 
-    // animation
+    // OK
     // TanksController
     private static void immortality() {
         curPowerupId = -1;

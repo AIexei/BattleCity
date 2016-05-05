@@ -13,13 +13,11 @@ public class WorldController {
     private static float border;
     private static boolean homeDef;
 
-
-    public WorldController(byte[][] field, float border) {
-        this.field = field;
-        this.border = border;
-        this.homeDef = false;
+    public static void create(byte[][] f, float b) {
+        field = f;
+        border = b;
+        homeDef = false;
     }
-
 
     /**
      * Check the possibility to movement to the next cell
