@@ -98,8 +98,7 @@ public class PowerupsController {
             curX *= 25;
         } while ((curX - p.getX() <= 50) && (curY - p.getY() <= 50));
 
-        //curPowerupId = (new Random()).nextInt(6);
-        curPowerupId = 4;
+        curPowerupId = (new Random()).nextInt(6);
 
         timer.purge();
         timer.schedule(new TimerTask() {

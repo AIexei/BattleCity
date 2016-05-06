@@ -1,7 +1,6 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
@@ -9,6 +8,8 @@ import com.mygdx.game.model.anima.AnimImages;
 import com.mygdx.game.model.anima.Animation;
 
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by ������� on 14.04.2016.
@@ -33,6 +34,8 @@ public class TanksController {
         playerImmortality = false;
         immortalityAnima = new Animation(AnimImages.getTankDef(), 2, 1f, p.getX(), p.getY());
         immortalityAnima.setRepeat(true);
+
+        playerAppearance();
     }
 
 
@@ -160,7 +163,7 @@ public class TanksController {
     }
 
 
-    public static void killTank(float x, float y, int dir, Tank tank) {
+    public static boolean killTank(float x, float y, int dir, Tank tank) {
         int xx = (int) x / 25;
         int yy = (int) y / 25;
 
@@ -175,19 +178,26 @@ public class TanksController {
         }
 
         if (temp.equals(player)) {
-            if (player.getLevel() == 0) {
-                if (!playerImmortality) {
+            if (!playerImmortality) {
+                if (player.getLevel() == 0) {
                     endFlag = true;
+                    return true;
+                } else {
+                    player.decLevel();
+                    return false;
                 }
             } else {
-                player.decLevel();
+                return false;
             }
         } else {
             if (temp.getLevel() == 0) {
                 tanks.remove(temp);
                 IIPlayer.decTanksCount();
+
+                return true;
             } else {
                 temp.decLevel();
+                return false;
             }
         }
     }
@@ -236,5 +246,17 @@ public class TanksController {
         while (tanks.size() != 1) {
             tanks.remove(tanks.size()-1);
         }
+    }
+
+
+    private static void playerAppearance() {
+        playerImmortality = true;
+
+        (new Timer()).schedule(new TimerTask() {
+            @Override
+            public void run() {
+                playerImmortality = false;
+            }
+        }, 5000);
     }
 }

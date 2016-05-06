@@ -20,7 +20,6 @@ public class Tank {
     private float y;
     private float speed;
 
-    private int lives;
     private int level;
     private int direction;
     private int reloadingTime;
@@ -29,7 +28,6 @@ public class Tank {
     private boolean canShoot;
     private boolean moveFlag;
 
-    private Texture image;
     private Sprite sprite;
 
     private Timer timer;
@@ -40,7 +38,6 @@ public class Tank {
         this.y = y;
         this.speed = s;
         this.level = l;
-        this.image = image;
         this.sprite = new Sprite(image);
         this.canShoot = true;
         this.timer = new Timer();
@@ -189,6 +186,8 @@ public class Tank {
                     reloadingTime = 600;
                     break;
             }
+        } else {
+            sprite.setTexture(TanksGenerator.getTexture(3, false));
         }
     }
 

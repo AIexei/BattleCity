@@ -28,8 +28,6 @@ public class BattleCity extends Game {
     SpriteBatch batch;
     ShapeRenderer renderer;
 
-    Texture[] tanks;
-    Texture[] enemies;
     Texture brick;
     Texture block;
     Texture emblem;
@@ -51,16 +49,6 @@ public class BattleCity extends Game {
         IIPlayer.create();
         TanksGenerator.create();
 
-        tanks = new Texture[3];
-        enemies = new Texture[3];
-
-        tanks[0] = new Texture("tanks/tank1.png");
-        tanks[1] = new Texture("tanks/tank2.png");
-        tanks[2] = new Texture("tanks/tank3.png");
-        enemies[0] = new Texture("tanks/enemy1.png");
-        enemies[1] = new Texture("tanks/enemy2.png");
-        enemies[2] = new Texture("tanks/enemy3.png");
-
         camera = new OrthographicCamera(800, 680);
         camera.position.set(new Vector3(385, 325, 0));
 
@@ -77,7 +65,7 @@ public class BattleCity extends Game {
         arr = new byte[26][26];
 
         try {
-            FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(1));
+            FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(3));
             Scanner scanner = new Scanner(fileReader);
 
             for (int i = 0; i < 26; i++)
@@ -89,7 +77,7 @@ public class BattleCity extends Game {
             System.out.println("File not found");
         }
 
-        player = new Tank(tanks[0]);
+        player = new Tank(225, 0, TanksGenerator.getTexture(0, true));
         player.isPlayer(true);
 
         WorldController.create(arr, 650);
@@ -111,19 +99,10 @@ public class BattleCity extends Game {
         InputController.inputProcessing();
         IIPlayer.actions();
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.GRAY);
-        renderer.rect(-15, 0, 15, 800);
-        renderer.rect(650, 0, 135, 800);
-        renderer.rect(-15, -15, 800, 15);
-        renderer.rect(-15, 650, 800, 15);
-        renderer.end();
 
         batch.begin();
         TanksController.drawTanks(batch);
 
-        AnimationsController.draw(batch);
-        AnimationsController.update();
 
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
@@ -140,11 +119,23 @@ public class BattleCity extends Game {
         }
 
         batch.draw(emblem, 12 * 25, 0);
+
+        AnimationsController.draw(batch);
+        AnimationsController.update();
+
         ShellsController.drawShells(batch);
         TanksController.update();
         PowerupsController.draw(batch);
 
         batch.end();
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.GRAY);
+        renderer.rect(-15, 0, 15, 800);
+        renderer.rect(650, 0, 135, 800);
+        renderer.rect(-15, -15, 800, 15);
+        renderer.rect(-15, 650, 800, 15);
+        renderer.end();
 
         if (TanksController.isEnd())
             dispose();

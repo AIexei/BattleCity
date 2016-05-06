@@ -103,10 +103,11 @@ public class Shell {
                             if (TanksController.notCollisionWithTank(x, y + 2.5f, direction, this)) {
                                 y += 2.5f;
                             } else {
-                                TanksController.killTank(x, y + 2.5f, direction, owner);
+                                if (TanksController.killTank(x, y + 2.5f, direction, owner)) {
+                                    AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-16));
+                                }
 
                                 isFlying = false;
-                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-16));
                             }
                         } else {
                             WorldController.destruction(x, y + 2.5f, direction);
@@ -128,10 +129,11 @@ public class Shell {
                             if (TanksController.notCollisionWithTank(x + 2.5f, y, direction, this)) {
                                 x += 2.5f;
                             } else {
-                                TanksController.killTank(x + 2.5f, y, direction, owner);
+                                if (TanksController.killTank(x + 2.5f, y, direction, owner)) {
+                                    AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-16, y-46));
+                                }
 
                                 isFlying = false;
-                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-16, y-46));
                             }
                         } else {
                             WorldController.destruction(x + 2.5f, y, direction);
@@ -153,10 +155,11 @@ public class Shell {
                             if (TanksController.notCollisionWithTank(x, y - 2.5f, direction, this)) {
                                 y -= 2.5f;
                             } else {
-                                TanksController.killTank(x, y - 2.5f, direction, owner);
+                                if (TanksController.killTank(x, y - 2.5f, direction, owner)) {
+                                    AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-75));
+                                }
 
                                 isFlying = false;
-                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-75));
                             }
                         } else {
                             WorldController.destruction(x, y - 2.5f, direction);
@@ -178,10 +181,11 @@ public class Shell {
                             if (TanksController.notCollisionWithTank(x - 2.5f, y, direction, this)) {
                                 x -= 2.5f;
                             } else {
-                                TanksController.killTank(x - 2.5f, y, direction, owner);
+                                if (TanksController.killTank(x - 2.5f, y, direction, owner)) {
+                                    AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-75, y-46));
+                                }
 
                                 isFlying = false;
-                                AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-75, y-46));
                             }
                         } else {
                             WorldController.destruction(x - 2.5f, y, direction);

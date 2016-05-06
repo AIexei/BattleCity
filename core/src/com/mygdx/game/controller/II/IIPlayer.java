@@ -1,7 +1,10 @@
 package com.mygdx.game.controller.II;
 
+import com.mygdx.game.controller.AnimationsController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.model.Tank;
+import com.mygdx.game.model.anima.AnimImages;
+import com.mygdx.game.model.anima.Animation;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -75,16 +78,40 @@ public class IIPlayer {
                 if (canAppearOnPoint(i)) {
                     switch (i) {
                         case 0:
-                            TanksController.addTank(TanksGenerator.createTank(0));
+                            AnimationsController.add(new Animation(AnimImages.getBirth(), 4, 4f, 0, 600));
                             prevAppearancePoint = 0;
+
+                            (new Timer()).schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    TanksController.addTank(TanksGenerator.createTank(0));
+                                }
+                            }, 500);
+
                             return;
                         case 1:
-                            TanksController.addTank(TanksGenerator.createTank(1));
+                            AnimationsController.add(new Animation(AnimImages.getBirth(), 4, 4f, 300, 600));
                             prevAppearancePoint = 1;
+
+                            (new Timer()).schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    TanksController.addTank(TanksGenerator.createTank(1));
+                                }
+                            }, 500);
+
                             return;
                         case 2:
-                            TanksController.addTank(TanksGenerator.createTank(2));
+                            AnimationsController.add(new Animation(AnimImages.getBirth(), 4, 4f, 600, 600));
                             prevAppearancePoint = 2;
+
+                            (new Timer()).schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    TanksController.addTank(TanksGenerator.createTank(2));
+                                }
+                            }, 500);
+
                             return;
                     }
                 }
