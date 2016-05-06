@@ -16,7 +16,7 @@ public class ShellsController {
     private static Music shoot;
 
 
-    public static void create() {
+    static {
         shells = new LinkedList<Shell>();
         shoot = Gdx.audio.newMusic(Gdx.files.internal("music/fire.mp3"));
     }

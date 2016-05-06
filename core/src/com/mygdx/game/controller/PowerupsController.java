@@ -45,7 +45,6 @@ public class PowerupsController {
 
     public static void actions() {
         if (!timerRunning) {
-            //System.out.println("timer");
             timerRunning = true;
 
             timer.purge();
@@ -57,8 +56,6 @@ public class PowerupsController {
             }, (new Random()).nextInt(10000) + 10000);
         } else {
             if (curPowerupId != -1) {
-                //System.out.println("checking");
-
                 if (checkTaking()) {
                     executePowerup();
                 }
@@ -101,7 +98,8 @@ public class PowerupsController {
             curX *= 25;
         } while ((curX - p.getX() <= 50) && (curY - p.getY() <= 50));
 
-        curPowerupId = (new Random()).nextInt(6);
+        //curPowerupId = (new Random()).nextInt(6);
+        curPowerupId = 4;
 
         timer.purge();
         timer.schedule(new TimerTask() {
@@ -137,8 +135,6 @@ public class PowerupsController {
                 points();
                 break;
         }
-
-        //System.out.println("EXE");
     }
 
     // OK
@@ -198,6 +194,7 @@ public class PowerupsController {
 
     // Tank
     private static void levelUp() {
+        TanksController.getPlayer().incLevel();
         timerRunning = false;
         curPowerupId = -1;
     }

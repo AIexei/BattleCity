@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.model.Tank;
 
 /**
- * Created by Алексей on 12.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 12.04.2016.
  */
 
 public class MoveController {
@@ -18,6 +18,7 @@ public class MoveController {
 
         tank.fire();
     }
+
 
     private static void inputControl(Tank tank, int dir) {
         if (dir == 0) {

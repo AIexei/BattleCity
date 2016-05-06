@@ -75,15 +75,15 @@ public class IIPlayer {
                 if (canAppearOnPoint(i)) {
                     switch (i) {
                         case 0:
-                            TanksController.addTank(TanksGenerator.createTank(0, 0, false));
+                            TanksController.addTank(TanksGenerator.createTank(0));
                             prevAppearancePoint = 0;
                             return;
                         case 1:
-                            TanksController.addTank(TanksGenerator.createTank(1, 0, false));
+                            TanksController.addTank(TanksGenerator.createTank(1));
                             prevAppearancePoint = 1;
                             return;
                         case 2:
-                            TanksController.addTank(TanksGenerator.createTank(2, 0, false));
+                            TanksController.addTank(TanksGenerator.createTank(2));
                             prevAppearancePoint = 2;
                             return;
                     }

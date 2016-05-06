@@ -63,27 +63,33 @@ public class Shell {
         }
     }
 
+
     public boolean draw(SpriteBatch batch) {
         move();
         sprite.draw(batch);
         return isFlying;
     }
 
+
     public Tank getOwner() {
         return this.owner;
     }
+
 
     public float getX () {
         return x;
     }
 
+
     public float getY() {
         return y;
     }
 
+
     public int getDir() {
         return direction;
     }
+
 
     private void move() {
         switch (direction) {

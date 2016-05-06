@@ -13,9 +13,11 @@ import com.mygdx.game.model.Tank;
 public class InputController {
     private static Tank tank;
 
+
     public static void create(Tank player) {
         tank = player;
     }
+
 
     public static void inputProcessing() {
         if (tank.getMoveFlag()) {
@@ -24,6 +26,7 @@ public class InputController {
             inputControl();
         }
     }
+
 
     private static void inputControl() {
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {

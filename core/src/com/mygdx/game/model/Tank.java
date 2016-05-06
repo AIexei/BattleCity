@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.II.TanksGenerator;
 import com.mygdx.game.controller.ShellsController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.controller.WorldController;
@@ -18,8 +19,13 @@ public class Tank {
     private float x;
     private float y;
     private float speed;
+
+    private int lives;
     private int level;
     private int direction;
+    private int reloadingTime;
+
+    private boolean isPlayer;
     private boolean canShoot;
     private boolean moveFlag;
 
@@ -29,17 +35,19 @@ public class Tank {
     private Timer timer;
 
 
-    public Tank(int x, int y, float r, float s,  Texture image) {
+    public Tank(int x, int y, int rt, int l, float r, float s,  Texture image) {
         this.x = x;
         this.y = y;
         this.speed = s;
-        this.level = 0;
+        this.level = l;
         this.image = image;
         this.sprite = new Sprite(image);
         this.canShoot = true;
         this.timer = new Timer();
         this.moveFlag = false;
         this.direction = (int) (r/90);
+        this.reloadingTime = rt;
+        this.isPlayer = false;
 
         sprite.setRotation(r);
         sprite.setX(x);
@@ -48,17 +56,12 @@ public class Tank {
 
 
     public Tank(int x, int y, Texture image) {
-        this(x, y, 0, 2.5f, image);
-    }
-
-
-    public Tank(float r, Texture image) {
-        this(0, 0, r, 2.5f, image);
+        this(x, y, 1000, 0, 0, 2.5f, image);
     }
 
 
     public Tank(Texture image) {
-        this(0, 0, 0, 2.5f, image);
+        this(0, 0, 1000, 0, 0, 2.5f, image);
     }
 
 
@@ -103,19 +106,89 @@ public class Tank {
         sprite.setY(y);
     }
 
+
     public void fire() {
         if (canShoot) {
             ShellsController.addShell(new Shell(this));
 
             canShoot = false;
-            timer.schedule(new Reloading(), 1000);
+            timer.schedule(new Reloading(), reloadingTime);
         }
     }
+
 
     private class Reloading extends TimerTask {
         @Override
         public void run() {
             canShoot = true;
+        }
+    }
+
+
+    public int getLevel() {
+        return level;
+    }
+
+
+    public void setLevel(int level) {
+        this.level = level;
+
+        sprite.setTexture(TanksGenerator.getTexture(level, true));
+
+        switch (level) {
+            case 0:
+                reloadingTime = 1000;
+                break;
+            case 1:
+                reloadingTime = 800;
+                break;
+            case 2:
+                reloadingTime = 600;
+                break;
+        }
+    }
+
+
+    public void incLevel() {
+        if (level != 2)
+            level++;
+
+        if (isPlayer) {
+            sprite.setTexture(TanksGenerator.getTexture(level, true));
+
+            switch (level) {
+                case 0:
+                    reloadingTime = 1000;
+                    break;
+                case 1:
+                    reloadingTime = 800;
+                    break;
+                case 2:
+                    reloadingTime = 600;
+                    break;
+            }
+        }
+    }
+
+
+    public void decLevel() {
+        if (level != 0)
+            level--;
+
+        if (isPlayer) {
+            sprite.setTexture(TanksGenerator.getTexture(level, true));
+
+            switch (level) {
+                case 0:
+                    reloadingTime = 1000;
+                    break;
+                case 1:
+                    reloadingTime = 800;
+                    break;
+                case 2:
+                    reloadingTime = 600;
+                    break;
+            }
         }
     }
 
@@ -129,29 +202,41 @@ public class Tank {
         return y;
     }
 
+
     public boolean getMoveFlag() {
         return moveFlag;
     }
+
 
     public void setMoveFlag(boolean newFlag) {
         moveFlag = newFlag;
     }
 
+
     public float getRotation() {
         return sprite.getRotation();
     }
+
 
     public void setRotation(float x) {
         sprite.setRotation(x);
     }
 
+
+    public void isPlayer(boolean value) {
+        this.isPlayer = value;
+    }
+
+
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
 
+
     public void setDir(int dir) {
         this.direction = dir;
     }
+
 
     public int getDir() {
         return direction;

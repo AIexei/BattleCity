@@ -11,6 +11,8 @@ public class DesktopLauncher {
 		config.width = 800;
 		config.height = 680;
 		config.resizable = false;
+		config.x = 300;
+		config.y = 15;
 		//config.fullscreen = true;
 		new LwjglApplication(new BattleCity(), config);
 	}

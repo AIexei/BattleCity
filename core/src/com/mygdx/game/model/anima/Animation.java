@@ -22,6 +22,7 @@ public class Animation {
     private boolean completed;
     private boolean repeatAnimation;
 
+
     public Animation(TextureRegion region, int frameCount, float cycleTime, float x, float y) {
         frames = new Array<TextureRegion>();
         int frameWidth = region.getRegionWidth() / frameCount;
@@ -38,6 +39,7 @@ public class Animation {
         this.completed = false;
         this.repeatAnimation = false;
     }
+
 
     public void update(float dt) {
         currentFrameTime += dt;
@@ -56,30 +58,37 @@ public class Animation {
         }
     }
 
+
     public void draw(SpriteBatch batch) {
         if (!completed)
             batch.draw(getFrame(), x, y);
     }
 
+
     public TextureRegion getFrame() {
         return frames.get(frame);
     }
+
 
     public boolean isCompleted() {
         return completed;
     }
 
+
     public void setCompleted(boolean value) {
         this.completed = value;
     }
+
 
     public void setRepeat(boolean value) {
         this.repeatAnimation = value;
     }
 
+
     public void setX(float x) {
         this.x = x;
     }
+
 
     public void setY(float y) {
         this.y = y;

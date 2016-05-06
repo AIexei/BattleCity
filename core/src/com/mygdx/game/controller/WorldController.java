@@ -13,6 +13,7 @@ public class WorldController {
     private static float border;
     private static boolean homeDef;
 
+
     public static void create(byte[][] f, float b) {
         field = f;
         border = b;
@@ -59,6 +60,7 @@ public class WorldController {
 
         return false;
     }
+
 
     public static void destruction (float x, float y, int dir) {
         int xx = (int) x / 25;

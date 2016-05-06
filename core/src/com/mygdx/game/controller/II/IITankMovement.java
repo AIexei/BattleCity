@@ -5,7 +5,7 @@ import com.mygdx.game.model.Tank;
 import java.util.*;
 
 /**
- * Created by Алексей on 19.04.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 19.04.2016.
  */
 
 public class IITankMovement {
@@ -16,6 +16,7 @@ public class IITankMovement {
         MoveController.move(tank, tank.getDir());
         tank.fire();
     }
+
 
     public static void changeDir(Tank tank) {
         HashSet<Integer> dirs = goodDirs(tank);

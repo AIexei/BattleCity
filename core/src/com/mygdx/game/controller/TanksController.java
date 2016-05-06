@@ -35,6 +35,7 @@ public class TanksController {
         immortalityAnima.setRepeat(true);
     }
 
+
     public static void drawTanks(SpriteBatch batch) {
         for (int i = 0; i < tanks.size(); i++)
             tanks.get(i).draw(batch);
@@ -46,6 +47,8 @@ public class TanksController {
             immortalityAnima.draw(batch);
             immortalityAnima.update(0.2f);
         }
+
+        System.out.println(player.getLevel());
     }
 
 
@@ -172,12 +175,20 @@ public class TanksController {
         }
 
         if (temp.equals(player)) {
-            if (!playerImmortality) {
-                endFlag = true;
+            if (player.getLevel() == 0) {
+                if (!playerImmortality) {
+                    endFlag = true;
+                }
+            } else {
+                player.decLevel();
             }
         } else {
-            tanks.remove(temp);
-            IIPlayer.decTanksCount();
+            if (temp.getLevel() == 0) {
+                tanks.remove(temp);
+                IIPlayer.decTanksCount();
+            } else {
+                temp.decLevel();
+            }
         }
     }
 

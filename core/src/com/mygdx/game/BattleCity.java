@@ -40,12 +40,13 @@ public class BattleCity extends Game {
 
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    //long start = 0;
+    //long frames = 0;
+
 
     @Override
     public void create() {
-        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
 
         IIPlayer.create();
         TanksGenerator.create();
@@ -89,11 +90,11 @@ public class BattleCity extends Game {
         }
 
         player = new Tank(tanks[0]);
+        player.isPlayer(true);
 
         WorldController.create(arr, 650);
         TanksController.create(player);
         InputController.create(player);
-        ShellsController.create();
     }
 
 
@@ -148,9 +149,9 @@ public class BattleCity extends Game {
         if (TanksController.isEnd())
             dispose();
 
-        frames++;
-        long time = System.currentTimeMillis() - start;
-        System.out.println(1000 * ((double)frames / (double) time));
+        //frames++;
+        //long time = System.currentTimeMillis() - start;
+        //System.out.println(1000 * ((double)frames / (double) time));
     }
 
 
