@@ -105,6 +105,8 @@ public class Shell {
                             } else {
                                 if (TanksController.killTank(x, y + 2.5f, direction, owner)) {
                                     AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-16));
+                                } else {
+                                    AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-16));
                                 }
 
                                 isFlying = false;
@@ -131,6 +133,8 @@ public class Shell {
                             } else {
                                 if (TanksController.killTank(x + 2.5f, y, direction, owner)) {
                                     AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-16, y-46));
+                                } else {
+                                    AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-16, y-21));
                                 }
 
                                 isFlying = false;
@@ -157,6 +161,8 @@ public class Shell {
                             } else {
                                 if (TanksController.killTank(x, y - 2.5f, direction, owner)) {
                                     AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-46, y-75));
+                                } else {
+                                    AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-25));
                                 }
 
                                 isFlying = false;
@@ -183,6 +189,8 @@ public class Shell {
                             } else {
                                 if (TanksController.killTank(x - 2.5f, y, direction, owner)) {
                                     AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-75, y-46));
+                                } else {
+                                    AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-25, y-21));
                                 }
 
                                 isFlying = false;

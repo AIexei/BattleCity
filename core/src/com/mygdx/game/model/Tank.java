@@ -244,8 +244,6 @@ public class Tank {
 
     @Override
     protected void finalize() throws Throwable {
-        System.out.print(this);
-        System.out.println("dispose");
         super.finalize();
     }
 }

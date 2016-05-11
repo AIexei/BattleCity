@@ -1,6 +1,7 @@
 package com.mygdx.game.controller.II;
 
 import com.mygdx.game.controller.AnimationsController;
+import com.mygdx.game.controller.GameInfoController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.model.Tank;
 import com.mygdx.game.model.anima.AnimImages;
@@ -46,6 +47,8 @@ public class IIPlayer {
 
 
     public static void actions() {
+        GameInfoController.setTanksLeft(tanksLeftCount);
+
         tanksOnMap = TanksController.getEnemies();
         curTanksCount = TanksController.getEnemies().size();
 
@@ -59,6 +62,11 @@ public class IIPlayer {
             newTank();
             createTank = false;
         }
+    }
+
+
+    public static int getTanksLeftCount() {
+        return tanksLeftCount;
     }
 
 

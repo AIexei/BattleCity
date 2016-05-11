@@ -106,6 +106,11 @@ public class WorldController {
     }
 
 
+    public static boolean isHomeDestroyed() {
+        return false;
+    }
+
+
     public static float getBorder() {
         return border;
     }

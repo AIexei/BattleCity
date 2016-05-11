@@ -50,8 +50,6 @@ public class TanksController {
             immortalityAnima.draw(batch);
             immortalityAnima.update(0.2f);
         }
-
-        System.out.println(player.getLevel());
     }
 
 

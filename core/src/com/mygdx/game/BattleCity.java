@@ -83,6 +83,7 @@ public class BattleCity extends Game {
         WorldController.create(arr, 650);
         TanksController.create(player);
         InputController.create(player);
+        GameInfoController.create();
     }
 
 
@@ -98,6 +99,15 @@ public class BattleCity extends Game {
         PowerupsController.actions();
         InputController.inputProcessing();
         IIPlayer.actions();
+
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.GRAY);
+        renderer.rect(-15, 0, 15, 800);
+        renderer.rect(650, 0, 135, 800);
+        renderer.rect(-15, -15, 800, 15);
+        renderer.rect(-15, 650, 800, 15);
+        renderer.end();
 
 
         batch.begin();
@@ -126,16 +136,9 @@ public class BattleCity extends Game {
         ShellsController.drawShells(batch);
         TanksController.update();
         PowerupsController.draw(batch);
+        GameInfoController.draw(batch);
 
         batch.end();
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.GRAY);
-        renderer.rect(-15, 0, 15, 800);
-        renderer.rect(650, 0, 135, 800);
-        renderer.rect(-15, -15, 800, 15);
-        renderer.rect(-15, 650, 800, 15);
-        renderer.end();
 
         if (TanksController.isEnd())
             dispose();
@@ -150,5 +153,10 @@ public class BattleCity extends Game {
     public void dispose() {
         System.out.println("End game");
         System.exit(0);
+    }
+
+
+    public static int getMapNumber() {
+        return 0;
     }
 }
