@@ -12,12 +12,14 @@ public class WorldController {
     private static byte[][] field;
     private static float border;
     private static boolean homeDef;
+    private static boolean isEnd;
 
 
     public static void create(byte[][] f, float b) {
         field = f;
         border = b;
         homeDef = false;
+        isEnd = false;
     }
 
     /**
@@ -66,7 +68,16 @@ public class WorldController {
         int xx = (int) x / 25;
         int yy = (int) y / 25;
 
-        if (field[yy][xx] != 4)
+        if (field[yy][xx] == 5) {
+            isEnd = true;
+            /*
+
+
+            ДОДЕЛАТЬ
+
+
+            */
+        } else if (field[yy][xx] != 4)
             field[yy][xx] = 0;
 
         switch (dir) {
@@ -106,7 +117,11 @@ public class WorldController {
     }
 
 
-    public static boolean isHomeDestroyed() {
+    public static boolean gameOver() {
+        if (TanksController.isEnd() || isEnd) {
+            return true;
+        }
+
         return false;
     }
 

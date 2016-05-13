@@ -108,6 +108,10 @@ public class Tank {
         if (canShoot) {
             ShellsController.addShell(new Shell(this));
 
+            if (isPlayer) {
+                MusicManager.playShoot();
+            }
+
             canShoot = false;
             timer.schedule(new Reloading(), reloadingTime);
         }

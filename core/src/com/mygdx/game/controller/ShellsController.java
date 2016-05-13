@@ -1,8 +1,7 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.model.MusicManager;
 import com.mygdx.game.model.Shell;
 
 import java.util.LinkedList;
@@ -13,12 +12,10 @@ import java.util.LinkedList;
 
 public class ShellsController {
     private static LinkedList<Shell> shells;
-    private static Music shoot;
 
 
     static {
         shells = new LinkedList<Shell>();
-        shoot = Gdx.audio.newMusic(Gdx.files.internal("music/fire.mp3"));
     }
 
 
@@ -35,7 +32,6 @@ public class ShellsController {
 
     public static void addShell(Shell newShell) {
         shells.add(newShell);
-        shoot.play();
     }
 
 

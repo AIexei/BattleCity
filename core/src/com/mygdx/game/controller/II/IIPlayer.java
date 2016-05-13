@@ -59,8 +59,10 @@ public class IIPlayer {
         }
 
         if (createTank) {
-            newTank();
-            createTank = false;
+            if (tanksLeftCount > 0) {
+                newTank();
+                createTank = false;
+            }
         }
     }
 

@@ -38,13 +38,13 @@ public class BattleCity extends Game {
 
     byte[][] arr;
 
-    //long start = 0;
-    //long frames = 0;
+    long start = 0;
+    long frames = 0;
 
 
     @Override
     public void create() {
-        //start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
 
         IIPlayer.create();
         TanksGenerator.create();
@@ -101,15 +101,6 @@ public class BattleCity extends Game {
         IIPlayer.actions();
 
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.GRAY);
-        renderer.rect(-15, 0, 15, 800);
-        renderer.rect(650, 0, 135, 800);
-        renderer.rect(-15, -15, 800, 15);
-        renderer.rect(-15, 650, 800, 15);
-        renderer.end();
-
-
         batch.begin();
         TanksController.drawTanks(batch);
 
@@ -136,16 +127,33 @@ public class BattleCity extends Game {
         ShellsController.drawShells(batch);
         TanksController.update();
         PowerupsController.draw(batch);
-        GameInfoController.draw(batch);
 
         batch.end();
 
-        if (TanksController.isEnd())
-            dispose();
 
-        //frames++;
-        //long time = System.currentTimeMillis() - start;
-        //System.out.println(1000 * ((double)frames / (double) time));
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.GRAY);
+        renderer.rect(-15, 0, 15, 800);
+        renderer.rect(650, 0, 135, 800);
+        renderer.rect(-15, -15, 800, 15);
+        renderer.rect(-15, 650, 800, 15);
+        renderer.end();
+
+
+        batch.begin();
+        GameInfoController.draw(batch);
+        batch.end();
+
+
+        if (WorldController.gameOver()) {
+            dispose();
+        } else if (IIPlayer.getTanksLeftCount() == 0) {
+            dispose();
+        }
+
+        frames++;
+        long time = System.currentTimeMillis() - start;
+        System.out.println(1000 * ((double)frames / (double) time));
     }
 
 
