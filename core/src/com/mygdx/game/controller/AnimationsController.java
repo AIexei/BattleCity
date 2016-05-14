@@ -10,7 +10,12 @@ import java.util.ArrayList;
  */
 
 public class AnimationsController {
-    private static ArrayList<Animation> list = new ArrayList<Animation>();
+    private static ArrayList<Animation> list;
+
+
+    public static void create() {
+        list = new ArrayList<Animation>();
+    }
 
 
     public static void draw(SpriteBatch batch) {

@@ -28,11 +28,6 @@ public class PowerupsController {
 
 
     static {
-        timerRunning = false;
-        curPowerupId = -1;
-        counter = 0;
-
-        timer = new Timer();
         images = new ArrayList<Texture>();
         images.add(new Texture("pups/grenadePup.png"));
         images.add(new Texture("pups/immortalityPup.png"));
@@ -40,6 +35,15 @@ public class PowerupsController {
         images.add(new Texture("pups/homePup.png"));
         images.add(new Texture("pups/levelPup.png"));
         images.add(new Texture("pups/pointsPup.png"));
+    }
+
+
+    public static void create() {
+        timerRunning = false;
+        curPowerupId = -1;
+        counter = 0;
+
+        timer = new Timer();
     }
 
 

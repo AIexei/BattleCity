@@ -2,7 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.BattleCity;
+import com.mygdx.game.view.GameScreen;
 import com.mygdx.game.controller.II.IIPlayer;
 
 /**
@@ -25,8 +25,7 @@ public class GameInfoController {
 
     public static void create() {
         tanksLeft = IIPlayer.getTanksLeftCount();
-        mapNumber = BattleCity.getMapNumber();
-        System.out.println(tanksLeft);
+        mapNumber = GameScreen.getMapNumber();
     }
 
 

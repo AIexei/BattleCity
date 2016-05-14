@@ -13,7 +13,7 @@ public class TanksGenerator {
     private static Texture[] myTextures;
     private static Texture[] enemyTextures;
 
-    public static void create() {
+    static {
         myTextures = new Texture[3];
         enemyTextures = new Texture[5];
 

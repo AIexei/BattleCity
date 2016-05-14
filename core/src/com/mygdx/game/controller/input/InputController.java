@@ -2,8 +2,6 @@ package com.mygdx.game.controller.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.controller.PowerupsController;
-import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.model.Tank;
 
 /**
@@ -87,6 +85,10 @@ public class InputController {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             tank.fire();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+
         }
     }
 

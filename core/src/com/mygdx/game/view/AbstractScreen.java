@@ -3,10 +3,10 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Screen;
 
 /**
- * Created by ������� on 13.04.2016.
+ * Created by Алексей on 14.05.2016.
  */
 
-public class MenuView implements Screen{
+public abstract class AbstractScreen implements Screen{
     @Override
     public void show() {
 

@@ -14,7 +14,7 @@ public class ShellsController {
     private static LinkedList<Shell> shells;
 
 
-    static {
+    public static void create() {
         shells = new LinkedList<Shell>();
     }
 
