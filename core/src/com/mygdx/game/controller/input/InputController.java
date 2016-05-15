@@ -2,6 +2,7 @@ package com.mygdx.game.controller.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.model.MusicManager;
 import com.mygdx.game.model.Tank;
 
 /**
@@ -11,17 +12,27 @@ import com.mygdx.game.model.Tank;
 public class InputController {
     private static Tank tank;
 
+    private static boolean canMove;
+
 
     public static void create(Tank player) {
         tank = player;
+        canMove = true;
+    }
+
+
+    public static void setCanMove(boolean value) {
+        canMove = value;
     }
 
 
     public static void inputProcessing() {
-        if (tank.getMoveFlag()) {
-            equalizer();
-        } else {
-            inputControl();
+        if (canMove) {
+            if (tank.getMoveFlag()) {
+                equalizer();
+            } else {
+                inputControl();
+            }
         }
     }
 
@@ -85,10 +96,6 @@ public class InputController {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             tank.fire();
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-
         }
     }
 

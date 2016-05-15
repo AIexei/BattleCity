@@ -28,6 +28,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        System.out.println("shsow");
         batch = new SpriteBatch();
         menu = new Texture("other/menu.png");
         position = 0;

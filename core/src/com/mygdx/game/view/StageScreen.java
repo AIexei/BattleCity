@@ -61,7 +61,7 @@ public class StageScreen extends AbstractScreen {
         }
 
         if (y2 > 680) {
-            game.setScreen(new GameScreen());
+            game.setScreen(new GameScreen(game));
         }
     }
 }

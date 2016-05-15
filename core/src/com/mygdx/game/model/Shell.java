@@ -99,6 +99,10 @@ public class Shell {
                         if (y + 2.5f > WorldController.getBorder() - 8) {
                             isFlying = false;
                             AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-16));
+
+                            if (owner == TanksController.getPlayer()) {
+                                MusicManager.playHitNone();
+                            }
                         } else if (WorldController.canMove(x, y + 2.5f, direction, this)) {
                             if (TanksController.notCollisionWithTank(x, y + 2.5f, direction, this)) {
                                 y += 2.5f;
@@ -127,6 +131,10 @@ public class Shell {
                         if (x + 2.5f > WorldController.getBorder() - 6) {
                             isFlying = false;
                             AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-16, y-21));
+
+                            if (owner == TanksController.getPlayer()) {
+                                MusicManager.playHitNone();
+                            }
                         } else if (WorldController.canMove(x + 2.5f, y, direction, this)) {
                             if (TanksController.notCollisionWithTank(x + 2.5f, y, direction, this)) {
                                 x += 2.5f;
@@ -155,6 +163,10 @@ public class Shell {
                         if (y - 2.5f <= 0) {
                             isFlying = false;
                             AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-21, y-25));
+
+                            if (owner == TanksController.getPlayer()) {
+                                MusicManager.playHitNone();
+                            }
                         } else if (WorldController.canMove(x, y - 2.5f, direction, this)) {
                             if (TanksController.notCollisionWithTank(x, y - 2.5f, direction, this)) {
                                 y -= 2.5f;
@@ -183,6 +195,10 @@ public class Shell {
                         if (x - 2.5f <= 0) {
                             isFlying = false;
                             AnimationsController.add(new Animation(AnimImages.getBang(), 3, 1, x-25, y-21));
+
+                            if (owner == TanksController.getPlayer()) {
+                                MusicManager.playHitNone();
+                            }
                         } else if (WorldController.canMove(x - 2.5f, y, direction, this)) {
                             if (TanksController.notCollisionWithTank(x - 2.5f, y, direction, this)) {
                                 x -= 2.5f;

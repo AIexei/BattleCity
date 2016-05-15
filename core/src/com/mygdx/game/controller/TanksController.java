@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.model.MusicManager;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
 import com.mygdx.game.model.anima.AnimImages;
@@ -118,8 +119,8 @@ public class TanksController {
         int yy = (int) y / 25;
         boolean isEnemy1 = !shell.getOwner().equals(player);
         boolean isEnemy2;
-        Tank tank = shell.getOwner();
 
+        Tank tank = shell.getOwner();
         Tank temp = tanksMap[yy][xx];
 
         if ((temp != null) && (!tank.equals(temp))) {
@@ -179,6 +180,7 @@ public class TanksController {
             if (!playerImmortality) {
                 if (player.getLevel() == 0) {
                     endFlag = true;
+                    MusicManager.playKill();
                     return true;
                 } else {
                     player.decLevel();
@@ -191,6 +193,7 @@ public class TanksController {
             if (temp.getLevel() == 0) {
                 tanks.remove(temp);
                 IIPlayer.decTanksCount();
+                MusicManager.playKill();
 
                 return true;
             } else {
@@ -239,6 +242,10 @@ public class TanksController {
 
             AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-25, y-25));
             IIPlayer.decTanksCount();
+        }
+
+        if (tanks.size() != 0) {
+            MusicManager.playKill();
         }
 
         while (tanks.size() != 1) {

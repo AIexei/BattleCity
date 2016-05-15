@@ -28,6 +28,7 @@ public class GameScreen extends AbstractScreen {
     OrthographicCamera camera;
     SpriteBatch batch;
     ShapeRenderer renderer;
+    Game game;
 
     Texture brick;
     Texture block;
@@ -39,14 +40,20 @@ public class GameScreen extends AbstractScreen {
 
     byte[][] arr;
 
-    long start = 0;
-    long frames = 0;
+    /////long start = 0;
+    //long frames = 0;
 
+    boolean isEnd;
+    boolean nextScreen;
+
+    public GameScreen(Game game) {
+        this.game = game;
+    }
 
 
     @Override
     public void show() {
-        start = System.currentTimeMillis();
+        //start = System.currentTimeMillis();
 
         IIPlayer.create();
 
@@ -62,8 +69,9 @@ public class GameScreen extends AbstractScreen {
         grass = new Texture("covering/trawa.png");
         water = new Texture("covering/voda.png");
 
-
         arr = new byte[26][26];
+        isEnd = false;
+        nextScreen = false;
 
         try {
             FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(3));
@@ -123,13 +131,12 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
         GameInfoController.draw(batch);
+        checkGameOver();
         batch.end();
 
-        checkGameOver();
-
-        frames++;
-        long time = System.currentTimeMillis() - start;
-        System.out.println(1000 * ((double)frames / (double) time));
+        //frames++;
+        //long time = System.currentTimeMillis() - start;
+        //System.out.println(1000 * ((double)frames / (double) time));
     }
 
 
@@ -140,7 +147,13 @@ public class GameScreen extends AbstractScreen {
     }
 
 
+    public static int getMapNumber() {
+        return 0;
+    }
+
+
     private void createControllers() {
+        GameOverView.create();
         WorldController.create(arr, 650);
         TanksController.create(player);
         InputController.create(player);
@@ -172,15 +185,25 @@ public class GameScreen extends AbstractScreen {
 
 
     private void checkGameOver() {
-        if (WorldController.gameOver()) {
-            dispose();
-        } else if (IIPlayer.getTanksLeftCount() == 0) {
-            dispose();
+        if (!isEnd) {
+            if (WorldController.gameOver() || IIPlayer.getTanksLeftCount() == 0) {
+                InputController.setCanMove(false);
+                IIPlayer.setStopActions(true);
+                isEnd = true;
+
+                (new Timer()).schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        nextScreen = true;
+                    }
+                }, 3000);
+            }
+        } else {
+            GameOverView.draw(batch);
+
+            if (nextScreen) {
+                game.setScreen(new MenuScreen(game));
+            }
         }
-    }
-
-
-    public static int getMapNumber() {
-        return 0;
     }
 }

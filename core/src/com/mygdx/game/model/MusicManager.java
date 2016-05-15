@@ -9,7 +9,8 @@ import com.badlogic.gdx.audio.Music;
 
 public class MusicManager {
     private static Music shoot;
-    private static Music hit;
+    private static Music hitIt;
+    private static Music hitNone;
     private static Music kill;
     private static Music powerOn;
     private static Music powerOff;
@@ -19,6 +20,13 @@ public class MusicManager {
 
     static {
         shoot = Gdx.audio.newMusic(Gdx.files.internal("music/fire.mp3"));
+        //hitIt = Gdx.audio.newMusic(Gdx.files.internal());
+        hitNone = Gdx.audio.newMusic(Gdx.files.internal("music/hitnone.mp3"));
+        kill = Gdx.audio.newMusic(Gdx.files.internal("music/dead.mp3"));
+        //powerOn = Gdx.audio.newMusic(Gdx.files.internal());
+        //powerOff = Gdx.audio.newMusic(Gdx.files.internal());
+        engine = Gdx.audio.newMusic(Gdx.files.internal("music/engine.mp3"));
+        moving = Gdx.audio.newMusic(Gdx.files.internal("music/move.mp3"));
     }
 
 
@@ -27,8 +35,13 @@ public class MusicManager {
     }
 
 
-    public static void playHit() {
-        hit.play();
+    public static void playHitIt() {
+        hitIt.play();
+    }
+
+
+    public static void playHitNone() {
+        hitNone.play();
     }
 
 

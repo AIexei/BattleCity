@@ -25,6 +25,7 @@ public class IIPlayer {
 
     private static boolean createTank = false;
     private static boolean stopPowerup = false;
+    private static boolean stopActions = false;
 
 
     public static void create() {
@@ -47,21 +48,23 @@ public class IIPlayer {
 
 
     public static void actions() {
-        GameInfoController.setTanksLeft(tanksLeftCount);
+        if (!stopActions) {
+            GameInfoController.setTanksLeft(tanksLeftCount);
 
-        tanksOnMap = TanksController.getEnemies();
-        curTanksCount = TanksController.getEnemies().size();
+            tanksOnMap = TanksController.getEnemies();
+            curTanksCount = TanksController.getEnemies().size();
 
-        if (!stopPowerup) {
-            for (int i = 0; i < curTanksCount; i++) {
-                IITankMovement.move(tanksOnMap.get(i));
+            if (!stopPowerup) {
+                for (int i = 0; i < curTanksCount; i++) {
+                    IITankMovement.move(tanksOnMap.get(i));
+                }
             }
-        }
 
-        if (createTank) {
-            if (tanksLeftCount > 0) {
-                newTank();
-                createTank = false;
+            if (createTank) {
+                if (tanksLeftCount > 0) {
+                    newTank();
+                    createTank = false;
+                }
             }
         }
     }
@@ -82,7 +85,12 @@ public class IIPlayer {
     }
 
 
-    public static void newTank() {
+    public static void setStopActions(boolean value) {
+        stopActions = value;
+    }
+
+
+    private static void newTank() {
         if (curTanksCount < 4) {
             for (int i = (prevAppearancePoint+1) % 3; i != prevAppearancePoint; i++, i %= 3) {
                 if (canAppearOnPoint(i)) {
