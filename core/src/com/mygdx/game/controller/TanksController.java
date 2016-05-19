@@ -23,10 +23,11 @@ public class TanksController {
     private static Animation immortalityAnima;
 
     private static boolean playerImmortality;
-    private static boolean endFlag = false;
+    private static boolean endFlag;
 
 
     public static void create(Tank p) {
+        endFlag = false;
         tanksMap = new Tank[26][26];
         tanks = new LinkedList<Tank>();
         player = p;

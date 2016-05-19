@@ -70,13 +70,6 @@ public class WorldController {
 
         if (field[yy][xx] == 5) {
             isEnd = true;
-            /*
-
-
-            ДОДЕЛАТЬ
-
-
-            */
         } else if (field[yy][xx] != 4)
             field[yy][xx] = 0;
 
@@ -117,12 +110,8 @@ public class WorldController {
     }
 
 
-    public static boolean gameOver() {
-        if (TanksController.isEnd() || isEnd) {
-            return true;
-        }
-
-        return false;
+    public static boolean isEnd() {
+        return isEnd;
     }
 
 

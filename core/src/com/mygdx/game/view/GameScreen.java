@@ -2,7 +2,6 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,6 +14,8 @@ import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.II.TanksGenerator;
 import com.mygdx.game.controller.input.InputController;
 import com.mygdx.game.model.Tank;
+import com.mygdx.game.model.anima.AnimImages;
+import com.mygdx.game.model.anima.Animation;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,11 +41,12 @@ public class GameScreen extends AbstractScreen {
 
     byte[][] arr;
 
-    /////long start = 0;
+    //long start = 0;
     //long frames = 0;
 
     boolean isEnd;
     boolean nextScreen;
+    boolean winGame;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -72,6 +74,7 @@ public class GameScreen extends AbstractScreen {
         arr = new byte[26][26];
         isEnd = false;
         nextScreen = false;
+        winGame = false;
 
         try {
             FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(3));
@@ -140,13 +143,6 @@ public class GameScreen extends AbstractScreen {
     }
 
 
-    @Override
-    public void dispose() {
-        System.out.println("End game");
-        System.exit(0);
-    }
-
-
     public static int getMapNumber() {
         return 0;
     }
@@ -156,7 +152,7 @@ public class GameScreen extends AbstractScreen {
         GameOverView.create();
         WorldController.create(arr, 650);
         TanksController.create(player);
-        InputController.create(player);
+        InputController.create(player, game);
         GameInfoController.create();
         AnimationsController.create();
         PowerupsController.create();
@@ -186,9 +182,24 @@ public class GameScreen extends AbstractScreen {
 
     private void checkGameOver() {
         if (!isEnd) {
-            if (WorldController.gameOver() || IIPlayer.getTanksLeftCount() == 0) {
+            if (WorldController.isEnd() || TanksController.isEnd()) {
                 InputController.setCanMove(false);
                 IIPlayer.setStopActions(true);
+                isEnd = true;
+
+                if (WorldController.isEnd()) {
+                    emblem = new Texture("other/homeDest.png");
+                    AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, 280, -20));
+                }
+
+                (new Timer()).schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        nextScreen = true;
+                    }
+                }, 3000);
+            } else if (IIPlayer.getTanksLeftCount() == 0) {
+                winGame = true;
                 isEnd = true;
 
                 (new Timer()).schedule(new TimerTask() {
@@ -199,9 +210,14 @@ public class GameScreen extends AbstractScreen {
                 }, 3000);
             }
         } else {
-            GameOverView.draw(batch);
+            if (!winGame) {
+                GameOverView.draw(batch);
+            }
 
             if (nextScreen) {
+                IIPlayer.dispose();
+                PowerupsController.dispose();
+
                 game.setScreen(new MenuScreen(game));
             }
         }

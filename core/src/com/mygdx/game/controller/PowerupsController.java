@@ -81,6 +81,11 @@ public class PowerupsController {
     }
 
 
+    public static void dispose() {
+        timer.cancel();
+    }
+
+
     private static boolean checkTaking() {
         Tank p = TanksController.getPlayer();
 

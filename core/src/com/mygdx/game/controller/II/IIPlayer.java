@@ -17,24 +17,34 @@ import java.util.TimerTask;
 
 public class IIPlayer {
     private static LinkedList<Tank> tanksOnMap = new LinkedList<Tank>();
-    private static Timer timer = new Timer();
+    private static Timer timer;
 
-    private static int curTanksCount = 0;
-    private static int tanksLeftCount = 16;
-    private static int prevAppearancePoint = 0;
+    private static int curTanksCount;
+    private static int tanksLeftCount;
+    private static int prevAppearancePoint;
 
-    private static boolean createTank = false;
-    private static boolean stopPowerup = false;
-    private static boolean stopActions = false;
+    private static boolean createTank;
+    private static boolean stopPowerup;
+    private static boolean stopActions;
 
 
     public static void create() {
+        createTank = false;
+        stopPowerup = false;
+        stopActions = false;
+
+        curTanksCount = 0;
+        tanksLeftCount = 2;
+        prevAppearancePoint = 0;
+
+        timer = new Timer();
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 createTank = true;
             }
-        }, 0, 5000);
+        }, 0, 3000);
 
         timer.schedule(new TimerTask() {
             @Override
@@ -91,7 +101,7 @@ public class IIPlayer {
 
 
     private static void newTank() {
-        if (curTanksCount < 4) {
+        if ((curTanksCount < 4) && (tanksLeftCount - curTanksCount > 0)){
             for (int i = (prevAppearancePoint+1) % 3; i != prevAppearancePoint; i++, i %= 3) {
                 if (canAppearOnPoint(i)) {
                     switch (i) {
@@ -161,5 +171,11 @@ public class IIPlayer {
         }
 
         return true;
+    }
+
+
+    public static void dispose() {
+        timer.cancel();
+        timer.purge();
     }
 }

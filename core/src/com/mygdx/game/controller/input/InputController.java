@@ -1,9 +1,12 @@
 package com.mygdx.game.controller.input;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.model.MusicManager;
+import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.controller.PowerupsController;
 import com.mygdx.game.model.Tank;
+import com.mygdx.game.view.MenuScreen;
 
 /**
  * Created by ������� on 14.04.2016.
@@ -11,12 +14,14 @@ import com.mygdx.game.model.Tank;
 
 public class InputController {
     private static Tank tank;
+    private static Game game;
 
     private static boolean canMove;
 
 
-    public static void create(Tank player) {
+    public static void create(Tank player, Game g) {
         tank = player;
+        game = g;
         canMove = true;
     }
 
@@ -96,6 +101,12 @@ public class InputController {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             tank.fire();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            IIPlayer.dispose();
+            PowerupsController.dispose();
+            game.setScreen(new MenuScreen(game));
         }
     }
 
