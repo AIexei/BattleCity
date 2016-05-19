@@ -4,7 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.model.DigitsImages;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,7 +16,9 @@ import java.util.TimerTask;
  * Created by Алексей on 14.05.2016.
  */
 public class StageScreen extends AbstractScreen {
+    private Texture texture;
     private ShapeRenderer renderer;
+    private SpriteBatch batch;
     private Game game;
 
     private int y1;
@@ -29,7 +34,9 @@ public class StageScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        texture = new Texture("other/stage.png");
         renderer = new ShapeRenderer();
+        batch = new SpriteBatch();
 
         y1 = 0;
         y2 = 340;
@@ -54,6 +61,14 @@ public class StageScreen extends AbstractScreen {
         renderer.rect(0, y1, 800, 340);
         renderer.rect(0, y2, 800, 340);
         renderer.end();
+
+
+        if (!canMove) {
+            batch.begin();
+            batch.draw(texture, 300, 327);
+            batch.draw(DigitsImages.getDigit(0), 440, 327);
+            batch.end();
+        }
 
         if (canMove) {
             y1 -= 10;
