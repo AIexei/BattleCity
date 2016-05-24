@@ -1,0 +1,56 @@
+/**
+ * Created by Алексей on 21.05.2016.
+ */
+
+import java.math.BigInteger;
+import java.util.*;
+
+public class Main {
+    public static void main(String... args) {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger result = new BigInteger("1");
+
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        ArrayList<Integer> a = new ArrayList<Integer>();
+
+        for (int i = 0; i < n; i++) {
+            a.add(scanner.nextInt());
+        }
+
+        Collections.sort(a);
+
+        int left = 0;
+        int right = a.size() - 1;
+        int count = 0;
+
+        while (count < k) {
+            if (k - count > 1) {
+                if (a.get(left) * a.get(left + 1) > a.get(right) * a.get(right - 1)) {
+                    Integer temp = a.get(left) * a.get(left + 1);
+                    result = result.multiply(new BigInteger(temp.toString()));
+
+                    left += 2;
+                    count += 2;
+                } else {
+                    Integer temp = a.get(right) * a.get(right -1);
+                    result = result.multiply(new BigInteger(temp.toString()));
+
+                    if (a.get(right - 1) == 1) {
+                        right -= 1;
+                        count += 1;
+                    } else {
+                        right -= 2;
+                        count += 2;
+                    }
+                }
+            } else {
+                result = result.multiply(new BigInteger(a.get(right).toString()));
+                count++;
+                right--;
+            }
+        }
+
+        System.out.println(result.mod(new BigInteger("1000000007")));
+    }
+}

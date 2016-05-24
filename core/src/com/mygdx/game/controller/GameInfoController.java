@@ -12,6 +12,7 @@ import com.mygdx.game.controller.II.IIPlayer;
 public class GameInfoController {
     private static int tanksLeft;
     private static int mapNumber;
+    private static int playerLives;
 
     private static Texture smallTank;
     private static Texture flag;
@@ -24,6 +25,7 @@ public class GameInfoController {
 
 
     public static void create() {
+        playerLives = 3;
         tanksLeft = IIPlayer.getTanksLeftCount();
         mapNumber = GameScreen.getMapNumber();
     }

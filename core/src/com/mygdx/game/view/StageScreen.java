@@ -34,7 +34,7 @@ public class StageScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        texture = new Texture("other/stage.png");
+        texture = new Texture("text/tbStage.png");
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
 
@@ -65,8 +65,8 @@ public class StageScreen extends AbstractScreen {
 
         if (!canMove) {
             batch.begin();
-            batch.draw(texture, 300, 327);
-            batch.draw(DigitsImages.getDigit(0), 440, 327);
+            batch.draw(texture, 310, 327);
+            batch.draw(DigitsImages.getBlackDigit(0), 450, 327);
             batch.end();
         }
 

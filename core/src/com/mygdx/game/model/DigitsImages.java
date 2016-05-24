@@ -8,18 +8,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 
 public class DigitsImages {
-    private static TextureRegion region;
+    private static TextureRegion bRegion;
+    private static TextureRegion wRegion;
 
 
     static {
-        region = new TextureRegion(new Texture("other/digits.png"));
+        wRegion = new TextureRegion(new Texture("text/wDigits.png"));
+        bRegion = new TextureRegion(new Texture("text/bDigits.png"));
     }
 
 
-    public static TextureRegion getDigit(int digit) {
-        int y = (digit < 5) ? 0 : 25;
-        digit %= 5;
+    public static TextureRegion getWhiteDigit(int digit) {
+        int x = digit * 20;
 
-        return (new TextureRegion(region, 25*digit, y, 25, 25));
+        return (new TextureRegion(wRegion, x, 0, 20, 25));
     }
+
+
+    public static TextureRegion getBlackDigit(int digit) {
+        int x = digit * 20;
+
+        return (new TextureRegion(bRegion, x, 0, 20, 25));
+    }
+
+
 }
