@@ -12,6 +12,6 @@ public class BattleCity extends Game {
     public void create() {
         //setScreen(new GameScreen());
         //setScreen(new StageScreen(this));
-        setScreen(new StartScreen(this));
+        setScreen(new ResultScreen(this));
     }
 }

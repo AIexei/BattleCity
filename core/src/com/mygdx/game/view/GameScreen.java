@@ -88,7 +88,7 @@ public class GameScreen extends AbstractScreen {
             System.out.println("File not found");
         }
 
-        player = new Tank(225, 0, TanksGenerator.getTexture(0, true));
+        player = new Tank(0, 225, 0, TanksGenerator.getTexture(0, true));
         player.isPlayer(true);
 
         createControllers();
@@ -133,7 +133,7 @@ public class GameScreen extends AbstractScreen {
         renderer.end();
 
         batch.begin();
-        GameInfoController.draw(batch);
+        GameInfoView.draw(batch);
         checkGameOver();
         batch.end();
 
@@ -150,10 +150,10 @@ public class GameScreen extends AbstractScreen {
 
     private void createControllers() {
         GameOverView.create();
+        GameInfoView.create();
         WorldController.create(arr, 650);
         TanksController.create(player);
         InputController.create(player, game);
-        GameInfoController.create();
         AnimationsController.create();
         PowerupsController.create();
         ScoreController.create();

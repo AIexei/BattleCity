@@ -23,6 +23,7 @@ public class Tank {
     private int level;
     private int direction;
     private int reloadingTime;
+    private int tankType;
 
     private boolean isPlayer;
     private boolean canShoot;
@@ -33,7 +34,7 @@ public class Tank {
     private Timer timer;
 
 
-    public Tank(int x, int y, int rt, int l, float r, float s,  Texture image) {
+    public Tank(int type, int x, int y, int rt, int l, float r, float s,  Texture image) {
         this.x = x;
         this.y = y;
         this.speed = s;
@@ -45,6 +46,7 @@ public class Tank {
         this.direction = (int) (r/90);
         this.reloadingTime = rt;
         this.isPlayer = false;
+        this.tankType = type;
 
         sprite.setRotation(r);
         sprite.setX(x);
@@ -52,13 +54,13 @@ public class Tank {
     }
 
 
-    public Tank(int x, int y, Texture image) {
-        this(x, y, 1000, 0, 0, 2.5f, image);
+    public Tank(int type, int x, int y, Texture image) {
+        this(type, x, y, 1000, 0, 0, 2.5f, image);
     }
 
 
     public Tank(Texture image) {
-        this(0, 0, 1000, 0, 0, 2.5f, image);
+        this(0, 0, 0, 1000, 0, 0, 2.5f, image);
     }
 
 

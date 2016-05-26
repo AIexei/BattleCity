@@ -46,13 +46,13 @@ public class TanksGenerator {
 
         switch (tankType) {
             case 0:
-                return new Tank(x, 600, 1700, 0, 180, 2.5f, enemyTextures[0]);
+                return new Tank(0, x, 600, 1700, 0, 180, 2.5f, enemyTextures[0]);
             case 1:
-                return new Tank(x, 600, 2000, 0, 180, 5f, enemyTextures[1]);
+                return new Tank(1, x, 600, 2000, 0, 180, 5f, enemyTextures[1]);
             case 2:
-                return new Tank(x, 600, 1500, 0, 180, 2.5f, enemyTextures[4]);
+                return new Tank(2, x, 600, 1500, 0, 180, 2.5f, enemyTextures[4]);
             default:
-                return new Tank(x, 600, 1900, 1, 180, 2.5f, enemyTextures[2]);
+                return new Tank(3, x, 600, 1900, 1, 180, 2.5f, enemyTextures[2]);
         }
     }
 

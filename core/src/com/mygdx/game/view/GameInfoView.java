@@ -1,22 +1,17 @@
-package com.mygdx.game.controller;
+package com.mygdx.game.view;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.view.GameScreen;
 import com.mygdx.game.controller.II.IIPlayer;
 
 /**
- * Created by Алексей on 11.05.2016.
+ * Created by Алексей on 26.05.2016.
  */
-
-public class GameInfoController {
+public class GameInfoView {
     private static int tanksLeft;
-    private static int mapNumber;
-    private static int playerLives;
 
     private static Texture smallTank;
     private static Texture flag;
-
 
     static {
         smallTank = new Texture("menus/smallTank.png");
@@ -25,9 +20,7 @@ public class GameInfoController {
 
 
     public static void create() {
-        playerLives = 3;
         tanksLeft = IIPlayer.getTanksLeftCount();
-        mapNumber = GameScreen.getMapNumber();
     }
 
 
@@ -51,3 +44,4 @@ public class GameInfoController {
         batch.draw(flag, 692, 100);
     }
 }
+

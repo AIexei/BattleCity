@@ -74,7 +74,7 @@ public class MenuScreen extends AbstractScreen {
         batch.end();
 
         if (!timeout)
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.SPACE))) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             switch (position) {
                 case 0:
                     game.setScreen(new StageScreen(game));
@@ -94,6 +94,14 @@ public class MenuScreen extends AbstractScreen {
                     System.exit(0);
                     break;
             }
+
+            timeout = true;
+            (new Timer()).schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timeout = false;
+                }
+            }, 200);
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             if (position > 0) {
                 position--;

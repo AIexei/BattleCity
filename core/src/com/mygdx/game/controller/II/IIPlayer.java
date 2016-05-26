@@ -1,11 +1,11 @@
 package com.mygdx.game.controller.II;
 
 import com.mygdx.game.controller.AnimationsController;
-import com.mygdx.game.controller.GameInfoController;
 import com.mygdx.game.controller.TanksController;
 import com.mygdx.game.model.Tank;
 import com.mygdx.game.model.anima.AnimImages;
 import com.mygdx.game.model.anima.Animation;
+import com.mygdx.game.view.GameInfoView;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -59,7 +59,7 @@ public class IIPlayer {
 
     public static void actions() {
         if (!stopActions) {
-            GameInfoController.setTanksLeft(tanksLeftCount);
+            GameInfoView.setTanksLeft(tanksLeftCount);
 
             tanksOnMap = TanksController.getEnemies();
             curTanksCount = TanksController.getEnemies().size();

@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -19,6 +20,7 @@ public class DigitsImages {
 
 
     public static TextureRegion getWhiteDigit(int digit) {
+        digit %= 10;
         int x = digit * 20;
 
         return (new TextureRegion(wRegion, x, 0, 20, 25));
@@ -26,10 +28,26 @@ public class DigitsImages {
 
 
     public static TextureRegion getBlackDigit(int digit) {
+        digit %= 10;
         int x = digit * 20;
 
         return (new TextureRegion(bRegion, x, 0, 20, 25));
     }
 
 
+    public static void drawMinus(SpriteBatch batch, int x, int y) {
+        TextureRegion region = new TextureRegion(wRegion, 210, 0, 21, 25);
+        batch.draw(region, x, y);
+    }
+
+
+    public static void drawNumber(SpriteBatch batch, int number, int x, int y) {
+        String num = Integer.toString(number);
+
+        for (int i = 0; i < num.length(); i++) {
+            int digit = (int)(num.charAt(i)- '0');
+            TextureRegion region = new TextureRegion(wRegion, digit * 21, 0, 21, 25);
+            batch.draw(region, x + i*21, y);
+        }
+    }
 }
