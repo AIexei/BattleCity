@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +16,8 @@ import com.mygdx.game.controller.input.InputController;
 import com.mygdx.game.model.Tank;
 import com.mygdx.game.model.anima.AnimImages;
 import com.mygdx.game.model.anima.Animation;
+import com.mygdx.game.view.GameInfoView;
+import com.mygdx.game.view.GameOverView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,30 +28,32 @@ import java.util.*;
  */
 
 public class GameScreen extends AbstractScreen {
-    OrthographicCamera camera;
-    SpriteBatch batch;
-    ShapeRenderer renderer;
-    Game game;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+    private ShapeRenderer renderer;
+    private Game game;
 
-    Texture brick;
-    Texture block;
-    Texture emblem;
-    Texture grass;
-    Texture water;
+    private Texture brick;
+    private Texture block;
+    private Texture emblem;
+    private Texture grass;
+    private Texture water;
 
-    Tank player;
+    private Tank player;
 
-    byte[][] arr;
+    private int stage;
+    private byte[][] arr;
 
     //long start = 0;
     //long frames = 0;
 
-    boolean isEnd;
-    boolean nextScreen;
-    boolean winGame;
+    private boolean isEnd;
+    private boolean nextScreen;
+    private boolean winGame;
 
-    public GameScreen(Game game) {
+    public GameScreen(Game game, int stage) {
         this.game = game;
+        this.stage = stage;
     }
 
 
@@ -77,7 +81,7 @@ public class GameScreen extends AbstractScreen {
         winGame = false;
 
         try {
-            FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(3));
+            FileInputStream fileReader = new FileInputStream("maps/map" + Integer.toString(stage));
             Scanner scanner = new Scanner(fileReader);
 
             for (int i = 0; i < 26; i++)
@@ -218,7 +222,7 @@ public class GameScreen extends AbstractScreen {
                 IIPlayer.dispose();
                 PowerupsController.dispose();
 
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new ResultScreen(game));
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.game.view.*;
+import com.mygdx.game.controller.GameController;
+import com.mygdx.game.view.screens.ResultScreen;
+import com.mygdx.game.view.screens.StartScreen;
 
 /**
  * Created by Алексей on 14.05.2016.
@@ -10,8 +12,12 @@ import com.mygdx.game.view.*;
 public class BattleCity extends Game {
     @Override
     public void create() {
-        //setScreen(new GameScreen());
-        //setScreen(new StageScreen(this));
-        setScreen(new ResultScreen(this));
+        try {
+            GameController.create();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        setScreen(new StartScreen(this));
     }
 }

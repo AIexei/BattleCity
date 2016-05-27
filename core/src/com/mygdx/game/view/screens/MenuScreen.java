@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.GameController;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,7 @@ public class MenuScreen extends AbstractScreen {
     private Texture tBest;
     private Texture tAbout;
     private Texture tExit;
-    private Sprite tChoise;
+    private Sprite choise;
     private SpriteBatch batch;
 
     private int position;
@@ -47,10 +48,9 @@ public class MenuScreen extends AbstractScreen {
         tExit = new Texture("text/pExit.png");
         menu = new Texture("other/menu.png");
 
-        tChoise = new Sprite(new Texture("tanks/tank1.png"));
-        tChoise.setRotation(270);
-        tChoise.setX(300);
-        tChoise.setY(255);
+        choise = new Sprite(new Texture("other/menuChoise.png"));
+        choise.setX(290);
+        choise.setY(250);
 
         timeout = false;
         position = 0;
@@ -70,19 +70,20 @@ public class MenuScreen extends AbstractScreen {
         batch.draw(tAbout, 350, 135);
         batch.draw(tExit, 350, 75);
 
-        tChoise.draw(batch);
+        choise.draw(batch);
         batch.end();
 
         if (!timeout)
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             switch (position) {
                 case 0:
-                    game.setScreen(new StageScreen(game));
+                    game.setScreen(new StageScreen(game, GameController.getStage()));
                     break;
                 case 1:
-                    game.setScreen(new StartScreen(game));
+                    game.setScreen(new ScoresScreen());
                     break;
                 case 2:
+                    game.setScreen(new CreditsScreen());
                     break;
                 case 3:
                     menu.dispose();
@@ -105,7 +106,7 @@ public class MenuScreen extends AbstractScreen {
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             if (position > 0) {
                 position--;
-                tChoise.setY(tChoise.getY() + 60);
+                choise.setY(choise.getY() + 60);
 
                 timeout = true;
                 (new Timer()).schedule(new TimerTask() {
@@ -118,7 +119,7 @@ public class MenuScreen extends AbstractScreen {
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             if (position < 3) {
                 position++;
-                tChoise.setY(tChoise.getY() - 60);
+                choise.setY(choise.getY() - 60);
 
                 timeout = true;
                 (new Timer()).schedule(new TimerTask() {
@@ -129,6 +130,17 @@ public class MenuScreen extends AbstractScreen {
                 }, 200);
             }
         }
+    }
+
+    @Override
+    public void dispose() {
+        menu.dispose();
+        tPlay.dispose();
+        tBest.dispose();
+        tAbout.dispose();
+        tExit.dispose();
+
+        System.exit(0);
     }
 }
 

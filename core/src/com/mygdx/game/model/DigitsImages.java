@@ -21,17 +21,17 @@ public class DigitsImages {
 
     public static TextureRegion getWhiteDigit(int digit) {
         digit %= 10;
-        int x = digit * 20;
+        int x = digit * 21;
 
-        return (new TextureRegion(wRegion, x, 0, 20, 25));
+        return (new TextureRegion(wRegion, x, 0, 21, 25));
     }
 
 
     public static TextureRegion getBlackDigit(int digit) {
         digit %= 10;
-        int x = digit * 20;
+        int x = digit * 21;
 
-        return (new TextureRegion(bRegion, x, 0, 20, 25));
+        return (new TextureRegion(bRegion, x, 0, 21, 25));
     }
 
 

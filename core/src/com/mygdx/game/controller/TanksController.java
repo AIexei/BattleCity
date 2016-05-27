@@ -192,6 +192,8 @@ public class TanksController {
             }
         } else {
             if (temp.getLevel() == 0) {
+                GameController.incKilled(temp.getType());
+
                 tanks.remove(temp);
                 IIPlayer.decTanksCount();
                 MusicManager.playKill();

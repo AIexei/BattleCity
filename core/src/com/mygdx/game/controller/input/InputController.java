@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.PowerupsController;
 import com.mygdx.game.model.Tank;
-import com.mygdx.game.view.MenuScreen;
+import com.mygdx.game.view.screens.MenuScreen;
 
 /**
  * Created by ������� on 14.04.2016.

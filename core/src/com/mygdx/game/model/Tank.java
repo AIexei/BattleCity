@@ -248,6 +248,11 @@ public class Tank {
     }
 
 
+    public int getType() {
+        return tankType;
+    }
+
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

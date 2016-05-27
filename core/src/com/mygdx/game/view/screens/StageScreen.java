@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -22,14 +22,15 @@ public class StageScreen extends AbstractScreen {
     private SpriteBatch batch;
     private Game game;
 
+    private int stage;
     private int y1;
     private int y2;
     private boolean canMove;
 
 
-    public StageScreen(Game game) {
+    public StageScreen(Game game, int stage) {
         this.game = game;
-        System.out.println("stage");
+        this.stage = stage;
     }
 
 
@@ -48,7 +49,7 @@ public class StageScreen extends AbstractScreen {
             public void run() {
                 canMove = true;
             }
-        }, 3000);
+        }, 2000);
     }
 
 
@@ -67,7 +68,7 @@ public class StageScreen extends AbstractScreen {
         if (!canMove) {
             batch.begin();
             batch.draw(texture, 310, 327);
-            batch.draw(DigitsImages.getBlackDigit(0), 450, 327);
+            batch.draw(DigitsImages.getBlackDigit(stage), 450, 327);
             batch.end();
         }
 
@@ -77,11 +78,11 @@ public class StageScreen extends AbstractScreen {
         }
 
         if (y2 > 680) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game, stage));
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            game.setScreen(new GameScreen(game));
-        }
+        //if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        //    game.setScreen(new GameScreen(game, stage));
+        //}
     }
 }

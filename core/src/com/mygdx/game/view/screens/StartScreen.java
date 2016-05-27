@@ -1,4 +1,4 @@
-package com.mygdx.game.view;
+package com.mygdx.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.I18NBundle;
 
 /**
  * Created by Алексей on 14.05.2016.
@@ -19,6 +18,7 @@ public class StartScreen extends AbstractScreen {
     private Texture tBest;
     private Texture tAbout;
     private Texture tExit;
+    private Texture choise;
     private SpriteBatch batch;
 
     private int y;
@@ -32,6 +32,7 @@ public class StartScreen extends AbstractScreen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        choise = new Texture("other/menuChoise.png");
         tPlay = new Texture("text/tPlay.png");
         tBest = new Texture("text/tBest.png");
         tAbout = new Texture("text/tAbout.png");
@@ -49,6 +50,7 @@ public class StartScreen extends AbstractScreen {
         batch.begin();
 
         batch.draw(menu, 0, y);
+        batch.draw(choise, 290, 250+y);
         batch.draw(tPlay, 350, 255+y);
         batch.draw(tBest, 350, 195+y);
         batch.draw(tAbout, 350, 135+y);
@@ -62,7 +64,7 @@ public class StartScreen extends AbstractScreen {
             game.setScreen(new MenuScreen(game));
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
             game.setScreen(new MenuScreen(game));
         }
     }
