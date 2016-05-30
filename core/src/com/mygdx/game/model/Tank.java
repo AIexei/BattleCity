@@ -253,6 +253,17 @@ public class Tank {
     }
 
 
+    public void newLife() {
+        x = 225;
+        y = 0;
+        direction = 0;
+
+        sprite.setY(y);
+        sprite.setX(x);
+        sprite.setRotation(0);
+    }
+
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

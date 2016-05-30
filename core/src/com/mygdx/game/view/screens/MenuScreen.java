@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.controller.GameController;
 
 import java.util.Timer;
@@ -18,11 +19,11 @@ import java.util.TimerTask;
  */
 
 public class MenuScreen extends AbstractScreen {
-    private Game game;
+    private MyGame game;
     private Texture menu;
-    private Texture tPlay;
+    private Texture tNewGame;
+    private Texture tContinue;
     private Texture tBest;
-    private Texture tAbout;
     private Texture tExit;
     private Sprite choise;
     private SpriteBatch batch;
@@ -31,8 +32,9 @@ public class MenuScreen extends AbstractScreen {
     private boolean timeout;
 
 
-    public MenuScreen(Game game) {
+    public MenuScreen(MyGame game) {
         this.game = game;
+        this.game.curScreen(this);
         System.out.println("menu");
     }
 
@@ -42,9 +44,9 @@ public class MenuScreen extends AbstractScreen {
         System.out.println("shsow");
         batch = new SpriteBatch();
 
-        tPlay = new Texture("text/tPlay.png");
+        tNewGame = new Texture("text/newGame.png");
+        tContinue = new Texture("text/continue.png");
         tBest = new Texture("text/tBest.png");
-        tAbout = new Texture("text/tAbout.png");
         tExit = new Texture("text/pExit.png");
         menu = new Texture("other/menu.png");
 
@@ -65,9 +67,9 @@ public class MenuScreen extends AbstractScreen {
         batch.begin();
 
         batch.draw(menu, 0, 0);
-        batch.draw(tPlay, 350, 255);
-        batch.draw(tBest, 350, 195);
-        batch.draw(tAbout, 350, 135);
+        batch.draw(tNewGame, 350, 255);
+        batch.draw(tContinue, 350, 195);
+        batch.draw(tBest, 350, 135);
         batch.draw(tExit, 350, 75);
 
         choise.draw(batch);
@@ -77,22 +79,28 @@ public class MenuScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             switch (position) {
                 case 0:
+                    try {
+                        GameController.clear();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     game.setScreen(new StageScreen(game, GameController.getStage()));
                     break;
                 case 1:
-                    game.setScreen(new ScoresScreen());
+                    try {
+                        GameController.load();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    game.setScreen(new StageScreen(game, GameController.getStage()));
                     break;
                 case 2:
-                    game.setScreen(new CreditsScreen());
+                    game.setScreen(new ScoresScreen());
                     break;
                 case 3:
-                    menu.dispose();
-                    tPlay.dispose();
-                    tBest.dispose();
-                    tAbout.dispose();
-                    tExit.dispose();
-
-                    System.exit(0);
+                    hide();
                     break;
             }
 
@@ -133,14 +141,12 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void dispose() {
+    public void hide() {
         menu.dispose();
-        tPlay.dispose();
+        tNewGame.dispose();
+        tContinue.dispose();
         tBest.dispose();
-        tAbout.dispose();
         tExit.dispose();
-
-        System.exit(0);
     }
 }
 

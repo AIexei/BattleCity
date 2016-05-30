@@ -2,6 +2,9 @@ package com.mygdx.game.controller;
 
 import com.mygdx.game.model.Shell;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Created by ������� on 01.03.2016.
@@ -14,12 +17,20 @@ public class WorldController {
     private static boolean homeDef;
     private static boolean isEnd;
 
+    private static Set<Byte> indestruct;
+
 
     public static void create(byte[][] f, float b) {
         field = f;
         border = b;
         homeDef = false;
         isEnd = false;
+
+        indestruct = new HashSet<Byte>();
+        indestruct.add((byte) 1);
+        indestruct.add((byte) 2);
+        indestruct.add((byte) 4);
+        indestruct.add((byte) 5);
     }
 
     /**
@@ -70,19 +81,19 @@ public class WorldController {
 
         if (field[yy][xx] == 5) {
             isEnd = true;
-        } else if (field[yy][xx] != 4)
+        } else if (!indestruct.contains(field[yy][xx]))
             field[yy][xx] = 0;
 
         switch (dir) {
             case 0:
             case 2:
-                if (field[yy][xx + 1] != 4)
+                if (!indestruct.contains(field[yy][xx+1]))
                     field[yy][xx + 1] = 0;
                 break;
 
             case 1:
             case 3:
-                if (field[yy + 1][xx] != 4)
+                if (!indestruct.contains(field[yy+1][xx]))
                     field[yy + 1][xx] = 0;
                 break;
         }
@@ -94,7 +105,7 @@ public class WorldController {
             homeDef = value;
 
             byte filler = 3;
-            if (homeDef == true) {
+            if (homeDef) {
                 filler = 4;
             }
 

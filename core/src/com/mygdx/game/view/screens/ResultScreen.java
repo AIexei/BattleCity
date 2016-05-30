@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.DigitsImages;
 import com.sun.media.jfxmediaimpl.platform.gstreamer.GSTAudioEqualizer;
@@ -17,7 +18,7 @@ import java.util.TimerTask;
  * Created by Алексей on 14.05.2016.
  */
 public class ResultScreen extends AbstractScreen {
-    private Game game;
+    private MyGame game;
     private SpriteBatch batch;
 
     private Texture tStage;
@@ -33,8 +34,9 @@ public class ResultScreen extends AbstractScreen {
     private int[] killed;
 
 
-    public ResultScreen(Game game) {
+    public ResultScreen(MyGame game) {
         this.game = game;
+        this.game.curScreen(this);
         this.killed = GameController.getKilled();
     }
 
@@ -66,7 +68,7 @@ public class ResultScreen extends AbstractScreen {
         batch.begin();
         batch.draw(tStage, 310, 550);
 
-        DigitsImages.drawNumber(batch, GameController.getStage(), 450, 550);
+        DigitsImages.drawNumber(batch, GameController.getStage() + 1, 450, 550);
 
         if (curResult >= 0) {
             int x = killed[0];
@@ -113,13 +115,36 @@ public class ResultScreen extends AbstractScreen {
         }
 
         if (curResult >= 4) {
+            DigitsImages.drawNumber(batch, GameController.getScore(), 400, 65);
             batch.draw(tTotal, 200, 65);
         }
 
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-            setScreen();
+            try {
+                setScreen();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public void hide() {
+        System.out.println("serialize");
+        try {
+            if (!(GameController.isEnd()) && (GameController.getStage() < 7)) {
+                GameController.incStage();
+                GameController.serialize();
+
+            } else {
+                GameController.clear();
+                GameController.serialize();
+            }
+        } catch (Exception e)  {
+            e.printStackTrace();
         }
     }
 
@@ -137,14 +162,16 @@ public class ResultScreen extends AbstractScreen {
     }
 
 
-    private void setScreen() {
-        if ((GameController.getLives() > 0) && (GameController.getStage() < 9)){
+    private void setScreen() throws Exception {
+        if (!(GameController.isEnd()) && (GameController.getStage() < 7)){
             GameController.incStage();
             GameController.clearKilled();
+            GameController.serialize();
             game.setScreen(new StageScreen(game, GameController.getStage()));
         } else {
             try {
                 GameController.clear();
+                GameController.serialize();
                 game.setScreen(new MenuScreen(game));
             } catch (Exception e) {
                 e.printStackTrace();

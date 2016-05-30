@@ -200,7 +200,7 @@ public class PowerupsController {
         }, 10000);
     }
 
-    // Tank
+    // OK
     private static void levelUp() {
         TanksController.getPlayer().incLevel();
         timerRunning = false;
@@ -209,7 +209,7 @@ public class PowerupsController {
 
     // OK
     private static void points() {
-        ScoreController.incScore(500);
+        GameController.incScore(500);
         timerRunning = false;
         curPowerupId = -1;
     }

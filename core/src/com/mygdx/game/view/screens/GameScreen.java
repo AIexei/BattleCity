@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.controller.*;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.II.TanksGenerator;
@@ -31,7 +32,7 @@ public class GameScreen extends AbstractScreen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private ShapeRenderer renderer;
-    private Game game;
+    private MyGame game;
 
     private Texture brick;
     private Texture block;
@@ -51,8 +52,9 @@ public class GameScreen extends AbstractScreen {
     private boolean nextScreen;
     private boolean winGame;
 
-    public GameScreen(Game game, int stage) {
+    public GameScreen(MyGame game, int stage) {
         this.game = game;
+        this.game.curScreen(this);
         this.stage = stage;
     }
 
@@ -147,8 +149,14 @@ public class GameScreen extends AbstractScreen {
     }
 
 
-    public static int getMapNumber() {
-        return 0;
+    @Override
+    public void hide() {
+        brick.dispose();
+        block.dispose();
+        batch.dispose();
+        emblem.dispose();
+        grass.dispose();
+        water.dispose();
     }
 
 
@@ -160,7 +168,6 @@ public class GameScreen extends AbstractScreen {
         InputController.create(player, game);
         AnimationsController.create();
         PowerupsController.create();
-        ScoreController.create();
         ShellsController.create();
     }
 
@@ -189,6 +196,7 @@ public class GameScreen extends AbstractScreen {
             if (WorldController.isEnd() || TanksController.isEnd()) {
                 InputController.setCanMove(false);
                 IIPlayer.setStopActions(true);
+                GameController.lose();
                 isEnd = true;
 
                 if (WorldController.isEnd()) {

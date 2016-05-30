@@ -1,8 +1,11 @@
 package com.mygdx.game.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.controller.II.IIPlayer;
+import com.mygdx.game.model.DigitsImages;
 
 /**
  * Created by Алексей on 26.05.2016.
@@ -41,7 +44,10 @@ public class GameInfoView {
             batch.draw(smallTank, 692, 600 - (25 * (rows+1)));
         }
 
-        batch.draw(flag, 692, 100);
+        batch.draw(flag, 680, 100);
+        batch.draw(DigitsImages.getBlackDigit(GameController.getStage()+1), 750, 100);
+
+        batch.draw(DigitsImages.getBlackDigit(GameController.getLives()), 750, 250);
     }
 }
 

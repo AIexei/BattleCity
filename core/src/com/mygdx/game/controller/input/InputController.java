@@ -3,6 +3,8 @@ package com.mygdx.game.controller.input;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.MyGame;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.controller.II.IIPlayer;
 import com.mygdx.game.controller.PowerupsController;
 import com.mygdx.game.model.Tank;
@@ -14,12 +16,12 @@ import com.mygdx.game.view.screens.MenuScreen;
 
 public class InputController {
     private static Tank tank;
-    private static Game game;
+    private static MyGame game;
 
     private static boolean canMove;
 
 
-    public static void create(Tank player, Game g) {
+    public static void create(Tank player, MyGame g) {
         tank = player;
         game = g;
         canMove = true;
@@ -106,6 +108,13 @@ public class InputController {
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             IIPlayer.dispose();
             PowerupsController.dispose();
+
+            try {
+                GameController.serialize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             game.setScreen(new MenuScreen(game));
         }
     }

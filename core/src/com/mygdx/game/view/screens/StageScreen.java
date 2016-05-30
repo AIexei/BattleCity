@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.MyGame;
+import com.mygdx.game.controller.GameController;
 import com.mygdx.game.model.DigitsImages;
 
 import java.util.Timer;
@@ -20,7 +22,7 @@ public class StageScreen extends AbstractScreen {
     private Texture texture;
     private ShapeRenderer renderer;
     private SpriteBatch batch;
-    private Game game;
+    private MyGame game;
 
     private int stage;
     private int y1;
@@ -28,8 +30,9 @@ public class StageScreen extends AbstractScreen {
     private boolean canMove;
 
 
-    public StageScreen(Game game, int stage) {
+    public StageScreen(MyGame game, int stage) {
         this.game = game;
+        this.game.curScreen(this);
         this.stage = stage;
     }
 
@@ -49,7 +52,7 @@ public class StageScreen extends AbstractScreen {
             public void run() {
                 canMove = true;
             }
-        }, 2000);
+        }, 1500);
     }
 
 
@@ -68,7 +71,7 @@ public class StageScreen extends AbstractScreen {
         if (!canMove) {
             batch.begin();
             batch.draw(texture, 310, 327);
-            batch.draw(DigitsImages.getBlackDigit(stage), 450, 327);
+            batch.draw(DigitsImages.getBlackDigit(stage + 1), 450, 327);
             batch.end();
         }
 
@@ -84,5 +87,14 @@ public class StageScreen extends AbstractScreen {
         //if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
         //    game.setScreen(new GameScreen(game, stage));
         //}
+    }
+
+    @Override
+    public void hide() {
+        try {
+            GameController.serialize();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

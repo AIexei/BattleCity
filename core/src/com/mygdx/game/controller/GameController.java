@@ -1,8 +1,9 @@
 package com.mygdx.game.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -15,25 +16,38 @@ public class GameController {
     private static int stage;
     private static int score;
 
+    private static boolean end;
+
     private static int[] highScores;
     private static int[] killed;
 
 
     public static void create() throws Exception {
-        lives = 3;
+        lives = 2;
         stage = 0;
         score = 0;
+
+        end = false;
 
         killed = new int[4];
         highScores = new int[6];
 
-        FileInputStream fis = new FileInputStream("highScores");
-        Scanner scanner = new Scanner(fis);
+        Scanner scanner = new Scanner((new File("highScores").getAbsoluteFile()));
         int x = 0;
 
         while (scanner.hasNext()) {
             highScores[x++] = scanner.nextInt();
         }
+    }
+
+
+    public static void lose() {
+        end = true;
+    }
+
+
+    public static boolean isEnd() {
+        return end;
     }
 
 
@@ -69,6 +83,19 @@ public class GameController {
 
     public static void incKilled(int type) {
         killed[type]++;
+
+        switch (type) {
+            case 0:
+                score += 100;
+                break;
+            case 1:
+            case 2:
+                score += 200;
+                break;
+            case 3:
+                score += 300;
+                break;
+        }
     }
 
 
@@ -90,6 +117,7 @@ public class GameController {
     public static void clear() throws Exception {
         lives = 3;
         stage = 0;
+        end = false;
 
         Arrays.fill(killed, 0);
 
@@ -102,7 +130,33 @@ public class GameController {
             highScores[5 - i] = temp;
         }
 
-        // дописать запись в файл
+        PrintWriter out = new PrintWriter((new File("highScores").getAbsoluteFile()));
+        for (int i = 0; i < 5; i++) {
+            out.println(highScores[i]);
+        }
 
+        out.close();
+    }
+
+
+    public static void serialize() throws Exception {
+        PrintWriter out = new PrintWriter((new File("load").getAbsoluteFile()));
+        out.println(lives);
+        out.println(stage);
+        out.println(score);
+        out.println(end);
+        out.close();
+    }
+
+
+    public static void load() throws Exception {
+        Scanner scanner = new Scanner((new File("load").getAbsoluteFile()));
+
+        lives = scanner.nextInt();
+        stage = scanner.nextInt();
+        score = scanner.nextInt();
+        end = scanner.nextBoolean();
+
+        scanner.close();
     }
 }

@@ -180,8 +180,15 @@ public class TanksController {
         if (temp.equals(player)) {
             if (!playerImmortality) {
                 if (player.getLevel() == 0) {
-                    endFlag = true;
-                    MusicManager.playKill();
+                    GameController.decLives();
+
+                    if (GameController.getLives() == 0) {
+                        endFlag = true;
+                    } else {
+                        player.newLife();
+                        playerAppearance();
+                    }
+
                     return true;
                 } else {
                     player.decLevel();
@@ -245,10 +252,6 @@ public class TanksController {
 
             AnimationsController.add(new Animation(AnimImages.getBigBang(), 2, 1.5f, x-25, y-25));
             IIPlayer.decTanksCount();
-        }
-
-        if (tanks.size() != 0) {
-            MusicManager.playKill();
         }
 
         while (tanks.size() != 1) {

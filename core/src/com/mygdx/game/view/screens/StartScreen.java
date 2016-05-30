@@ -6,17 +6,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGame;
 
 /**
  * Created by Алексей on 14.05.2016.
  */
 
 public class StartScreen extends AbstractScreen {
-    private Game game;
+    private MyGame game;
     private Texture menu;
-    private Texture tPlay;
+    private Texture tNewGame;
+    private Texture tContinue;
     private Texture tBest;
-    private Texture tAbout;
     private Texture tExit;
     private Texture choise;
     private SpriteBatch batch;
@@ -24,8 +25,9 @@ public class StartScreen extends AbstractScreen {
     private int y;
 
 
-    public StartScreen(Game game) {
+    public StartScreen(MyGame game) {
         this.game = game;
+        this.game.curScreen(this);
     }
 
 
@@ -33,9 +35,9 @@ public class StartScreen extends AbstractScreen {
     public void show() {
         batch = new SpriteBatch();
         choise = new Texture("other/menuChoise.png");
-        tPlay = new Texture("text/tPlay.png");
+        tNewGame = new Texture("text/newGame.png");
+        tContinue = new Texture("text/continue.png");
         tBest = new Texture("text/tBest.png");
-        tAbout = new Texture("text/tAbout.png");
         tExit = new Texture("text/pExit.png");
         menu = new Texture("other/menu.png");
         y = -680;
@@ -51,11 +53,10 @@ public class StartScreen extends AbstractScreen {
 
         batch.draw(menu, 0, y);
         batch.draw(choise, 290, 250+y);
-        batch.draw(tPlay, 350, 255+y);
-        batch.draw(tBest, 350, 195+y);
-        batch.draw(tAbout, 350, 135+y);
+        batch.draw(tNewGame, 350, 255+y);
+        batch.draw(tContinue, 350, 195+y);
+        batch.draw(tBest, 350, 135+y);
         batch.draw(tExit, 350, 75+y);
-
         batch.end();
 
         y += 7;
