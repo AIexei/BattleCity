@@ -65,7 +65,7 @@ public class StartScreen extends AbstractScreen {
             game.setScreen(new MenuScreen(game));
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             game.setScreen(new MenuScreen(game));
         }
     }

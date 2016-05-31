@@ -23,7 +23,7 @@ public class GameController {
 
 
     public static void create() throws Exception {
-        lives = 2;
+        lives = 3;
         stage = 0;
         score = 0;
 
@@ -135,6 +135,7 @@ public class GameController {
             out.println(highScores[i]);
         }
 
+        score = 0;
         out.close();
     }
 

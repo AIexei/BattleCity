@@ -1,5 +1,6 @@
 package com.mygdx.game.controller.II;
 
+import com.mygdx.game.controller.WorldController;
 import com.mygdx.game.model.Tank;
 
 import java.util.*;
@@ -22,11 +23,13 @@ public class IITankMovement {
         HashSet<Integer> dirs = goodDirs(tank);
         int result = -1;
 
-        while(!dirs.contains(result)) {
-            result = randomDir();
-        }
+        if (dirs.size() > 0) {
+            while (!dirs.contains(result)) {
+                result = randomDir();
+            }
 
-        tank.setDir(result);
+            tank.setDir(result);
+        }
     }
 
 
@@ -53,25 +56,40 @@ public class IITankMovement {
     }
 
 
-    private static HashSet<Integer> goodDirs(Tank tank) {
+    public static HashSet<Integer> goodDirs(Tank tank) {
         HashSet<Integer> result = new HashSet<Integer>();
         result.add(0);
         result.add(1);
         result.add(2);
         result.add(3);
 
+        int prevDir = tank.getDir();
         int xx = (int) tank.getX()/25;
         int yy = (int) tank.getY()/25;
 
-        if (xx == 25) {
+        result.remove((prevDir + 2) % 4);
+
+        if (xx == 24) {
             result.remove(1);
-        } else if (xx == 0) {
+        } else if (WorldController.getFieldCell(yy, xx + 2) == 4) {
+            result.remove(1);
+        }
+
+        if (xx == 0) {
+            result.remove(3);
+        } else if (WorldController.getFieldCell(yy, xx - 1) == 4) {
             result.remove(3);
         }
 
         if (yy == 0) {
             result.remove(2);
-        } else if (yy == 25) {
+        } else if (WorldController.getFieldCell(yy - 1, xx) == 4) {
+            result.remove(2);
+        }
+
+        if (yy == 24) {
+            result.remove(0);
+        } else if (WorldController.getFieldCell(yy + 2, xx) == 4) {
             result.remove(0);
         }
 

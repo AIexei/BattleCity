@@ -57,7 +57,7 @@ public class PowerupsController {
                 public void run() {
                     createPowerup();
                 }
-            }, (new Random()).nextInt(10000) + 10000);
+            }, (new Random()).nextInt(10000) + 6000);
         } else {
             if (curPowerupId != -1) {
                 if (checkTaking()) {

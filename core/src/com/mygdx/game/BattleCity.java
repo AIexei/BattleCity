@@ -32,7 +32,7 @@ public class BattleCity extends MyGame {
 
     @Override
     public void dispose() {
-        screen.hide();
+        screen.dispose();
         System.exit(0);
     }
 }

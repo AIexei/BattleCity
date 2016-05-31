@@ -7,6 +7,7 @@ import com.mygdx.game.model.anima.AnimImages;
 import com.mygdx.game.model.anima.Animation;
 import com.mygdx.game.view.GameInfoView;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,7 +35,7 @@ public class IIPlayer {
         stopActions = false;
 
         curTanksCount = 0;
-        tanksLeftCount = 2;
+        tanksLeftCount = 12;
         prevAppearancePoint = 0;
 
         timer = new Timer();
@@ -44,7 +45,7 @@ public class IIPlayer {
             public void run() {
                 createTank = true;
             }
-        }, 0, 3000);
+        }, 0, 1500);
 
         timer.schedule(new TimerTask() {
             @Override
@@ -53,7 +54,21 @@ public class IIPlayer {
                     IITankMovement.changeDir(tanksOnMap.get(i));
                 }
             }
-        }, 0, 3000);
+        }, 0, 4000);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (int i = 0; i < curTanksCount; i++) {
+                    HashSet<Integer> goodDirs = IITankMovement.goodDirs(tanksOnMap.get(i));
+                    int curDir = tanksOnMap.get(i).getDir();
+
+                    if (!goodDirs.contains(curDir)) {
+                        IITankMovement.changeDir(tanksOnMap.get(i));
+                    }
+                }
+            }
+        }, 2000, 4000);
     }
 
 

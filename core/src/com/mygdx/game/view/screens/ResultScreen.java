@@ -121,7 +121,7 @@ public class ResultScreen extends AbstractScreen {
 
         batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             try {
                 setScreen();
             } catch (Exception e) {
@@ -132,8 +132,8 @@ public class ResultScreen extends AbstractScreen {
 
 
     @Override
-    public void hide() {
-        System.out.println("serialize");
+    public void dispose() {
+        System.out.println("dispose");
         try {
             if (!(GameController.isEnd()) && (GameController.getStage() < 7)) {
                 GameController.incStage();

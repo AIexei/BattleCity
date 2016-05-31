@@ -90,7 +90,7 @@ public class StageScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
+    public void dispose() {
         try {
             GameController.serialize();
         } catch (Exception e) {

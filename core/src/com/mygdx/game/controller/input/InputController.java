@@ -105,7 +105,7 @@ public class InputController {
             tank.fire();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
             IIPlayer.dispose();
             PowerupsController.dispose();
 

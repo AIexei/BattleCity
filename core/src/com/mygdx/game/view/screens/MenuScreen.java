@@ -100,7 +100,7 @@ public class MenuScreen extends AbstractScreen {
                     game.setScreen(new ScoresScreen());
                     break;
                 case 3:
-                    hide();
+                    dispose();
                     break;
             }
 
@@ -141,7 +141,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
+    public void dispose() {
         menu.dispose();
         tNewGame.dispose();
         tContinue.dispose();

@@ -121,6 +121,11 @@ public class WorldController {
     }
 
 
+    public static int getFieldCell(int yy, int xx) {
+        return field[yy][xx];
+    }
+
+
     public static boolean isEnd() {
         return isEnd;
     }

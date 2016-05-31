@@ -150,7 +150,7 @@ public class GameScreen extends AbstractScreen {
 
 
     @Override
-    public void hide() {
+    public void dispose() {
         brick.dispose();
         block.dispose();
         batch.dispose();
