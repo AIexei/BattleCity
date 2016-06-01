@@ -1,7 +1,6 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.model.MusicManager;
 import com.mygdx.game.model.Shell;
 
 import java.util.LinkedList;

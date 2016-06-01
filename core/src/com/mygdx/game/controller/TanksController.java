@@ -2,7 +2,6 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.controller.II.IIPlayer;
-import com.mygdx.game.model.MusicManager;
 import com.mygdx.game.model.Shell;
 import com.mygdx.game.model.Tank;
 import com.mygdx.game.model.anima.AnimImages;
@@ -203,7 +202,6 @@ public class TanksController {
 
                 tanks.remove(temp);
                 IIPlayer.decTanksCount();
-                MusicManager.playKill();
 
                 return true;
             } else {

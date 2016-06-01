@@ -97,7 +97,7 @@ public class MenuScreen extends AbstractScreen {
                     game.setScreen(new StageScreen(game, GameController.getStage()));
                     break;
                 case 2:
-                    game.setScreen(new ScoresScreen());
+                    game.setScreen(new ScoresScreen(game));
                     break;
                 case 3:
                     dispose();
